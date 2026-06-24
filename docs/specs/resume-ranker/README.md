@@ -21,8 +21,8 @@ Este é um projeto novo. A estrutura inicial será criada no formato monorepo so
 
 | Milestone | Card | Tag | Status | Arquivo |
 |---|---|---|---|---|
-| 1. Infraestrutura e Anonimização | 1.1 Setup da Infraestrutura Docker e Esqueleto Monorepo | 🤖 | [/] | [1.1-setup-monorepo.md](milestone-1-infra-pii/1.1-setup-monorepo.md) |
-| 1. Infraestrutura e Anonimização | 1.2 Implementação do `PIIRedactor` e Reconhecedores BR | 🤖 | [/] | [1.2-pii-redactor.md](milestone-1-infra-pii/1.2-pii-redactor.md) |
+| 1. Infraestrutura e Anonimização | 1.1 Setup da Infraestrutura Docker e Esqueleto Monorepo | 🤖 | [x] | [1.1-setup-monorepo.md](milestone-1-infra-pii/1.1-setup-monorepo.md) |
+| 1. Infraestrutura e Anonimização | 1.2 Implementação do `PIIRedactor` e Reconhecedores BR | 🤖 | [x] | [1.2-pii-redactor.md](milestone-1-infra-pii/1.2-pii-redactor.md) |
 | 2. Extração e Normalização | 2.1 Parser de PDF e Extração Estruturada via LLM | 🧑 | [ ] | [2.1-pdf-parser-llm.md](milestone-2-parser-esco/2.1-pdf-parser-llm.md) |
 | 2. Extração e Normalização | 2.2 Implementação do `SkillNormalizer` com Taxonomia ESCO | 🤖 | [ ] | [2.2-skill-normalizer-esco.md](milestone-2-parser-esco/2.2-skill-normalizer-esco.md) |
 | 3. Vetores e Busca Híbrida | 3.1 Abstração de `EmbeddingProvider` e Ingestão Qdrant | 🤖 | [ ] | [3.1-embedding-provider-qdrant.md](milestone-3-embeddings-busca/3.1-embedding-provider-qdrant.md) |
