@@ -11,6 +11,13 @@ class Settings(BaseSettings):
     QDRANT_HOST: str = os.getenv("QDRANT_HOST", "localhost")
     QDRANT_PORT: int = int(os.getenv("QDRANT_PORT", "6333"))
 
+    EMBEDDING_PROVIDER: str = os.getenv("EMBEDDING_PROVIDER", "local")
+    EMBEDDING_MODEL_LOCAL: str = os.getenv("EMBEDDING_MODEL_LOCAL", "paraphrase-multilingual-MiniLM-L12-v2")
+    EMBEDDING_MODEL_OPENAI: str = os.getenv("EMBEDDING_MODEL_OPENAI", "text-embedding-3-small")
+    EMBEDDING_MODEL_VOYAGE: str = os.getenv("EMBEDDING_MODEL_VOYAGE", "voyage-multilingual-2")
+    OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
+    VOYAGE_API_KEY: str = os.getenv("VOYAGE_API_KEY", "")
+
     @property
     def database_url(self) -> str:
         return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
