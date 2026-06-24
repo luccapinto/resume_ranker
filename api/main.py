@@ -19,10 +19,21 @@ from api.explain import generate_match_explanation
 from api.fairness import run_counterfactual_bias_audit
 from fastapi import Query
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(
     title="Resume Ranker API",
     description="Backend API for Resume Ranker platform - Candidate & Job extraction and normalization",
     version="0.1.0"
+)
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Global helper instances
@@ -548,6 +559,77 @@ def audit_bias(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Counterfactual bias audit failed: {str(e)}")
 
+@app.get("/profiles/candidates", response_model=List[dict])
+def list_candidates(db: Session = Depends(get_db)):
+    """
+    Lista todos os candidatos cadastrados no banco de dados.
+    """
+    candidates = db.query(api.models.ProfileModel).filter(
+        api.models.ProfileModel.type == "candidate"
+    ).order_by(api.models.ProfileModel.created_at.desc()).all()
+    
+    return [
+        {
+            "id": c.id,
+            "type": c.type,
+            "file_name": c.file_name,
+            "raw_text": c.raw_text,
+            "redacted_text": c.redacted_text,
+            "redaction_map": c.redaction_map,
+            "extracted_profile": c.extracted_profile,
+            "created_at": c.created_at
+        }
+        for c in candidates
+    ]
+
+@app.get("/profiles/jobs", response_model=List[dict])
+def list_jobs(db: Session = Depends(get_db)):
+    """
+    Lista todas as vagas cadastradas no banco de dados.
+    """
+    jobs = db.query(api.models.ProfileModel).filter(
+        api.models.ProfileModel.type == "job"
+    ).order_by(api.models.ProfileModel.created_at.desc()).all()
+    
+    return [
+        {
+            "id": j.id,
+            "type": j.type,
+            "file_name": j.file_name,
+            "raw_text": j.raw_text,
+            "redacted_text": j.redacted_text,
+            "redaction_map": j.redaction_map,
+            "extracted_profile": j.extracted_profile,
+            "created_at": j.created_at
+        }
+        for j in jobs
+    ]
+
+@app.get("/audit/logs", response_model=List[dict])
+def list_audit_logs(db: Session = Depends(get_db)):
+    """
+    Lista todo o histórico de logs de auditoria de viés.
+    """
+    logs = db.query(api.models.AuditLogModel).order_by(
+        api.models.AuditLogModel.created_at.desc()
+    ).all()
+    
+    return [
+        {
+            "id": l.id,
+            "query_type": l.query_type,
+            "query_id": l.query_id,
+            "embedding_model": l.embedding_model,
+            "reranker_model": l.reranker_model,
+            "execution_time_ms": l.execution_time_ms,
+            "bias_audit_passed": bool(l.bias_audit_passed),
+            "bias_audit_results": l.bias_audit_results,
+            "created_at": l.created_at
+        }
+        for l in logs
+    ]
+
 @app.get("/openapi.json")
 def get_openapi():
     return app.openapi()
+

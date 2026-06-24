@@ -29,4 +29,4 @@ Este é um projeto novo. A estrutura inicial será criada no formato monorepo so
 | 3. Vetores e Busca Híbrida | 3.2 Busca Híbrida Bidirecional e Reranking com Cross-Encoder | 🤖 | [x] | [3.2-hybrid-search-reranker.md](milestone-3-embeddings-busca/3.2-hybrid-search-reranker.md) |
 | 4. Explicabilidade e Fairness | 4.1 Explicabilidade LLM e Auditoria de Viés Contraditório | 🧑 | [x] | [4.1-explainability-bias-audit.md](milestone-4-fairness-evaluation/4.1-explainability-bias-audit.md) |
 | 4. Explicabilidade e Fairness | 4.2 Harness de Avaliação de Retrieval e Seed Data | 🤖 | [x] | [4.2-evaluation-harness-seed.md](milestone-4-fairness-evaluation/4.2-evaluation-harness-seed.md) |
-| 5. Frontend e UI | 5.1 Interface Web Premium Next.js | 🧑 | [ ] | [5.1-frontend-nextjs.md](milestone-5-frontend/5.1-frontend-nextjs.md) |
+| 5. Frontend e UI | 5.1 Interface Web Premium Next.js | 🧑 | [x] | [5.1-frontend-nextjs.md](milestone-5-frontend/5.1-frontend-nextjs.md) |
