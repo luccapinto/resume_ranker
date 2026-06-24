@@ -1,0 +1,51 @@
+conceptUri,preferredLabel,altLabels
+http://data.europa.eu/esco/skill/python,Python,python 3;py;python language;programação python;desenvolvimento python
+http://data.europa.eu/esco/skill/javascript,JavaScript,js;ecmascript;javascript language;programação javascript;js framework;vanilla js
+http://data.europa.eu/esco/skill/typescript,TypeScript,ts;typescript language;programação typescript
+http://data.europa.eu/esco/skill/react,React,react.js;reactjs;react framework;biblioteca react
+http://data.europa.eu/esco/skill/docker,Docker,docker containers;docker engine;conteinerização
+http://data.europa.eu/esco/skill/kubernetes,Kubernetes,k8s;kube;kubernetes orchestration
+http://data.europa.eu/esco/skill/aws,Amazon Web Services,aws;amazon cloud;serviços web da amazon;nuvem aws
+http://data.europa.eu/esco/skill/sql,SQL,sql language;structured query language;linguagem sql;consultas sql
+http://data.europa.eu/esco/skill/postgresql,PostgreSQL,postgres;postgresql database;banco de dados postgresql
+http://data.europa.eu/esco/skill/git,Git,git vsc;git control;controle de versão git;repositório git
+http://data.europa.eu/esco/skill/html,HTML,html5;hypertext markup language;linguagem html
+http://data.europa.eu/esco/skill/css,CSS,css3;cascading style sheets;folhas de estilo
+http://data.europa.eu/esco/skill/nodejs,Node.js,node;nodejs;node runtime
+http://data.europa.eu/esco/skill/java,Java,java language;jdk;programação java
+http://data.europa.eu/esco/skill/csharp,C#,csharp;c-sharp;programação c#
+http://data.europa.eu/esco/skill/go,Go,golang;go language;programação go
+http://data.europa.eu/esco/skill/fastapi,FastAPI,fastapi framework;fastapi python;api fastapi
+http://data.europa.eu/esco/skill/vuejs,Vue.js,vue;vuejs;vue framework
+http://data.europa.eu/esco/skill/angular,Angular,angularjs;angular framework;angular v2+
+http://data.europa.eu/esco/skill/pytorch,PyTorch,pytorch deep learning;biblioteca pytorch
+http://data.europa.eu/esco/skill/tensorflow,TensorFlow,tensorflow ml;biblioteca tensorflow
+http://data.europa.eu/esco/skill/scrum,Scrum,scrum framework;agile scrum;metodologia scrum
+http://data.europa.eu/esco/skill/kanban,Kanban,kanban method;fluxo kanban;quadro kanban
+http://data.europa.eu/esco/skill/machine-learning,Machine Learning,ml;aprendizado de maquina;aprendizado de máquina;modelos de ml
+http://data.europa.eu/esco/skill/deep-learning,Deep Learning,aprendizado profundo;dl;redes neurais profundas
+http://data.europa.eu/esco/skill/rest-api,REST API,rest;restful api;restful web services;serviços rest
+http://data.europa.eu/esco/skill/cicd,CI/CD,continuous integration;continuous deployment;integração contínua;entrega contínua;pipelines ci/cd
+http://data.europa.eu/esco/skill/linux,Linux,linux os;linux kernel;sistema operacional linux;administração linux
+http://data.europa.eu/esco/skill/rust,Rust,rust language;rustlang;programação rust
+http://data.europa.eu/esco/skill/cpp,C++,cpp;c plus plus;programação c++
+http://data.europa.eu/esco/skill/mongodb,MongoDB,mongo;mongodb database;banco de dados mongodb
+http://data.europa.eu/esco/skill/redis,Redis,redis cache;banco de dados redis;cache redis
+http://data.europa.eu/esco/skill/django,Django,django framework;django python
+http://data.europa.eu/esco/skill/flask,Flask,flask python;flask framework
+http://data.europa.eu/esco/skill/graphql,GraphQL,graphql api;consultas graphql
+http://data.europa.eu/esco/skill/terraform,Terraform,terraform iac;infraestrutura como código
+http://data.europa.eu/esco/skill/ansible,Ansible,ansible automation;gerenciamento de configuração
+http://data.europa.eu/esco/skill/jenkins,Jenkins,jenkins ci;automação jenkins
+http://data.europa.eu/esco/skill/jira,Jira,jira software;gerenciamento jira
+http://data.europa.eu/esco/skill/confluence,Confluence,atlassian confluence;documentação confluence
+http://data.europa.eu/esco/skill/project-management,Project Management,gerenciamento de projetos;gestão de projetos;pmp;gerência de projetos
+http://data.europa.eu/esco/skill/communication,Communication,comunicacao;comunicação;comunicacao interpessoal;habilidades de comunicação
+http://data.europa.eu/esco/skill/teamwork,Teamwork,trabalho em equipe;colaboracao;colaboração;espírito de equipe
+http://data.europa.eu/esco/skill/problem-solving,Problem Solving,resolucao de problemas;resolução de problemas;pensamento analítico
+http://data.europa.eu/esco/skill/leadership,Leadership,lideranca;liderança;gestão de pessoas
+http://data.europa.eu/esco/skill/negotiation,Negotiation,negociacao;negociação;habilidade de negociação
+http://data.europa.eu/esco/skill/agile,Agile,metodologias ageis;metodologias ágeis;agile methodologies;desenvolvimento ágil
+http://data.europa.eu/esco/skill/unit-testing,Unit Testing,testes unitarios;testes unitários;testes de unidade;pytest;junit
+http://data.europa.eu/esco/skill/microservices,Microservices,microsservicos;microsserviços;microservices architecture;arquitetura de microsserviços
+http://data.europa.eu/esco/skill/ui-ux,UI/UX Design,design de interface;experiencia do usuario;experiência do usuário;figma;wireframing

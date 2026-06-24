@@ -12,3 +12,7 @@ httpx>=0.24.0
 python-multipart>=0.0.6
 pydantic>=2.0
 pydantic-settings>=2.0
+pymupdf>=1.22.0
+rapidfuzz>=3.0.0
+sentence-transformers>=2.2.0
+
