@@ -1,5 +1,16 @@
 # Resume Ranker 🤖💼
 
+<div align="center">
+
+![Python](https://img.shields.io/badge/python-3.11-blue.svg?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688.svg?style=for-the-badge&logo=fastapi&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-16-black.svg?style=for-the-badge&logo=next.js&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38bdf8.svg?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Qdrant](https://img.shields.io/badge/Qdrant-Vector%20DB-red.svg?style=for-the-badge&logo=qdrant&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+
+</div>
+
 > Plataforma de Matching Candidato-Vaga com IA, Busca Semântica Híbrida, Governança de Viés e Explicabilidade de Ponta a Ponta.
 
 Este é um projeto de portfólio profissional de arquitetura aberta que resolve as limitações das ferramentas tradicionais de triagem de talentos. Em vez de depender apenas de busca lexical (palavras-chave rígidas) ou busca semântica pura (que pode ignorar requisitos duros), o **Resume Ranker** combina o melhor dos dois mundos em um sistema híbrido robusto e auditável.
@@ -25,6 +36,43 @@ Este é um projeto de portfólio profissional de arquitetura aberta que resolve 
 
 4. **Harness de Avaliação Quantitativa**:
    - Avaliação quantitativa de Information Retrieval calculando **NDCG@5**, **NDCG@10** e **MRR** contra um gabarito rotulado (`qrels.json`) para determinar os melhores pesos empíricos de busca.
+
+---
+
+## 📐 Arquitetura do Sistema
+
+O motor do **Resume Ranker** opera com base em três fluxos principais integrados: ingestão com governança, representação multi-vetorial e busca híbrida refinada por inteligência artificial local.
+
+```mermaid
+graph TD
+    subgraph Ingestao ["1. Ingestão & Governança"]
+        A[PDF / Texto Bruto] --> B[PII Redactor: Presidio + spaCy pt-BR]
+        B -->|Texto Anonimizado| C[LLM Structured Extractor: OpenRouter]
+        C -->|Perfil Estruturado| D[Skill Normalizer: Taxonomia ESCO]
+        D -->|Metadados + Competências Mapeadas| E[(PostgreSQL)]
+        D -->|Metadados + Texto| F[Vector Engine: Qdrant Ingestion]
+    end
+
+    subgraph Indexacao ["2. Indexação Multi-Vetor (Qdrant)"]
+        F --> G[skills_vector: Dense E5]
+        F --> H[narrative_vector: Dense E5]
+        F --> I[lexical_vector: Sparse BM25]
+    end
+
+    subgraph Busca ["3. Busca Híbrida & Reranking"]
+        J[Vaga / Candidato Query] --> K[Embeddings Query Generator]
+        K -->|Query Vectors| L[Multi-Vector Search]
+        G & H & I -.-> L
+        L -->|Resultados por Estratégia| M[Reciprocal Rank Fusion - RRF]
+        M -->|Filtros Estruturados| N[Qdrant Payload Filtering]
+        N -->|Top-K Pré-filtrado| O[Cross-Encoder Reranker: MiniLM-L6]
+        O -->|Top-N Ordenado| P[Resultados Finais com Justificativa IA]
+    end
+
+    style Ingestao fill:#1e1b4b,stroke:#818cf8,stroke-width:2px,color:#fff
+    style Indexacao fill:#311042,stroke:#c084fc,stroke-width:2px,color:#fff
+    style Busca fill:#062f4f,stroke:#38bdf8,stroke-width:2px,color:#fff
+```
 
 ---
 
