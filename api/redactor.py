@@ -103,6 +103,40 @@ class BrazilPhoneRecognizer(PatternRecognizer):
         )
 
 
+PII_WHITELIST = {
+    # Section titles and labels
+    "currículo", "curriculo", "vitae", "cv", "resume", "dados", "pessoais", 
+    "nome", "completo", "e-mail", "email", "telefone", "celular", "fone", "tel",
+    "cpf", "rg", "endereço", "endereco", "nacionalidade", "brasileira", "brasileiro",
+    "objetivo", "profissional", "resumo", "experiência", "experiencia", "detalhada",
+    "competências", "competencias", "ténicas", "tecnicas", "técnicas", "formação", 
+    "formacao", "acadêmica", "academica", "certificações", "certificacoes", "cursos", 
+    "idiomas", "português", "portugues", "inglês", "ingles", "espanhol", "idioma",
+    
+    # State abbreviations and standard terms
+    "sp", "rj", "mg", "pr", "rs", "ba", "pe", "ce", "df", "sc", "go",
+    
+    # Technology / Tech stack words
+    "kubernetes", "docker", "python", "javascript", "reactjs", "react", "node.js", "node", 
+    "sql", "postgresql", "aws", "git", "scrum", "agile", "devops", "cloud", "apis", "api",
+    "typescript", "html", "css", "vue.js", "vue", "java", "spring", "boot", "ci/cd", "ci", "cd",
+    "continuous", "integration", "delivery", "microserviços", "microservicos", "microsserviços", "microsservicos",
+    "fastapi", "django", "flask", "golang", "rust", "ruby", "rails", "php",
+    
+    # Common words that spaCy NER misidentifies
+    "empresa", "colaboração", "colaboracao", "vaga", "trabalho", "oportunidade", 
+    "requisitos", "benefícios", "beneficios", "cargo", "nível", "nivel", "senioridade", 
+    "liderança", "lideranca", "desenvolvedor", "desenvolvedora", "engenheiro", 
+    "engenheira", "tecnologia", "produto", "software", "projetos", "sistemas",
+    "atribuições", "atribuicoes", "responsabilidades", "qualificações", "qualificacoes",
+    "presente", "atuação", "atuacao", "desenvolvimento", "arquitetura", "time", "equipe",
+    "serviços", "servicos", "corporativo", "soluções", "solucoes", "pleno", "sênior", 
+    "senior", "júnior", "junior", "estágio", "estagio", "especialista", "lead", "foco",
+    "com", "para", "uma", "dos", "das", "nas", "nos", "pelo", "pela", "sob", "sem", 
+    "como", "por", "mais", "bem", "seu", "sua", "de", "da", "do", "em", "um", "na", "no"
+}
+
+
 class PIIRedactor:
     def __init__(self):
         try:
@@ -184,6 +218,12 @@ class PIIRedactor:
             original_val = text[res.start:res.end]
             entity_type = res.entity_type
             
+            # Skip false positive entities based on our whitelist
+            if entity_type in ["PERSON", "LOCATION", "ORGANIZATION"]:
+                words = re.findall(r"\b[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇ]{3,}\b", original_val.lower())
+                if words and all(w in PII_WHITELIST for w in words):
+                    continue
+                    
             # Map standard entity type to customized clean tag
             clean_tag = entity_name_map.get(entity_type, entity_type)
             

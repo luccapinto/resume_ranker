@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form
+from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, Response
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from qdrant_client import QdrantClient
@@ -40,6 +40,20 @@ app.add_middleware(
 redactor = PIIRedactor()
 extractor = OpenRouterExtractor()
 normalizer = SkillNormalizer()
+
+def generate_pdf_from_text(text: str) -> bytes:
+    import fitz
+    doc = fitz.open()
+    max_chars_per_page = 2500
+    chunks = [text[i:i+max_chars_per_page] for i in range(0, len(text), max_chars_per_page)]
+    
+    for chunk in chunks:
+        page = doc.new_page()
+        # A4 margins: 50pt from edges
+        rect = fitz.Rect(50, 50, 545, 792)
+        page.insert_textbox(rect, chunk, fontsize=10.5, fontname="helv")
+        
+    return doc.write()
 
 @app.on_event("startup")
 def on_startup():
@@ -162,6 +176,16 @@ def create_candidate_profile(
         db.add(db_profile)
         db.commit()
         db.refresh(db_profile)
+        # Save PDF copy if uploaded
+        if file:
+            pdf_dir = os.path.join("api", "data", "pdfs")
+            os.makedirs(pdf_dir, exist_ok=True)
+            pdf_path = os.path.join(pdf_dir, f"candidate_{db_profile.id}.pdf")
+            try:
+                with open(pdf_path, "wb") as f:
+                    f.write(file_bytes)
+            except Exception as e:
+                print(f"Warning: Failed to save PDF copy: {e}")
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Database persistence failed: {str(e)}")
@@ -184,7 +208,8 @@ def create_candidate_profile(
         "redacted_text": db_profile.redacted_text,
         "redaction_map": db_profile.redaction_map,
         "extracted_profile": db_profile.extracted_profile,
-        "created_at": db_profile.created_at
+        "created_at": db_profile.created_at,
+        "has_pdf": True
     }
 
 @app.post("/profiles/job", response_model=dict)
@@ -260,6 +285,16 @@ def create_job_profile(
         db.add(db_profile)
         db.commit()
         db.refresh(db_profile)
+        # Save PDF copy if uploaded
+        if file:
+            pdf_dir = os.path.join("api", "data", "pdfs")
+            os.makedirs(pdf_dir, exist_ok=True)
+            pdf_path = os.path.join(pdf_dir, f"job_{db_profile.id}.pdf")
+            try:
+                with open(pdf_path, "wb") as f:
+                    f.write(file_bytes)
+            except Exception as e:
+                print(f"Warning: Failed to save PDF copy: {e}")
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Database persistence failed: {str(e)}")
@@ -282,8 +317,57 @@ def create_job_profile(
         "redacted_text": db_profile.redacted_text,
         "redaction_map": db_profile.redaction_map,
         "extracted_profile": db_profile.extracted_profile,
-        "created_at": db_profile.created_at
+        "created_at": db_profile.created_at,
+        "has_pdf": True
     }
+
+@app.get("/profiles/candidates", response_model=List[dict])
+def list_candidates(db: Session = Depends(get_db)):
+    """
+    Lista todos os candidatos cadastrados no banco de dados.
+    """
+    candidates = db.query(api.models.ProfileModel).filter(
+        api.models.ProfileModel.type == "candidate"
+    ).order_by(api.models.ProfileModel.created_at.desc()).all()
+    
+    return [
+        {
+            "id": c.id,
+            "type": c.type,
+            "file_name": c.file_name,
+            "raw_text": c.raw_text,
+            "redacted_text": c.redacted_text,
+            "redaction_map": c.redaction_map,
+            "extracted_profile": c.extracted_profile,
+            "created_at": c.created_at,
+            "has_pdf": True
+        }
+        for c in candidates
+    ]
+
+@app.get("/profiles/jobs", response_model=List[dict])
+def list_jobs(db: Session = Depends(get_db)):
+    """
+    Lista todas as vagas cadastradas no banco de dados.
+    """
+    jobs = db.query(api.models.ProfileModel).filter(
+        api.models.ProfileModel.type == "job"
+    ).order_by(api.models.ProfileModel.created_at.desc()).all()
+    
+    return [
+        {
+            "id": j.id,
+            "type": j.type,
+            "file_name": j.file_name,
+            "raw_text": j.raw_text,
+            "redacted_text": j.redacted_text,
+            "redaction_map": j.redaction_map,
+            "extracted_profile": j.extracted_profile,
+            "created_at": j.created_at,
+            "has_pdf": True
+        }
+        for j in jobs
+    ]
 
 @app.get("/profiles/{profile_id}", response_model=dict)
 def get_profile(profile_id: int, db: Session = Depends(get_db)):
@@ -301,8 +385,45 @@ def get_profile(profile_id: int, db: Session = Depends(get_db)):
         "redacted_text": db_profile.redacted_text,
         "redaction_map": db_profile.redaction_map,
         "extracted_profile": db_profile.extracted_profile,
-        "created_at": db_profile.created_at
+        "created_at": db_profile.created_at,
+        "has_pdf": True
     }
+
+@app.get("/profiles/{profile_id}/pdf")
+def get_profile_pdf(profile_id: int, db: Session = Depends(get_db)):
+    """
+    Serves the PDF resume or job description. If the PDF file was uploaded,
+    it serves the original PDF. Otherwise, it generates a PDF on the fly
+    from the raw text.
+    """
+    db_profile = db.query(api.models.ProfileModel).filter(api.models.ProfileModel.id == profile_id).first()
+    if not db_profile:
+        raise HTTPException(status_code=404, detail="Perfil não encontrado.")
+    
+    # 1. Check if PDF file exists on disk
+    pdf_path = os.path.join("api", "data", "pdfs", f"{db_profile.type}_{profile_id}.pdf")
+    if os.path.exists(pdf_path):
+        try:
+            with open(pdf_path, "rb") as f:
+                pdf_bytes = f.read()
+            filename = db_profile.file_name or f"profile_{profile_id}.pdf"
+            return Response(content=pdf_bytes, media_type="application/pdf", headers={
+                "Content-Disposition": f"inline; filename={filename}"
+            })
+        except Exception as e:
+            print(f"Error reading PDF file from disk: {e}")
+            
+    # 2. If it does not exist, dynamically generate PDF from raw_text
+    try:
+        pdf_bytes = generate_pdf_from_text(db_profile.raw_text)
+        filename = db_profile.file_name or f"{db_profile.type}_{profile_id}.pdf"
+        if not filename.lower().endswith(".pdf"):
+            filename += ".pdf"
+        return Response(content=pdf_bytes, media_type="application/pdf", headers={
+            "Content-Disposition": f"inline; filename={filename}"
+        })
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao gerar PDF: {str(e)}")
 
 @app.post("/skills/normalize", response_model=List[dict])
 def normalize_skills_list(skills: List[str]):
@@ -324,12 +445,19 @@ def match_candidates_for_job(
     top_k: int = Query(20, description="Top-K candidatos para RRF e Cross-Encoder"),
     top_n: int = Query(10, description="Top-N final a retornar"),
     rerank: bool = Query(True, description="Habilitar reranking com Cross-Encoder"),
-    weights: Optional[List[float]] = Query(None, description="Pesos RRF para [skills, narrative, lexical]"),
+    weights: Optional[str] = Query(None, description="Pesos RRF para [skills, narrative, lexical] (ex: '1,1,0.5')"),
     db: Session = Depends(get_db)
 ):
     """
     Busca candidatos compatíveis com uma vaga (Job) usando busca híbrida e reranking.
     """
+    parsed_weights = None
+    if weights:
+        try:
+            parsed_weights = [float(w) for w in weights.split(",")]
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Weights parameter must be comma-separated floats.")
+
     # 1. Obter perfil da vaga
     job_profile = db.query(api.models.ProfileModel).filter(
         api.models.ProfileModel.id == job_id,
@@ -370,7 +498,7 @@ def match_candidates_for_job(
             top_k_hybrid=top_k,
             top_n_final=top_n,
             rerank=rerank,
-            weights=weights
+            weights=parsed_weights
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Hybrid search failed: {str(e)}")
@@ -413,12 +541,19 @@ def match_jobs_for_candidate(
     top_k: int = Query(20, description="Top-K vagas para RRF e Cross-Encoder"),
     top_n: int = Query(10, description="Top-N final a retornar"),
     rerank: bool = Query(True, description="Habilitar reranking com Cross-Encoder"),
-    weights: Optional[List[float]] = Query(None, description="Pesos RRF para [skills, narrative, lexical]"),
+    weights: Optional[str] = Query(None, description="Pesos RRF para [skills, narrative, lexical] (ex: '1,1,0.5')"),
     db: Session = Depends(get_db)
 ):
     """
     Busca vagas (Jobs) compatíveis com um candidato usando busca híbrida e reranking.
     """
+    parsed_weights = None
+    if weights:
+        try:
+            parsed_weights = [float(w) for w in weights.split(",")]
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Weights parameter must be comma-separated floats.")
+
     # 1. Obter perfil do candidato
     cand_profile = db.query(api.models.ProfileModel).filter(
         api.models.ProfileModel.id == candidate_id,
@@ -459,7 +594,7 @@ def match_jobs_for_candidate(
             top_k_hybrid=top_k,
             top_n_final=top_n,
             rerank=rerank,
-            weights=weights
+            weights=parsed_weights
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Hybrid search failed: {str(e)}")
@@ -558,52 +693,6 @@ def audit_bias(
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Counterfactual bias audit failed: {str(e)}")
-
-@app.get("/profiles/candidates", response_model=List[dict])
-def list_candidates(db: Session = Depends(get_db)):
-    """
-    Lista todos os candidatos cadastrados no banco de dados.
-    """
-    candidates = db.query(api.models.ProfileModel).filter(
-        api.models.ProfileModel.type == "candidate"
-    ).order_by(api.models.ProfileModel.created_at.desc()).all()
-    
-    return [
-        {
-            "id": c.id,
-            "type": c.type,
-            "file_name": c.file_name,
-            "raw_text": c.raw_text,
-            "redacted_text": c.redacted_text,
-            "redaction_map": c.redaction_map,
-            "extracted_profile": c.extracted_profile,
-            "created_at": c.created_at
-        }
-        for c in candidates
-    ]
-
-@app.get("/profiles/jobs", response_model=List[dict])
-def list_jobs(db: Session = Depends(get_db)):
-    """
-    Lista todas as vagas cadastradas no banco de dados.
-    """
-    jobs = db.query(api.models.ProfileModel).filter(
-        api.models.ProfileModel.type == "job"
-    ).order_by(api.models.ProfileModel.created_at.desc()).all()
-    
-    return [
-        {
-            "id": j.id,
-            "type": j.type,
-            "file_name": j.file_name,
-            "raw_text": j.raw_text,
-            "redacted_text": j.redacted_text,
-            "redaction_map": j.redaction_map,
-            "extracted_profile": j.extracted_profile,
-            "created_at": j.created_at
-        }
-        for j in jobs
-    ]
 
 @app.get("/audit/logs", response_model=List[dict])
 def list_audit_logs(db: Session = Depends(get_db)):

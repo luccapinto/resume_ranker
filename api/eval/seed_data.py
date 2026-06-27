@@ -9,6 +9,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 
 from api.database import SessionLocal, Base, engine
 from api.models import ProfileModel, AuditLogModel
+from api.redactor import PIIRedactor
 from api.config import settings
 from api.embeddings import get_embedding_provider
 from api.search import init_qdrant_collections, ingest_profile
@@ -139,6 +140,138 @@ def create_random_job(job_id: int) -> dict:
         "narrative_experience": narrative
     }
 
+def generate_valid_cpf(seed_val: int) -> str:
+    # Deterministic generation based on seed_val
+    random.seed(seed_val)
+    digits = [random.randint(0, 9) for _ in range(9)]
+    # Make sure they are not all equal
+    if len(set(digits)) == 1:
+        digits[0] = (digits[0] + 1) % 10
+        
+    # Calculate first check digit
+    sum1 = sum(digits[i] * (10 - i) for i in range(9))
+    d1 = (sum1 * 10) % 11
+    if d1 >= 10:
+        d1 = 0
+    digits.append(d1)
+    
+    # Calculate second check digit
+    sum2 = sum(digits[i] * (11 - i) for i in range(10))
+    d2 = (sum2 * 10) % 11
+    if d2 >= 10:
+        d2 = 0
+    digits.append(d2)
+    
+    return f"{digits[0]}{digits[1]}{digits[2]}.{digits[3]}{digits[4]}{digits[5]}.{digits[6]}{digits[7]}{digits[8]}-{digits[9]}{digits[10]}"
+
+def generate_full_resume_text(profile: dict, cand_id: int) -> str:
+    names = ["Thiago de Souza", "Mariana Costa", "Roberto Almeida", "Beatriz Santos", "Carlos Oliveira", "Juliana Lima", "André Pereira", "Patricia Gomes", "Fernando Rodrigues", "Luciana Martins"]
+    cities = ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Curitiba", "Porto Alegre", "Salvador", "Recife", "Fortaleza", "Brasília", "Campinas"]
+    states = ["SP", "RJ", "MG", "PR", "RS", "BA", "PE", "CE", "DF", "SP"]
+    
+    name = names[cand_id % len(names)]
+    city = cities[cand_id % len(cities)]
+    state = states[cand_id % len(states)]
+    
+    email = f"{name.lower().replace(' ', '.')}@gmail.com"
+    phone = f"(11) 9{random.randint(1000, 9999)}-{random.randint(1000, 9999)}"
+    
+    cpf = generate_valid_cpf(cand_id)
+    rg = f"{random.randint(10, 99)}.{random.randint(100, 999)}.{random.randint(100, 999)}-{random.randint(0, 9)}"
+    
+    certifications_str = ", ".join(profile.get("certifications", []))
+    languages_str = ", ".join(profile.get("languages", []))
+    skills_str = ", ".join(profile.get("skills_raw", []))
+    
+    education_lines = []
+    for edu in profile.get("education", []):
+        education_lines.append(f"- {edu['degree']} em {edu['field']} ({edu.get('year', '')})")
+    education_str = "\n".join(education_lines)
+    
+    return f"""
+========================================================================
+CURRÍCULO VITAE - {name.upper()}
+========================================================================
+
+DADOS PESSOAIS:
+Nome Completo: {name}
+E-mail: {email}
+Telefone: {phone}
+CPF: {cpf}
+RG: {rg}
+Endereço: Rua das Flores, {random.randint(100, 999)}, Bairro das Nações - {city} - {state}
+Nacionalidade: Brasileira
+
+OBJETIVO PROFISSIONAL:
+Atuar como Engenheiro de Software {profile['seniority']} com foco em tecnologias modernas e entrega ágil.
+
+RESUMO PROFISSIONAL:
+{profile['narrative_experience']}
+Com {profile['experience_years']} anos de experiência prática, participei de múltiplos projetos desenvolvendo sistemas escaláveis e resilientes. Busco sempre aplicar as melhores práticas de Clean Code, arquitetura de microsserviços e governança de dados.
+
+EXPERIÊNCIA DETALHADA:
+Desenvolvedor de Software {profile['seniority']} na Empresa Tech Solutions Inc. (Período: 2021 até o presente)
+- Liderança técnica no desenho de novas arquiteturas de microsserviços, utilizando Docker e Kubernetes para orquestração.
+- Desenvolvimento de APIs robustas e performáticas com {skills_str}.
+- Implementação de bancos de dados eficientes em PostgreSQL e consultas SQL otimizadas.
+- Colaboração contínua com times de produto em metodologia Scrum e Git para controle de versão.
+- Otimização de tempos de consulta e refatoração de sistemas legados de alto impacto.
+
+COMPETÊNCIAS TÉCNICAS:
+{skills_str}
+
+FORMAÇÃO ACADÊMICA:
+{education_str}
+
+CERTIFICAÇÕES E CURSOS:
+{certifications_str if certifications_str else "Nenhuma certificação listada."}
+
+IDIOMAS:
+{languages_str if languages_str else "Português"}
+""".strip()
+
+def generate_full_job_text(profile: dict, job_id: int) -> str:
+    skills_str = ", ".join(profile.get("skills_raw", []))
+    certifications_str = ", ".join(profile.get("certifications", []))
+    
+    return f"""
+========================================================================
+OPORTUNIDADE DE CARREIRA: ENGENHEIRO(A) DE SOFTWARE {profile['seniority'].upper()}
+========================================================================
+
+SOBRE A VAGA:
+Estamos contratando um(a) Engenheiro(a) de Software {profile['seniority']} para se juntar ao nosso time de desenvolvimento global na GlobalTech Solutions. 
+Esta é uma vaga com grande foco em inovação, escalabilidade e qualidade de software. O profissional terá a oportunidade de atuar em projetos críticos com tecnologias modernas.
+
+INFORMAÇÕES DE CONTATO PARA CANDIDATURA:
+Envie seu currículo atualizado para recrutamento.vagas@globaltech.com ou entre em contato direto pelo telefone (11) 97766-5544 (falar com Ana Paula, Recursos Humanos).
+Estamos localizados na Av. Paulista, 1000 - Bela Vista - São Paulo - SP.
+
+DESCRIÇÃO DO TIME E NARRATIVA:
+{profile['narrative_experience']}
+O time atua em ambiente ágil de alta performance, focado em entregar soluções rápidas e eficientes que impactam milhares de usuários diariamente.
+
+RESPONSABILIDADES E ATRIBUIÇÕES:
+- Desenvolver e sustentar sistemas de software de alta escala e disponibilidade.
+- Integrar APIs e projetar fluxos eficientes com {skills_str}.
+- Colaborar com outros desenvolvedores em revisões de código de forma construtiva.
+- Participar ativamente das reuniões de planejamento e retrospectiva ágil.
+- Garantir a cobertura de testes unitários e boas práticas de integração contínua (CI/CD).
+
+REQUISITOS TÉCNICOS:
+- Experiência mínima exigida de {profile['experience_years']} anos em desenvolvimento.
+- Conhecimentos em: {skills_str}.
+- Familiaridade com arquitetura de microsserviços, Docker, bancos de dados SQL/NoSQL.
+- Certificações desejadas: {certifications_str if certifications_str else "Nenhuma específica exigida."}
+
+O QUE OFERECEMOS:
+- Remuneração competitiva compatível com o nível {profile['seniority']}.
+- Vale Refeição / Alimentação.
+- Plano de Saúde e Odontológico premium.
+- Participação nos lucros (PLR).
+- Ambiente flexível de trabalho (Home Office amigável).
+""".strip()
+
 def seed():
     """Trims database tables, creates collections, generates seed data and populates both databases."""
     from sqlalchemy import create_engine
@@ -168,7 +301,7 @@ def seed():
     # 2. Setup Qdrant
     provider = get_embedding_provider()
     try:
-        qdrant_client = QdrantClient(host=settings.QDRANT_HOST, port=settings.QDRANT_PORT)
+        qdrant_client = QdrantClient(host=settings.QDRANT_HOST, port=settings.QDRANT_PORT, timeout=60.0)
         # Test connection
         qdrant_client.get_collections()
         print("Using real Docker Qdrant client.")
@@ -195,18 +328,22 @@ def seed():
     
     # 3. Seed 50 Candidates
     print("Seeding 50 candidates...")
+    redactor = PIIRedactor()
     for idx in range(1, 51):
         # We start IDs from 10 to leave space or keep in sync with Qrels
         cand_id = idx + 9 # IDs 10 to 59
         profile = create_random_candidate(cand_id)
         
+        raw_text = generate_full_resume_text(profile, cand_id)
+        redacted_text, redaction_map = redactor.redact(raw_text)
+        
         db_profile = ProfileModel(
             id=cand_id,
             type="candidate",
             file_name=f"candidato_{cand_id}.pdf",
-            raw_text=profile["narrative_experience"],
-            redacted_text=profile["narrative_experience"],
-            redaction_map={},
+            raw_text=raw_text,
+            redacted_text=redacted_text,
+            redaction_map=redaction_map,
             extracted_profile=profile
         )
         db.add(db_profile)
@@ -221,13 +358,16 @@ def seed():
         job_id = idx + 99 # IDs 100 to 109
         profile = create_random_job(job_id)
         
+        raw_text = generate_full_job_text(profile, job_id)
+        redacted_text, redaction_map = redactor.redact(raw_text)
+        
         db_profile = ProfileModel(
             id=job_id,
             type="job",
             file_name=f"vaga_{job_id}.pdf",
-            raw_text=profile["narrative_experience"],
-            redacted_text=profile["narrative_experience"],
-            redaction_map={},
+            raw_text=raw_text,
+            redacted_text=redacted_text,
+            redaction_map=redaction_map,
             extracted_profile=profile
         )
         db.add(db_profile)
@@ -263,24 +403,31 @@ def seed():
         profile_cf["narrative_experience"] = f"Sou a candidata Maria Silva, desenvolvedora pleno com foco em Python e SQL."
         
         # Original
+        raw_text_orig = generate_full_resume_text(profile_orig, pair_id_orig)
+        redacted_text_orig, redaction_map_orig = redactor.redact(raw_text_orig)
+        
         db_orig = ProfileModel(
             id=pair_id_orig,
             type="candidate",
             file_name=f"candidato_fairness_{pair_id_orig}.pdf",
-            raw_text=profile_orig["narrative_experience"],
-            redacted_text=profile_orig["narrative_experience"],
-            redaction_map={},
+            raw_text=raw_text_orig,
+            redacted_text=redacted_text_orig,
+            redaction_map=redaction_map_orig,
             extracted_profile=profile_orig
         )
         db.add(db_orig)
+        
         # Counterfactual
+        raw_text_cf = generate_full_resume_text(profile_cf, pair_id_cf)
+        redacted_text_cf, redaction_map_cf = redactor.redact(raw_text_cf)
+        
         db_cf = ProfileModel(
             id=pair_id_cf,
             type="candidate",
             file_name=f"candidato_fairness_{pair_id_cf}.pdf",
-            raw_text=profile_cf["narrative_experience"],
-            redacted_text=profile_cf["narrative_experience"],
-            redaction_map={},
+            raw_text=raw_text_cf,
+            redacted_text=redacted_text_cf,
+            redaction_map=redaction_map_cf,
             extracted_profile=profile_cf
         )
         db.add(db_cf)

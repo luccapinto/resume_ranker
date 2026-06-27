@@ -4,6 +4,18 @@
   --background: #09090b;
   --foreground: #f4f4f5;
   --border-color: rgba(255, 255, 255, 0.08);
+  color-scheme: dark; /* Forces native browser components to render in dark mode */
+}
+
+select {
+  color-scheme: dark;
+  background-color: #18181b !important;
+  color: #ffffff !important;
+}
+
+select option {
+  background-color: #18181b !important;
+  color: #ffffff !important;
 }
 
 @theme inline {
@@ -53,6 +65,11 @@ body {
   border-color: rgba(99, 102, 241, 0.5); /* Indigo focus */
   outline: none;
   box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.glass-input option {
+  background-color: #18181b; /* Dark background for options in select */
+  color: #ffffff; /* White text for options */
 }
 
 /* Glowing backgrounds */
