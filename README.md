@@ -11,62 +11,62 @@
 
 </div>
 
-> Plataforma de Matching Candidato-Vaga com IA, Busca Semântica Híbrida, Governança de Viés e Explicabilidade de Ponta a Ponta.
+> AI-Powered Candidate-Job Matching Platform with Hybrid Semantic Search, Bias Governance, and End-to-End Explainability.
 
-Este é um projeto de portfólio profissional de arquitetura aberta que resolve as limitações das ferramentas tradicionais de triagem de talentos. Em vez de depender apenas de busca lexical (palavras-chave rígidas) ou busca semântica pura (que pode ignorar requisitos duros), o **Resume Ranker** combina o melhor dos dois mundos em um sistema híbrido robusto e auditável.
-
----
-
-## 🚀 Diferenciais da Plataforma
-
-1. **Busca Híbrida Semântica & Lexical (Bidirecional)**:
-   - **Vetor Denso (Skills)**: Mapeamento semântico de competências técnicas normalizadas contra a base europeia oficial **ESCO**.
-   - **Vetor Denso (Narrativa)**: Similaridade de cosseno sobre a trajetória livre e experiências descritas.
-   - **Vetor Esparso (Léxico)**: Termos técnicos exatos e certificações indexados nativamente no Qdrant.
-   - **RRF (Reciprocal Rank Fusion)**: Fusão matemática dos múltiplos rankings antes do refino.
-   - **Reranker Cross-Encoder**: Processamento profundo sobre o top-K do ranking final usando modelo local leve.
-
-2. **Módulo de Explicabilidade Baseada em Evidências**:
-   - Justificativa textual gerada por LLM contendo evidências explícitas do match.
-   - **Guardrail de Alucinação (Validação de Citação)**: Validação automática de substring no backend para certificar que as citações trazidas pelo modelo existem 100% textualmente no currículo bruto original.
-
-3. **Módulo de Governança & Auditoria de Viés (Fairness)**:
-   - **PII Redactor**: Anonimização local obrigatória (Microsoft Presidio + spaCy pt-BR) de dados como CPF, RG, telefones, nomes e e-mails antes de qualquer envio a APIs de LLM externas.
-   - **Auditoria de Viés Contraditório (Counterfactual Audit)**: Teste contraditório automatizado que clona o currículo, realiza swaps de gênero (ele/ela, programador/programadora) e nomes fictícios comuns e afere a variação (delta) do score de similaridade, que deve ser menor que 1% para aprovação.
-
-4. **Harness de Avaliação Quantitativa**:
-   - Avaliação quantitativa de Information Retrieval calculando **NDCG@5**, **NDCG@10** e **MRR** contra um gabarito rotulado (`qrels.json`) para determinar os melhores pesos empíricos de busca.
+This is a professional, open-architecture portfolio project that addresses the limitations of traditional talent screening tools. Instead of relying solely on lexical search (rigid keywords) or pure semantic search (which can overlook hard requirements), the **Resume Ranker** combines the best of both worlds into a robust, auditable hybrid system.
 
 ---
 
-## 📐 Arquitetura do Sistema
+## 🚀 Platform Highlights
 
-O motor do **Resume Ranker** opera com base em três fluxos principais integrados: ingestão com governança, representação multi-vetorial e busca híbrida refinada por inteligência artificial local.
+1. **Hybrid Semantic & Lexical Search (Bidirectional)**:
+   - **Dense Vector (Skills)**: Semantic mapping of normalized technical skills against the official European **ESCO** taxonomy.
+   - **Dense Vector (Narrative)**: Cosine similarity over the free-form trajectory and described experiences.
+   - **Sparse Vector (Lexical)**: Exact technical terms and certifications natively indexed in Qdrant.
+   - **RRF (Reciprocal Rank Fusion)**: Mathematical fusion of the multiple rankings before refinement.
+   - **Cross-Encoder Reranker**: Deep processing over the top-K of the final ranking using a lightweight local model.
+
+2. **Evidence-Based Explainability Module**:
+   - LLM-generated textual justification containing explicit match evidence.
+   - **Hallucination Guardrail (Citation Validation)**: Automatic substring validation on the backend to certify that the citations produced by the model exist 100% verbatim in the original raw resume.
+
+3. **Bias Governance & Audit Module (Fairness)**:
+   - **PII Redactor**: Mandatory local anonymization (Microsoft Presidio + spaCy pt-BR) of data such as CPF, RG, phone numbers, names, and emails before any submission to external LLM APIs.
+   - **Counterfactual Bias Audit**: Automated counterfactual test that clones the resume, performs gender swaps (he/she pronouns and masculine/feminine job-title forms) and common fictitious names, then measures the variation (delta) of the similarity score, which must be below 1% to pass.
+
+4. **Quantitative Evaluation Harness**:
+   - Quantitative Information Retrieval evaluation computing **NDCG@5**, **NDCG@10**, and **MRR** against a labeled ground truth (`qrels.json`) to determine the best empirical search weights.
+
+---
+
+## 📐 System Architecture
+
+The **Resume Ranker** engine operates on three main integrated flows: governance-aware ingestion, multi-vector representation, and hybrid search refined by local AI.
 
 ```mermaid
 graph TD
-    subgraph Ingestao ["1. Ingestão & Governança"]
-        A[PDF / Texto Bruto] --> B[PII Redactor: Presidio + spaCy pt-BR]
-        B -->|Texto Anonimizado| C[LLM Structured Extractor: OpenRouter]
-        C -->|Perfil Estruturado| D[Skill Normalizer: Taxonomia ESCO]
-        D -->|Metadados + Competências Mapeadas| E[(PostgreSQL)]
-        D -->|Metadados + Texto| F[Vector Engine: Qdrant Ingestion]
+    subgraph Ingestao ["1. Ingestion & Governance"]
+        A[PDF / Raw Text] --> B[PII Redactor: Presidio + spaCy pt-BR]
+        B -->|Anonymized Text| C[LLM Structured Extractor: OpenRouter]
+        C -->|Structured Profile| D[Skill Normalizer: ESCO Taxonomy]
+        D -->|Metadata + Mapped Skills| E[(PostgreSQL)]
+        D -->|Metadata + Text| F[Vector Engine: Qdrant Ingestion]
     end
 
-    subgraph Indexacao ["2. Indexação Multi-Vetor (Qdrant)"]
+    subgraph Indexacao ["2. Multi-Vector Indexing (Qdrant)"]
         F --> G[skills_vector: Dense E5]
         F --> H[narrative_vector: Dense E5]
         F --> I[lexical_vector: Sparse BM25]
     end
 
-    subgraph Busca ["3. Busca Híbrida & Reranking"]
-        J[Vaga / Candidato Query] --> K[Embeddings Query Generator]
+    subgraph Busca ["3. Hybrid Search & Reranking"]
+        J[Job / Candidate Query] --> K[Embeddings Query Generator]
         K -->|Query Vectors| L[Multi-Vector Search]
         G & H & I -.-> L
-        L -->|Resultados por Estratégia| M[Reciprocal Rank Fusion - RRF]
-        M -->|Filtros Estruturados| N[Qdrant Payload Filtering]
-        N -->|Top-K Pré-filtrado| O[Cross-Encoder Reranker: MiniLM-L6]
-        O -->|Top-N Ordenado| P[Resultados Finais com Justificativa IA]
+        L -->|Results by Strategy| M[Reciprocal Rank Fusion - RRF]
+        M -->|Structured Filters| N[Qdrant Payload Filtering]
+        N -->|Pre-filtered Top-K| O[Cross-Encoder Reranker: MiniLM-L6]
+        O -->|Ranked Top-N| P[Final Results with AI Justification]
     end
 
     style Ingestao fill:#1e1b4b,stroke:#818cf8,stroke-width:2px,color:#fff
@@ -76,137 +76,137 @@ graph TD
 
 ---
 
-## 🛠️ Stack Tecnológica
+## 🛠️ Tech Stack
 
 ### Backend (`/api`)
-- **FastAPI**: Endpoints rápidos e auto-documentados via Swagger/OpenAPI.
-- **SQLAlchemy & SQLite/PostgreSQL**: Persistência relacional para perfis brutos, anonimizados, metadados extraídos e logs de auditoria.
-- **Qdrant**: Banco de dados vetorial de alta performance para armazenamento de múltiplos vetores nomeados (`skills_vector`, `narrative_vector` e `lexical_vector`).
-- **Sentence-Transformers**: Execução local de modelos de embedding (E5) e Cross-Encoder.
-- **Microsoft Presidio + spaCy**: Reconhecimento e higienização local de PII.
+- **FastAPI**: Fast, self-documenting endpoints via Swagger/OpenAPI.
+- **SQLAlchemy & SQLite/PostgreSQL**: Relational persistence for raw and anonymized profiles, extracted metadata, and audit logs.
+- **Qdrant**: High-performance vector database for storing multiple named vectors (`skills_vector`, `narrative_vector`, and `lexical_vector`).
+- **Sentence-Transformers**: Local execution of embedding (E5) and Cross-Encoder models.
+- **Microsoft Presidio + spaCy**: Local PII recognition and sanitization.
 
 ### Frontend (`/web`)
-- **Next.js 16 (App Router)** & **React 19**: Estrutura moderna para SPA.
-- **TailwindCSS v4**: Estilização fluida e de última geração.
-- **Design System Premium (Glassmorphic Dark Mode)**: Interface translúcida com efeitos de desfoque, gradientes dinâmicos de luz e custom scrollbars.
-- **TypeScript & openapi-typescript**: Tipagem 100% segura gerada diretamente a partir do endpoint de documentação do backend.
-- **Lucide-React**: Coleção moderna de ícones vetoriais.
+- **Next.js 16 (App Router)** & **React 19**: Modern SPA architecture.
+- **TailwindCSS v4**: Fluid, state-of-the-art styling.
+- **Premium Design System (Glassmorphic Dark Mode)**: Translucent interface with blur effects, dynamic light gradients, and custom scrollbars.
+- **TypeScript & openapi-typescript**: 100% safe typing generated directly from the backend documentation endpoint.
+- **Lucide-React**: Modern collection of vector icons.
 
 ---
 
-## 📁 Estrutura de Diretórios
+## 📁 Directory Structure
 
 ```text
 resume_ranker/
-├── api/                  # Código do Backend (FastAPI)
-│   ├── data/             # Base de dados offline ESCO
-│   ├── eval/             # Scripts de Seed e Avaliação (NDCG/MRR)
-│   ├── tests/            # Suíte de testes unitários e de integração
-│   ├── main.py           # Configuração de rotas e startup da API
-│   ├── search.py         # Motor de busca híbrida no Qdrant + RRF + Reranker
-│   ├── fairness.py       # Auditoria de viés contraditório e swaps
-│   └── explain.py        # Geração de explicações e guardrails de citação
-├── web/                  # Código do Frontend (Next.js)
+├── api/                  # Backend code (FastAPI)
+│   ├── data/             # Offline ESCO database
+│   ├── eval/             # Seed and evaluation scripts (NDCG/MRR)
+│   ├── tests/            # Unit and integration test suite
+│   ├── main.py           # API route configuration and startup
+│   ├── search.py         # Hybrid search engine on Qdrant + RRF + Reranker
+│   ├── fairness.py       # Counterfactual bias audit and swaps
+│   └── explain.py        # Explanation generation and citation guardrails
+├── web/                  # Frontend code (Next.js)
 │   ├── src/
-│   │   ├── app/          # Páginas e estilo global (page.tsx, globals.css)
-│   │   └── types/        # Tipagem TypeScript auto-gerada
-│   └── package.json      # Dependências do Next.js
-└── docs/                 # Especificações do Spec Driven Development (SDD)
+│   │   ├── app/          # Pages and global styles (page.tsx, globals.css)
+│   │   └── types/        # Auto-generated TypeScript types
+│   └── package.json      # Next.js dependencies
+└── docs/                 # Spec Driven Development (SDD) specifications
 ```
 
 ---
 
-## 🔧 Como Executar o Projeto Localmente
+## 🔧 Running the Project Locally
 
-### Passo 1: Executar o Backend (`/api`)
+### Step 1: Run the Backend (`/api`)
 
-1. Navegue até a pasta do backend:
+1. Navigate to the backend folder:
    ```bash
    cd api
    ```
 
-2. Crie e ative um ambiente virtual Python:
+2. Create and activate a Python virtual environment:
    ```bash
    python -m venv .venv
-   # No Windows (PowerShell):
+   # On Windows (PowerShell):
    .venv\Scripts\Activate.ps1
-   # No Linux/Mac:
+   # On Linux/Mac:
    source .venv/bin/activate
    ```
 
-3. Instale as dependências necessárias:
+3. Install the required dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. Baixe o modelo de idioma do spaCy para anonimização em português:
+4. Download the spaCy language model for Portuguese anonymization:
    ```bash
    python -m spacy download pt_core_news_lg
    ```
 
-5. Crie ou configure seu arquivo `.env` (ou utilize as variáveis padrão integradas):
+5. Create or configure your `.env` file (or use the built-in default variables):
    ```env
-   OPENROUTER_API_KEY=sua_chave_aqui
-   EMBEDDING_PROVIDER=local  # Opções: local, voyage, openai
+   OPENROUTER_API_KEY=your_key_here
+   EMBEDDING_PROVIDER=local  # Options: local, voyage, openai
    ```
-   *Nota: O sistema possui fallback automático local (SQLite em disco e armazenamento persistido do Qdrant na pasta `api/eval/qdrant_storage`) dispensando setup complexo de Docker se preferir rodar de forma isolada.*
+   *Note: The system has automatic local fallback (on-disk SQLite and persistent Qdrant storage in the `api/eval/qdrant_storage` folder), sparing you from complex Docker setup if you prefer to run it in isolation.*
 
-6. Inicie o servidor FastAPI:
+6. Start the FastAPI server:
    ```bash
    uvicorn api.main:app --reload --port 8000
    ```
 
-### Passo 2: Executar o Frontend (`/web`)
+### Step 2: Run the Frontend (`/web`)
 
-1. Abra um terminal separado na pasta do frontend:
+1. Open a separate terminal in the frontend folder:
    ```bash
    cd web
    ```
 
-2. Instale os pacotes npm:
+2. Install the npm packages:
    ```bash
    npm install
    ```
 
-3. Com a API do backend em execução na porta 8000, você pode gerar/atualizar os tipos de tipos estáticos do TypeScript:
+3. With the backend API running on port 8000, you can generate/update the static TypeScript types:
    ```bash
    npx openapi-typescript ../api/openapi.json -o src/types/api.ts
    ```
 
-4. Inicie o servidor de desenvolvimento:
+4. Start the development server:
    ```bash
    npm run dev
    ```
-   Acesse a interface premium no navegador em: `http://localhost:3000`.
+   Access the premium interface in your browser at: `http://localhost:3000`.
 
 ---
 
-## 🧪 Suíte de Testes e Validação
+## 🧪 Test Suite & Validation
 
-### Testes Automatizados do Backend
-A plataforma possui testes unitários matemáticos para as métricas de recuperação, testes de fluxo de anonimização (PII Redactor) e testes de integração simulando a busca vetorial complexa.
+### Automated Backend Tests
+The platform includes mathematical unit tests for the retrieval metrics, anonymization flow tests (PII Redactor), and integration tests simulating the complex vector search.
 
-Execute a suíte com o ambiente virtual ativo a partir da raiz ou pasta `/api`:
+Run the suite with the virtual environment active from the root or the `/api` folder:
 ```bash
-# Executado a partir da pasta /api
+# Run from the /api folder
 .venv\Scripts\python -m pytest
 ```
 
-### Build e Lint do Frontend
-Para garantir a qualidade e corretude estática do código no frontend:
+### Frontend Build & Lint
+To ensure code quality and static correctness on the frontend:
 ```bash
-# Executado a partir da pasta /web
+# Run from the /web folder
 npm run lint
 npm run build
 ```
 
 ---
 
-## 📊 Rodando o Benchmarking de Pesos (Information Retrieval)
+## 📊 Running the Weight Benchmarking (Information Retrieval)
 
-Você pode simular e avaliar a eficácia do algoritmo de busca híbrida com diferentes configurações de pesos de vetores denso/esparso rodando o script de avaliação nativo:
+You can simulate and evaluate the effectiveness of the hybrid search algorithm with different dense/sparse vector weight configurations by running the native evaluation script:
 ```bash
-# Executado a partir da pasta /api com venv ativo
+# Run from the /api folder with the venv active
 python -m api.eval.run_harness
 ```
-Este script calculará e imprimirá em formato tabular os ganhos de **NDCG@5**, **NDCG@10** e **MRR** sob variadas composições de peso vetorial, garantindo embasamento empírico na escolha da parametrização de busca.
+This script will compute and print in tabular format the **NDCG@5**, **NDCG@10**, and **MRR** gains under various vector weight compositions, ensuring empirical grounding for the choice of search parameterization.
