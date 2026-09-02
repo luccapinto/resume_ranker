@@ -127,6 +127,28 @@ def _from_redaction_map(redaction_map: Dict[str, str], prefix: str) -> Optional[
 
 _PLACEHOLDER_RE = re.compile(r"\[[A-Z_]+_\d+\]")
 
+# Postgres rejects NUL in a text column, and models do emit it: gpt-4.1-nano
+# produced "s\x00eanior" for "sênior" — a mangled encoding that persisted fine
+# into a json column and then blew up when copied into a String one. Strip the
+# C0 control characters that carry no meaning in a résumé.
+_CONTROL_CHARS = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
+
+
+def sanitize_text(value: str) -> str:
+    """Remove control characters no storage layer will accept."""
+    return _CONTROL_CHARS.sub("", value)
+
+
+def sanitize(value: Any) -> Any:
+    """Recursively sanitise every string inside a model-produced structure."""
+    if isinstance(value, str):
+        return sanitize_text(value)
+    if isinstance(value, dict):
+        return {k: sanitize(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [sanitize(v) for v in value]
+    return value
+
 
 def rehydrate(text: Optional[str], redaction_map: Dict[str, str]) -> Optional[str]:
     """Put the original values back into model-generated text, for display only.
@@ -242,10 +264,13 @@ class IngestionService:
         """Redact → extract → normalise → persist → index. The whole pipeline."""
         schema = CandidateProfile if profile_type == "candidate" else JobRequirements
 
+        raw_text = sanitize_text(raw_text)
         redacted_text, redaction_map = self.redactor.redact(raw_text)
         profile = self.extractor.extract(redacted_text, schema)
 
-        profile_dict = profile.model_dump(mode="json")
+        # Everything past this point is model output; it reaches Postgres, so it
+        # must not carry characters Postgres refuses.
+        profile_dict = sanitize(profile.model_dump(mode="json"))
         # The extractor occasionally lists a redaction placeholder as a skill;
         # it is PII noise, not a competency, and must not reach the taxonomy.
         profile_dict["skills_raw"] = [
@@ -263,7 +288,7 @@ class IngestionService:
             file_name=file_name,
             raw_text=raw_text,
             redacted_text=redacted_text,
-            redaction_map=redaction_map,
+            redaction_map=sanitize(redaction_map),
             extracted_profile=profile_dict,
             has_pdf=False,
             trace_id=trace.id if trace else None,

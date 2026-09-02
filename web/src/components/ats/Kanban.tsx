@@ -6,6 +6,7 @@ import { GripVertical, Loader2 } from "lucide-react";
 import type { Application, KanbanColumn, Stage } from "@/lib/types";
 import { api } from "@/lib/api";
 import { Badge, FitBadge, cn } from "@/components/ui/primitives";
+import { InlineMarkdown } from "@/components/ui/Markdown";
 import { ORDINAL } from "@/components/charts";
 
 function ApplicationCard({
@@ -53,7 +54,7 @@ function ApplicationCard({
           </div>
           {application.ai_summary ? (
             <p className="mt-2 line-clamp-2 text-[10px] leading-relaxed text-[var(--text-muted)]">
-              {application.ai_summary}
+              <InlineMarkdown content={application.ai_summary} />
             </p>
           ) : null}
         </div>

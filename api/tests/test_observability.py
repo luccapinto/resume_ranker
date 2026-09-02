@@ -302,3 +302,16 @@ def test_a_5xx_is_still_a_failure(captured):
         with obs.trace("ats.rank"):
             raise _ServerError()
     assert captured[0].status == obs.STATUS_ERROR
+
+
+def test_previews_strip_characters_postgres_rejects(captured):
+    """A model emitting NUL must not be able to take the tracer down."""
+    with obs.trace("op"):
+        with obs.span("chamada", kind=obs.KIND_LLM) as span:
+            span.record_input("prompt\x00 com nul")
+            span.record_output({"resposta": "texto\x00 quebrado"})
+
+    span = captured[0].spans[0]
+    assert "\x00" not in span.input_preview
+    assert "\x00" not in span.output_preview
+    assert "prompt com nul" in span.input_preview
