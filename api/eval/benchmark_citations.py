@@ -29,7 +29,7 @@ from typing import Dict, List
 from api.database import SessionLocal
 from api.explain import generate_match_explanation
 from api.llm import LLMClient
-from api.models import CandidateModel, JobModel
+from api.models import JobModel
 
 sys.stdout.reconfigure(line_buffering=True)
 

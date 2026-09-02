@@ -36,6 +36,14 @@ class Settings(BaseSettings):
     # ── LLM (OpenRouter) ────────────────────────────────────────────
     OPENROUTER_API_KEY: str = ""
     OPENROUTER_MODEL: str = "deepseek/deepseek-v4-flash"
+    # Per-task models. Benchmarked, not guessed — see api/eval/benchmark_models.py
+    # and api/eval/benchmark_citations.py. Extraction is mechanical and
+    # schema-bound, where a small non-reasoning model is faster, cheaper *and*
+    # more accurate. Explanation needs faithful verbatim quoting, where the
+    # reasoning model still wins. Empty falls back to OPENROUTER_MODEL.
+    OPENROUTER_MODEL_EXTRACTION: str = "openai/gpt-4.1-nano"
+    OPENROUTER_MODEL_EXPLANATION: str = ""
+    OPENROUTER_MODEL_COPILOT: str = ""
     OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
     LLM_TIMEOUT_SECONDS: float = 90.0
     LLM_MAX_RETRIES: int = 3

@@ -327,11 +327,23 @@ def _strict_json_schema(schema_class: Type[BaseModel]) -> Dict[str, Any]:
     return resolve(schema)
 
 
-_default_client: Optional[LLMClient] = None
+_clients: Dict[str, LLMClient] = {}
 
 
-def get_llm() -> LLMClient:
-    global _default_client
-    if _default_client is None:
-        _default_client = LLMClient()
-    return _default_client
+def get_llm(task: str = "default") -> LLMClient:
+    """Client for a given task, honouring the per-task model override.
+
+    Tasks differ in what they demand of a model — extraction wants a fast,
+    literal schema-filler; explanation wants faithful verbatim quoting — and the
+    benchmarks under `api/eval/` show no single model wins both.
+    """
+    client = _clients.get(task)
+    if client is None:
+        override = {
+            "extraction": settings.OPENROUTER_MODEL_EXTRACTION,
+            "explanation": settings.OPENROUTER_MODEL_EXPLANATION,
+            "copilot": settings.OPENROUTER_MODEL_COPILOT,
+        }.get(task) or settings.OPENROUTER_MODEL
+        client = LLMClient(model=override)
+        _clients[task] = client
+    return client

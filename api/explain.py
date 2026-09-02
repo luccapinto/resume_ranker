@@ -217,7 +217,7 @@ def generate_match_explanation(
             missing=len(signals["missing_skills"]),
         )
 
-        llm = client or (LLMClient(api_key=api_key) if api_key else get_llm())
+        llm = client or (LLMClient(api_key=api_key) if api_key else get_llm("explanation"))
         if not llm.is_configured:
             sp.set(mode="fallback")
             return _mock_explanation(
