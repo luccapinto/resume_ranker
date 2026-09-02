@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import time
 import traceback
 import uuid
@@ -64,6 +65,10 @@ def _is_client_error(exc: BaseException) -> bool:
 
 _MAX_PREVIEW = 4000
 
+# Prompts and completions land in text columns, and Postgres rejects NUL. A
+# model that emits one must not be able to take the tracer down with it.
+_CONTROL_CHARS = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
+
 
 def _preview(value: Any, limit: int = _MAX_PREVIEW) -> Optional[str]:
     """Render any value as a bounded string safe to persist."""
@@ -74,6 +79,7 @@ def _preview(value: Any, limit: int = _MAX_PREVIEW) -> Optional[str]:
             value = json.dumps(value, ensure_ascii=False, default=str)
         except Exception:
             value = str(value)
+    value = _CONTROL_CHARS.sub("", value)
     if len(value) > limit:
         return value[:limit] + f"\n… [truncado, {len(value)} chars no total]"
     return value

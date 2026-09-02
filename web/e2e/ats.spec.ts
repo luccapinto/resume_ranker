@@ -117,7 +117,20 @@ test.describe("vagas e ranqueamento", () => {
     await expect(firstCard.getByText("Evidências citadas")).toBeVisible({ timeout: 120_000 });
     await expect(firstCard.getByText(/verificadas no currículo/)).toBeVisible();
     await expect(firstCard.getByText("Pontos fortes", { exact: true })).toBeVisible();
-    await expect(firstCard.getByText("Perguntas sugeridas para a entrevista")).toBeVisible();
+
+    // The count is the assertion that matters: it must be "n/m verificadas",
+    // with n never exceeding m, whatever the model returned.
+    const badge = await firstCard.getByText(/verificadas no currículo/).textContent();
+    const [verified, total] = (badge ?? "").match(/(\d+)\/(\d+)/)!.slice(1).map(Number);
+    expect(total).toBeGreaterThan(0);
+    expect(verified).toBeLessThanOrEqual(total);
+
+    // Interview questions are optional — the model does not always return them,
+    // and an empty section would be worse than none.
+    const questions = firstCard.getByText("Perguntas sugeridas para a entrevista");
+    if (await questions.count()) {
+      await expect(questions).toBeVisible();
+    }
   });
 
   test("os controles de busca expõem os pesos da fusão RRF", async ({ page }) => {
@@ -136,9 +149,13 @@ test.describe("vagas e ranqueamento", () => {
     await waitForRanking(page);
 
     await page.getByRole("tab", { name: /Funil/ }).click();
-    await expect(page.getByText("Triagem inicial")).toBeVisible();
-    await expect(page.getByText("Entrevista técnica")).toBeVisible();
-    await expect(page.getByText("Contratado")).toBeVisible();
+
+    // Match the column headers, not the same words appearing inside an AI
+    // summary on a card.
+    const columns = page.locator("main section header");
+    for (const label of ["Triagem inicial", "Entrevista técnica", "Contratado"]) {
+      await expect(columns.filter({ hasText: label }).first()).toBeVisible();
+    }
   });
 
   test("a aba de documento prova que a IA só recebeu o texto anonimizado", async ({ page }) => {

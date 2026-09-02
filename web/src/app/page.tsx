@@ -18,6 +18,7 @@ import { api } from "@/lib/api";
 import { formatRelative, useAsync } from "@/lib/hooks";
 import type { Metrics, Overview } from "@/lib/types";
 import { PageHeader } from "@/components/layout/AppShell";
+import { InlineMarkdown } from "@/components/ui/Markdown";
 import {
   Badge,
   EmptyState,
@@ -287,8 +288,10 @@ export default function DashboardPage() {
                   {activity.actor}
                 </Badge>
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs text-[var(--text-secondary)]">
-                    {activity.content ?? ACTIVITY_LABELS[activity.type] ?? activity.type}
+                  <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
+                    <InlineMarkdown
+                      content={activity.content ?? ACTIVITY_LABELS[activity.type] ?? activity.type}
+                    />
                   </p>
                   <p className="mt-0.5 text-[11px] text-[var(--text-muted)]">
                     {activity.candidate ? `${activity.candidate} · ` : ""}

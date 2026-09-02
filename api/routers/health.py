@@ -42,6 +42,12 @@ def runtime_config():
     return {
         "llm_model": llm.model,
         "llm_configured": llm.is_configured,
+        # Tasks differ in what they need from a model; see api/llm.py:get_llm.
+        "llm_models_by_task": {
+            "extraction": get_llm("extraction").model,
+            "explanation": get_llm("explanation").model,
+            "copilot": get_llm("copilot").model,
+        },
         "embedding_provider": settings.EMBEDDING_PROVIDER,
         "embedding_model": get_embedding_provider().name,
         "reranker_model": settings.RERANKER_MODEL,

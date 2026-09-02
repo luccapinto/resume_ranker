@@ -38,7 +38,11 @@ class OpenRouterExtractor:
     """Thin, traced wrapper that turns redacted text into a validated profile."""
 
     def __init__(self, api_key: Optional[str] = None, default_model: Optional[str] = None):
-        self.client = LLMClient(api_key=api_key, model=default_model) if (api_key or default_model) else get_llm()
+        self.client = (
+            LLMClient(api_key=api_key, model=default_model)
+            if (api_key or default_model)
+            else get_llm("extraction")
+        )
 
     @property
     def model(self) -> str:

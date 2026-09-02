@@ -50,12 +50,20 @@ def test_config_exposes_the_running_stack(client):
     assert set(body) == {
         "llm_model",
         "llm_configured",
+        "llm_models_by_task",
         "embedding_provider",
         "embedding_model",
         "reranker_model",
         "vector_store",
     }
     assert body["vector_store"].startswith("qdrant://")
+
+
+def test_config_reports_a_model_per_task(client):
+    """Extraction and explanation are benchmarked separately and may differ."""
+    by_task = client.get("/config").json()["llm_models_by_task"]
+    assert set(by_task) == {"extraction", "explanation", "copilot"}
+    assert all(model for model in by_task.values())
 
 
 def test_the_openapi_document_is_served(client):

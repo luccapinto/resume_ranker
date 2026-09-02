@@ -465,7 +465,7 @@ def run_copilot(
     client: Optional[LLMClient] = None,
 ) -> Dict[str, Any]:
     """One conversational turn: reason, call tools, answer."""
-    llm = client or get_llm()
+    llm = client or get_llm("copilot")
     tools = CopilotTools(db)
     registry = _tool_registry(tools)
 

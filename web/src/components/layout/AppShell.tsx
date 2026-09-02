@@ -19,6 +19,13 @@ import { api } from "@/lib/api";
 import type { RuntimeConfig } from "@/lib/types";
 import { cn, StatusDot } from "@/components/ui/primitives";
 
+// The sidebar reports one model per task, because they are not the same model.
+const TASK_LABELS: Record<string, string> = {
+  extraction: "Extração",
+  explanation: "Análise",
+  copilot: "Copiloto",
+};
+
 const NAV = [
   { href: "/", label: "Visão geral", icon: LayoutDashboard, exact: true },
   { href: "/jobs", label: "Vagas", icon: Briefcase },
@@ -134,12 +141,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           />
           {config ? (
             <dl className="space-y-1 text-[10px] leading-relaxed text-[var(--text-muted)]">
-              <div className="flex justify-between gap-2">
-                <dt>LLM</dt>
-                <dd className="truncate text-right text-[var(--text-secondary)]" title={config.llm_model}>
-                  {config.llm_model.split("/").pop()}
-                </dd>
-              </div>
+              {Object.entries(config.llm_models_by_task ?? { LLM: config.llm_model }).map(
+                ([task, model]) => (
+                  <div key={task} className="flex justify-between gap-2">
+                    <dt className="capitalize">{TASK_LABELS[task] ?? task}</dt>
+                    <dd className="truncate text-right text-[var(--text-secondary)]" title={model}>
+                      {model.split("/").pop()}
+                    </dd>
+                  </div>
+                ),
+              )}
               <div className="flex justify-between gap-2">
                 <dt>Embeddings</dt>
                 <dd className="truncate text-right text-[var(--text-secondary)]" title={config.embedding_model}>

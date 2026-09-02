@@ -16,7 +16,7 @@ import React from "react";
  */
 
 /** Inline formatting: **bold**, *italic*, `code`. */
-function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
+export function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
   const nodes: React.ReactNode[] = [];
   const pattern = /(\*\*[^*]+\*\*|`[^`]+`|\*[^*\n]+\*)/g;
   let lastIndex = 0;
@@ -61,6 +61,15 @@ const isTableRow = (line: string) => line.trim().startsWith("|") && line.trim().
 const isSeparatorRow = (line: string) => /^\s*\|[\s:|-]+\|\s*$/.test(line);
 const cells = (line: string) =>
   line.trim().slice(1, -1).split("|").map((c) => c.trim());
+
+/**
+ * Inline-only rendering, for places that show a single line of model output —
+ * an activity feed entry, a kanban card. Models emit **bold** in one-line
+ * summaries too, and raw asterisks in a list read as a bug.
+ */
+export function InlineMarkdown({ content }: { content: string }) {
+  return <>{renderInline(content, "inline")}</>;
+}
 
 export function Markdown({ content }: { content: string }) {
   const blocks: React.ReactNode[] = [];

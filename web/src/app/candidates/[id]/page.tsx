@@ -34,6 +34,7 @@ import {
   Skeleton,
   Tabs,
 } from "@/components/ui/primitives";
+import { InlineMarkdown } from "@/components/ui/Markdown";
 import { PiiViewer } from "@/components/ats/PiiViewer";
 import { FairnessReport } from "@/components/ats/FairnessReport";
 import { JobRecommendations } from "@/components/ats/JobRecommendations";
@@ -395,7 +396,7 @@ export default function CandidateDetailPage() {
                       </div>
                       {application.ai_summary ? (
                         <p className="mt-3 text-xs leading-relaxed text-[var(--text-secondary)]">
-                          {application.ai_summary}
+                          <InlineMarkdown content={application.ai_summary} />
                         </p>
                       ) : null}
                       {application.ai_matched_skills.length ? (

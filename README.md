@@ -10,7 +10,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Qdrant](https://img.shields.io/badge/Qdrant-vector%20db-DC244C?style=flat-square&logo=qdrant&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?style=flat-square&logo=postgresql&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-213%20passing-0ca30c?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-220%20passing-0ca30c?style=flat-square)
 
 </div>
 
@@ -374,7 +374,7 @@ $EDITOR api/.env          # set OPENROUTER_API_KEY
 make install
 
 # 4 · Populate the ATS with the demo corpus
-make seed                 # ~15 min: 34 documents through the full pipeline
+make seed                 # ~2 min: 34 documents through the full pipeline
 
 # 5 · Run it
 make dev-api              # http://localhost:8000  (docs at /docs)
@@ -388,7 +388,7 @@ make corpus                                          # generate with an LLM
 python -m api.eval.normalize_seed_corpus             # distinct, valid identities
 ```
 
-Embeddings and reranking run **locally** by default — the only paid API call is the LLM, and with `deepseek/deepseek-v4-flash` a full seed costs a few cents.
+Embeddings and reranking run **locally** by default — the only paid API calls are the LLM ones, and a full seed of 34 documents costs a couple of cents and takes under two minutes.
 
 ---
 
@@ -411,7 +411,7 @@ resume_ranker/
 │   ├── routers/              # HTTP surface
 │   ├── eval/                 # corpus generation, seeding, IR harness, calibration
 │   ├── data/seed/            # the committed demo corpus
-│   └── tests/                # 213 backend tests
+│   └── tests/                # 220 backend tests
 ├── web/
 │   ├── src/app/              # dashboard, jobs, candidates, copilot, fairness, observability
 │   ├── src/components/       # UI primitives, charts, ATS widgets, copilot cards
@@ -423,6 +423,8 @@ resume_ranker/
 ---
 
 ## Tests
+
+CI runs the backend suite, the frontend lint/typecheck/build and a secret scan on every pull request — the backend job needs no API key, because the LLM, embeddings and Qdrant are replaced by deterministic doubles.
 
 ```bash
 make test          # backend suite — offline, no API keys required
@@ -446,6 +448,26 @@ The backend suite covers RRF arithmetic, score calibration, filter construction,
 **Why identity lives outside the AI path.** Keeping the name in a separate table isn't a workaround for anonymisation — it *is* the design. The pipeline reads only from the redacted text; the ATS reads only from its own columns. The guarantee is structural, and there is a test that asserts the raw text never reaches the extractor.
 
 **Why charts are hand-rolled.** A charting library would have been faster, but the constraints here (validated CVD-safe palette against a specific dark surface, table view on every chart, status never carried by colour alone, a Gantt-style span waterfall) are easier to satisfy directly than to configure around.
+
+**Why extraction and explanation use different models.** "Which model should this use" is a question with a measurable answer, so `api/eval/benchmark_models.py` and `benchmark_citations.py` measure it on the real tasks against a hand-checked ground truth. The result contradicted the obvious conclusion:
+
+| Model | Extraction: median | exact `experience_years` | US$/extraction | Citations surviving verbatim check |
+|---|---:|---:|---:|---:|
+| `openai/gpt-4.1-nano` | **4.7 s** | **14/16** | **0.00030** | 73% |
+| `deepseek/deepseek-v4-flash` | 22.3 s | 9/16 | 0.00133 | **83%** |
+| `google/gemini-2.5-flash-lite` | 3.7 s | 0/11 | 0.00061 | 54% |
+| `mistralai/mistral-small-24b` | 18.6 s | 12/16 | 0.00012 | 48% |
+| `openai/gpt-oss-120b` | 1.5 s | 0/8 | 0.00163 | — |
+
+Extraction is mechanical and schema-bound, and a small non-reasoning model is faster, cheaper *and* more accurate at it. Explanation needs faithful **verbatim quoting**, and there the reasoning model still wins — 83% of its quotes survive verification against 73%, and it produces 9.0 citations per analysis against 3.8. So the two tasks run on different models, configured independently.
+
+Measured end to end on a real ingestion of four résumés: **41.8 s → 7.1 s median, 5.9× faster.** A full seed of 34 documents went from ~25 minutes to **1 m 22 s**, and the dashboard's p95 from 3.8 min to 32.6 s.
+
+The swap also surfaced a bug that had been latent: `gpt-4.1-nano` emitted `s\x00eanior` for *sênior*, and Postgres rejects NUL in a text column. Model output is now stripped of control characters at the persistence boundary — both in the ingestion path and in the tracer, so a model that emits one cannot take telemetry down with it.
+
+**Why provider routing is pinned.** OpenRouter serves one model from a dozen providers, and their throughput differs by ~20×. Measured on this workload: the slowest endpoint delivered **5.7 output tokens/s** against 114 for the fastest, and 12% of the calls landed there and burned **52% of all LLM time**. Requesting `provider: {sort: "throughput"}` cut worst-case latency from 104 s to 28 s on an A/B of the same prompt. Each span records the observed tokens/s, so a slow provider looks like a slow provider instead of a slow model.
+
+**Why reasoning stays on for the explanation model.** DeepSeek spends ~79% of its generated tokens thinking before answering, which is most of its latency and cost. Turning that off is 2.4× faster — and on the hardest extraction it got the answer wrong where reasoning got it right, and `effort: "low"` matched accuracy with no reliable latency win. Rather than degrade it, extraction moved to a model that does not reason at all (see above) and the reasoning model kept the job it is actually better at: quoting faithfully.
 
 **Why singletons.** `get_embedding_provider()` used to construct a fresh `SentenceTransformer` on every request — seconds of model loading per call. Both it and the Qdrant client are now process-wide.
 

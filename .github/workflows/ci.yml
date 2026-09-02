@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend — tests and lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # The suite is fully offline — the LLM, embeddings and Qdrant are replaced
+      # by deterministic doubles — so CI needs no API key and no services.
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-${{ hashFiles('api/requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # CPU-only torch keeps the CI image from pulling ~2GB of CUDA wheels.
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r api/requirements.txt
+          python -m spacy download pt_core_news_lg
+
+      - name: Lint
+        run: |
+          pip install ruff
+          ruff check api --select F,E9,B --ignore B008
+
+      - name: Tests
+        run: python -m pytest api/tests -q
+
+  frontend:
+    name: Frontend — lint, types and build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npx tsc --noEmit
+      - run: npm run build
+
+  secrets:
+    name: No secrets committed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # The OpenRouter key lives in api/.env, which is gitignored. This fails
+      # loudly if one ever reaches a commit.
+      - name: Scan history for API keys
+        run: |
+          if git grep -I -n -E 'sk-or-v1-[a-f0-9]{16}' $(git rev-list --all) -- 2>/dev/null | head -5 | grep .; then
+            echo "::error::Uma chave de API foi encontrada no histórico do repositório."
+            exit 1
+          fi
+          echo "Nenhuma chave encontrada."

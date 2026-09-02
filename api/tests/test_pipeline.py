@@ -249,3 +249,43 @@ def test_redaction_placeholders_never_become_skills(db_session, ingestion, fake_
     assert profile.extracted_profile["skills_raw"] == ["Python", "Kubernetes"]
     labels = [s["original_term"] for s in profile.extracted_profile["skills_normalized"]]
     assert all("REDACT" not in label for label in labels)
+
+
+# ── Regression: model output that Postgres refuses ──────────────────────────
+def test_control_characters_are_stripped_from_model_output(db_session, ingestion, fake_provider):
+    """gpt-4.1-nano emitted "s\\x00eanior"; Postgres rejects NUL in a text column."""
+    from api.schemas import CandidateProfile, SeniorityEnum
+
+    ingestion.extractor.extract.return_value = CandidateProfile(
+        seniority=SeniorityEnum.SENIOR,
+        skills_raw=["Pyth\x00on"],
+        experience_years=8.0,
+        education=[],
+        certifications=[],
+        languages=["Português"],
+        narrative_experience="Atuou\x00 em plataformas.",
+        headline="Desenvolvedor s\x00eanior",
+        current_title="SRE\x00",
+        highlights=["Reduziu\x00 o MTTR"],
+    )
+    ingestion.redactor.redact.return_value = ("texto\x00 anonimizado", {"[NOME_REDACT_1]": "Ana\x00"})
+
+    with (
+        patch("api.ats.get_qdrant", return_value=MagicMock()),
+        patch("api.ats.get_embedding_provider", return_value=fake_provider),
+    ):
+        profile = ingestion.build_profile(db_session, "Ana\x00 Souza atua com Python.", "candidate")
+
+    import json as _json
+
+    assert "\x00" not in profile.raw_text
+    assert "\x00" not in _json.dumps(profile.extracted_profile)
+    assert "\x00" not in _json.dumps(profile.redaction_map)
+    assert profile.extracted_profile["headline"] == "Desenvolvedor seanior"
+
+
+def test_sanitize_keeps_meaningful_whitespace():
+    from api.ats import sanitize_text
+
+    assert sanitize_text("linha1\nlinha2\ttab\r\n") == "linha1\nlinha2\ttab\r\n"
+    assert sanitize_text("acentuação preservada — sim") == "acentuação preservada — sim"

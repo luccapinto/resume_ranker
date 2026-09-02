@@ -391,6 +391,7 @@ export interface Metrics {
 export interface RuntimeConfig {
   llm_model: string;
   llm_configured: boolean;
+  llm_models_by_task: Record<string, string>;
   embedding_provider: string;
   embedding_model: string;
   reranker_model: string;
