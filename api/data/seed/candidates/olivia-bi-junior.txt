@@ -1,5 +1,5 @@
-Luiza Fernandes de Oliveira
-luiza.fernandes@email.com.br | (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+Olívia Machado Pontes
+olivia.pontes@email.com | (48) 95857-4714 | São Paulo, SP | CPF: 874.305.034-46
 
 Resumo Profissional
 Analista de dados júnior com 1 ano e meio de experiência prática em inteligência de negócios e análise de dados. Estágio concluído em BI e formação em Estatística em andamento. Domínio de SQL, Power BI, Excel avançado e pandas para manipulação, modelagem e visualização de dados. Capacidade de transformar dados brutos em insights acionáveis, automatizar processos e gerar relatórios que apoiam decisões estratégicas. Experiência comprovada em redução de tempos de processamento, aumento de precisão de indicadores e economia de custos operacionais.

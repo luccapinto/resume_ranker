@@ -1,5 +1,5 @@
-Carlos Eduardo Silva
-carlos.silva@email.com.br | (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+Vanessa Lobato Guedes
+vanessa.guedes@email.com | (85) 93371-3088 | São Paulo, SP | CPF: 052.769.090-24
 
 RESUMO PROFISSIONAL
 Platform Engineer Sênior com mais de 8 anos de experiência em infraestrutura cloud native, especializado em Kubernetes, Go, Terraform, service mesh Istio, GitOps e FinOps. Histórico comprovado de liderança técnica em projetos de migração de workloads, redução de custos de nuvem e otimização de performance de sistemas distribuídos. Apaixonado por automação, observabilidade e governança de recursos, com forte atuação em equipes multidisciplinares e práticas de engenharia de plataforma.

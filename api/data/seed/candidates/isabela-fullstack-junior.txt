@@ -1,5 +1,5 @@
-Ana Clara Silva Santos
-E-mail: anaclarass@email.com | Telefone: (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+Isabela Fontenele Cruz
+E-mail: isabela.cruz@email.com | Telefone: (85) 98343-6340 | São Paulo, SP | CPF: 898.769.076-89
 
 RESUMO PROFISSIONAL
 Desenvolvedora full stack júnior com 2 anos de experiência prática, formada em Análise e Desenvolvimento de Sistemas e certificada em bootcamp intensivo de desenvolvimento web. Domínio de JavaScript, React, Node.js e MongoDB, com capacidade de entregar funcionalidades completas do front-end ao back-end. Foco em código limpo, performance e usabilidade, com histórico de contribuições que reduziram latências, automatizaram processos e melhoraram indicadores de negócio em projetos reais.

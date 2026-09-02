@@ -1,5 +1,5 @@
-Lucas Almeida Santos
-lucas.almeida.santos@email.com | (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+Felipe Moreira Rangel
+felipe.rangel@email.com | (62) 94586-2153 | São Paulo, SP | CPF: 709.476.543-64
 
 RESUMO PROFISSIONAL
 Desenvolvedor full stack pleno com 5 anos de experiência na construção de aplicações web escaláveis e de alta performance. Especializado em TypeScript, React, Next.js e Node.js, com forte atuação em back-end com NestJS e bancos de dados PostgreSQL. Experiência sólida em conteinerização com Docker e deploy em nuvem AWS (EC2, S3, Lambda, RDS). Busco contribuir com equipes ágeis, otimizando processos, reduzindo custos e entregando valor de negócio através de código limpo e boas práticas de engenharia de software.

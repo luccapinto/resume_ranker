@@ -1,5 +1,5 @@
-Mariana Costa Albuquerque
-E-mail: mariana.albuquerque@email.com | Telefone: (11) 98765-4321 | São Paulo – SP | CPF: 123.456.789-00
+Eduarda Kimura Sales
+E-mail: eduarda.sales@email.com | Telefone: (61) 96667-7424 | São Paulo – SP | CPF: 034.369.058-60
 
 RESUMO PROFISSIONAL
 Engenheira de dados sênior com 9 anos de experiência no desenvolvimento e operação de pipelines de streaming em larga escala. Especialista em processamento contínuo com Kafka Streams, Flink e Spark Structured Streaming, aplicados a cenários de alta complexidade e volume. Perfil hands-on na construção de plataformas de dados resilientes, com forte automação de infraestrutura via Kubernetes e Terraform. Histórico consistente de redução de latências, otimização de custos de processamento e garantia de integridade transacional em ambientes de missão crítica. Atuação próxima aos times de negócio para traduzir requisitos complexos em soluções de dados que geram valor mensurável.

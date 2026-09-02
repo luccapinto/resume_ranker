@@ -1,5 +1,5 @@
-Carlos Eduardo Menezes Silva
-carlos.menezes@email.com | (11) 98765-4321 | São Paulo - SP | CPF: 123.456.789-00
+Ulisses Amorim Botelho
+ulisses.botelho@email.com | (81) 95452-8359 | São Paulo - SP | CPF: 387.452.505-88
 
 RESUMO PROFISSIONAL
 Engenheiro DevOps pleno com 5 anos de experiência em automação de infraestrutura, pipelines de CI/CD e gerenciamento de ambientes em nuvem AWS. Sólido conhecimento em Docker, Jenkins e Ansible, com início de atuação em Kubernetes. Foco em otimização de processos, redução de custos operacionais e aumento da confiabilidade de sistemas. Histórico de entrega de projetos que resultaram em ganhos de desempenho e economia de recursos.

@@ -1,5 +1,5 @@
-Carlos Eduardo Menezes
-E-mail: carlos.menezes@email.com | Telefone: (11) 98765-4321 | São Paulo - SP | CPF: 412.785.960-17
+Wagner Pimentel Braga
+E-mail: wagner.braga@email.com | Telefone: (11) 91290-7817 | São Paulo - SP | CPF: 658.747.454-32
 
 RESUMO PROFISSIONAL
 Analista de Infraestrutura com 11 anos de experiência em ambientes corporativos de médio e grande porte, com forte atuação em virtualização VMware, administração de Windows Server, redes e Active Directory. Perfil voltado para a estabilidade, performance e segurança de datacenter, com histórico comprovado de redução de custos, aumento de disponibilidade e otimização de parques tecnológicos. Conhecimento intermediário em nuvem (AWS), complementando a base sólida em infraestrutura on-premise.

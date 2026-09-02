@@ -48,10 +48,20 @@ def fit_from_score(score_normalized: float) -> str:
 # ─────────────────────────────────────────────────────────────────────────────
 # Identity recovery
 # ─────────────────────────────────────────────────────────────────────────────
-# Two to six capitalised words, no digits, no punctuation that a name never has.
-_NAME_RE = re.compile(
-    r"^[A-ZÀ-ÝÁÉÍÓÚÂÊÔÃÕÇ][a-zà-ÿ'’\-]+(?:\s+(?:d[aeo]s?|e|[A-ZÀ-ÝÁÉÍÓÚÂÊÔÃÕÇ][a-zà-ÿ'’\-]+)){1,5}$"
-)
+# Two to six name-like words, no digits, no punctuation a name never contains.
+_NAME_WORD = r"[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ\'’\-]+"
+_NAME_RE = re.compile(rf"^{_NAME_WORD}(?:\s+{_NAME_WORD}){{1,5}}$")
+_NAME_PARTICLES = {"da", "de", "do", "das", "dos", "e", "di", "del", "van", "von"}
+
+
+def _titleize(value: str) -> str:
+    """Render ALL-CAPS résumé headers as a normal name."""
+    words = value.split()
+    if not any(w.isupper() and len(w) > 1 for w in words):
+        return " ".join(words)
+    return " ".join(
+        w.lower() if w.lower() in _NAME_PARTICLES else w.capitalize() for w in words
+    )
 
 
 def looks_like_person_name(value: Optional[str]) -> bool:
@@ -59,7 +69,8 @@ def looks_like_person_name(value: Optional[str]) -> bool:
 
     spaCy happily tags "Kimball", "Logstash" or "DAGs" as PERSON inside a
     résumé, and Presidio spans can run across a line break. Anything that does
-    not read like a Brazilian full name is rejected here.
+    not read like a Brazilian full name is rejected here. Names are frequently
+    written in caps at the top of a CV, so case is not part of the test.
     """
     if not value:
         return False
@@ -68,7 +79,28 @@ def looks_like_person_name(value: Optional[str]) -> bool:
         return False
     if any(ch.isdigit() for ch in candidate) or any(ch in candidate for ch in "@:|/\\"):
         return False
-    return bool(_NAME_RE.match(candidate))
+    if not _NAME_RE.match(candidate):
+        return False
+    # Last line of defence: if the ESCO taxonomy recognises the string as a
+    # competency ("Retrieval-Augmented Generation", "Machine Learning"), it is a
+    # skill the NER mislabelled, not a person.
+    return not _is_known_skill(candidate)
+
+
+def _is_known_skill(value: str) -> bool:
+    try:
+        from api.normalizer import normalize_string
+        from api.services import get_normalizer
+
+        taxonomy = get_normalizer().exact_match_map
+        # Hyphens are meaningful in tech terms (CI/CD, C++) but ESCO stores some
+        # of them spaced out, so probe both spellings.
+        return any(
+            normalize_string(variant) in taxonomy
+            for variant in (value, value.replace("-", " "))
+        )
+    except Exception:  # noqa: BLE001 — the check is advisory, never fatal
+        return False
 
 
 def _redaction_entries(redaction_map: Dict[str, str], prefix: str) -> List[str]:
@@ -93,6 +125,32 @@ def _from_redaction_map(redaction_map: Dict[str, str], prefix: str) -> Optional[
     return entries[0] if entries else None
 
 
+_PLACEHOLDER_RE = re.compile(r"\[[A-Z_]+_\d+\]")
+
+
+def rehydrate(text: Optional[str], redaction_map: Dict[str, str]) -> Optional[str]:
+    """Put the original values back into model-generated text, for display only.
+
+    Everything the LLM writes is grounded in the anonymised document, so its
+    output is peppered with tokens like `[ORGANIZACAO_REDACT_1]`. The recruiter
+    should read the real words; the model still never saw them.
+    """
+    if not text or not redaction_map:
+        return text
+    return _PLACEHOLDER_RE.sub(lambda m: redaction_map.get(m.group(0), m.group(0)), text)
+
+
+def summarize(text: Optional[str], limit: int = 180) -> Optional[str]:
+    """Trim a headline to one line, cutting on a word boundary."""
+    if not text:
+        return text
+    single_line = " ".join(text.split())
+    if len(single_line) <= limit:
+        return single_line
+    cut = single_line[:limit].rsplit(" ", 1)[0]
+    return f"{cut}…"
+
+
 def derive_identity(profile: ProfileModel) -> Dict[str, Optional[str]]:
     """Recover display identity from the redaction map — never from the LLM.
 
@@ -105,13 +163,13 @@ def derive_identity(profile: ProfileModel) -> Dict[str, Optional[str]]:
     for line in (profile.raw_text or "").splitlines()[:4]:
         stripped = line.strip()
         if looks_like_person_name(stripped):
-            name = " ".join(stripped.split())
+            name = _titleize(stripped)
             break
 
     if not name:
         for candidate in _redaction_entries(rmap, "NOME_REDACT"):
             if looks_like_person_name(candidate):
-                name = " ".join(candidate.split())
+                name = _titleize(candidate)
                 break
 
     return {
@@ -237,12 +295,16 @@ def serialize_profile(profile: ProfileModel, include_raw: bool = True) -> Dict[s
 
 def serialize_candidate(candidate: CandidateModel, include_profile: bool = False) -> Dict[str, Any]:
     extracted = (candidate.profile.extracted_profile if candidate.profile else {}) or {}
+    rmap = (candidate.profile.redaction_map if candidate.profile else {}) or {}
+    # Everything the model wrote is grounded in the anonymised text, so it comes
+    # back peppered with placeholders. Restore them at the display boundary only.
+    headline = candidate.headline or extracted.get("headline") or extracted.get("current_title")
     payload = {
         "id": candidate.id,
         "profile_id": candidate.profile_id,
         "display_name": candidate.display_name,
         "initials": "".join(p[0] for p in candidate.display_name.split()[:2]).upper(),
-        "headline": candidate.headline or extracted.get("headline") or extracted.get("current_title"),
+        "headline": summarize(rehydrate(headline, rmap)),
         "location": candidate.location,
         "email": mask_email(candidate.email),
         "phone": candidate.phone,
@@ -255,7 +317,8 @@ def serialize_candidate(candidate: CandidateModel, include_profile: bool = False
         ],
         "certifications": extracted.get("certifications") or [],
         "languages": extracted.get("languages") or [],
-        "highlights": extracted.get("highlights") or [],
+        "highlights": [rehydrate(h, rmap) for h in (extracted.get("highlights") or [])],
+        "narrative": rehydrate(extracted.get("narrative_experience"), rmap),
         "created_at": candidate.created_at,
     }
     if include_profile and candidate.profile:

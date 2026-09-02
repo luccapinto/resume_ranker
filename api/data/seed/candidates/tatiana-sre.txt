@@ -1,5 +1,5 @@
-Lucas Almeida Santos
-lucas.santos@email.com | (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+Tatiana Rezende Peixoto
+tatiana.peixoto@email.com | (71) 97533-3630 | São Paulo, SP | CPF: 569.474.921-90
 
 RESUMO PROFISSIONAL
 SRE pleno com seis anos de experiência em plataformas cloud-native e automação de infraestrutura. Especialista em garantir alta disponibilidade e resiliência de sistemas críticos, utilizando Kubernetes, AWS e Terraform para provisionamento de ambientes. Experiência consolidada na implementação de observabilidade com Prometheus, Grafana e OpenTelemetry, além de entrega contínua com ArgoCD. Foco em reliability engineering, definição e monitoramento de SLOs, com forte atuação em regimes de plantão on-call e gestão de incidentes em larga escala.

@@ -1,5 +1,5 @@
-Ana Beatriz Silva Costa
-E-mail: ana.costa@email.com | Telefone: (11) 98765-4321 | São Paulo - SP | CPF: 123.456.789-00
+Gabriela Portela Aguiar
+E-mail: gabriela.aguiar@email.com | Telefone: (71) 92505-6882 | São Paulo - SP | CPF: 305.474.927-40
 
 RESUMO PROFISSIONAL
 Desenvolvedora frontend pleno com 4 anos de experiência focada em React, Next.js, Tailwind CSS, design system e acessibilidade web. Atuação em projetos de alto impacto, com entregas que reduziram latências, melhoraram taxas de conversão e garantiram conformidade com WCAG. Experiência em colaboração com equipes multidisciplinares, code review e versionamento com Git. Backend limitado, com conhecimento básico em Node.js e consumo de APIs REST.

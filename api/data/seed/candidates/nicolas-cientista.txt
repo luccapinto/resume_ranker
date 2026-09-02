@@ -1,5 +1,5 @@
-Ana Beatriz Silva Santos
-E-mail: anabeatriz.santos@email.com | Telefone: (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+Nicolas Ferraz Quintela
+E-mail: nicolas.quintela@email.com | Telefone: (47) 97938-9985 | São Paulo, SP | CPF: 109.016.549-81
 
 RESUMO PROFISSIONAL
 Cientista de dados pleno com 5 anos de experiência em análise de dados, modelagem estatística e experimentação. Especialista em Python, pandas e scikit-learn, com sólida formação em estatística. Proficiente em conduzir testes A/B e gerar insights baseados em dados para tomada de decisão. Apesar de ainda não ter colocado modelos em produção, tenho fortes habilidades em prototipação, validação e comunicação de resultados.

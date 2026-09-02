@@ -1,5 +1,5 @@
-Lucas Almeida Santos
-lucas.almeida.santos@email.com.br | (11) 98765-4321 | São Paulo, SP | CPF: 382.648.197-50
+João Vitor Caldeira
+joao.caldeira@email.com | (11) 96262-1069 | São Paulo, SP | CPF: 494.747.450-56
 
 RESUMO PROFISSIONAL
 Desenvolvedor full stack sênior com 9 anos de experiência na construção de aplicações web escaláveis e de alto desempenho. Especialista no ecossistema TypeScript, React e Node.js, com sólida expertise em bancos de dados PostgreSQL, APIs GraphQL e infraestrutura em nuvem AWS. Atuei como referência técnica em times ágeis, liderando squads de até 8 pessoas, realizando code reviews, definindo arquiteturas e promovendo boas práticas de engenharia de software. Foco em entregar soluções robustas, com alta disponibilidade e reduzindo custos operacionais.

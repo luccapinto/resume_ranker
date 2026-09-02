@@ -17,6 +17,9 @@ from api.embeddings import get_embedding_provider
 from api.search import init_qdrant_collections
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+# httpx logs every model-download request at INFO, which buries our own lines.
+for noisy in ("httpx", "httpcore", "sentence_transformers", "urllib3"):
+    logging.getLogger(noisy).setLevel(logging.WARNING)
 logger = logging.getLogger("resume_ranker")
 
 

@@ -1,5 +1,5 @@
-Ana Beatriz Mendes Silva
-E-mail: anabeatriz.mendes@email.com | Telefone: (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+Ana Beatriz Mendes
+E-mail: ana.mendes@email.com | Telefone: (21) 99153-9050 | São Paulo, SP | CPF: 856.723.092-67
 
 RESUMO PROFISSIONAL
 Engenheira de dados sênior com 8 anos de experiência em arquitetura, desenvolvimento e otimização de pipelines de dados em larga escala. Especialista em processamento streaming com Apache Kafka e Spark Structured Streaming, orquestração com Apache Airflow, transformações com dbt e armazenamento em Snowflake na nuvem AWS. Liderou a migração de arquitetura batch para streaming em uma plataforma de dados, resultando em redução de latência de 4 horas para menos de 2 minutos e economia de 35% em custos de infraestrutura. Apaixonada por data quality, governança e automação de processos.

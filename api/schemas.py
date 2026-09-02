@@ -52,7 +52,10 @@ class BaseProfile(BaseModel):
 
 class CandidateProfile(BaseProfile):
     headline: str = Field(
-        description="Resumo de uma linha do posicionamento profissional (ex: 'Engenheiro de Dados Sênior com foco em streaming')."
+        description=(
+            "Posicionamento profissional em UMA frase curta de no máximo 120 caracteres, "
+            "no formato 'Cargo Senioridade com foco em X e Y'. Não escreva um parágrafo."
+        )
     )
     current_title: str = Field(description="Cargo atual ou mais recente do candidato.")
     highlights: List[str] = Field(

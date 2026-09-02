@@ -56,6 +56,7 @@ export interface Candidate {
   certifications: string[];
   languages: string[];
   highlights: string[];
+  narrative: string | null;
   created_at: string;
   profile?: Profile;
   applications?: Application[];

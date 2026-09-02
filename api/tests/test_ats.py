@@ -212,3 +212,59 @@ def test_pipeline_overview_aggregates_the_funnel(seeded):
     assert overview["applications_total"] == 1
     assert overview["avg_ai_score"] == 88.0
     assert overview["strong_fit_count"] == 1
+
+
+# ── Display-layer helpers ───────────────────────────────────────────────────
+@pytest.mark.parametrize(
+    "value,expected",
+    [
+        ("Ana Beatriz Mendes", True),
+        ("FELIPE AUGUSTO DE OLIVEIRA", True),   # résumé headers are often shouted
+        ("João da Silva", True),
+        ("Kimball", False),                     # single word
+        ("DAGs", False),
+        ("Machine Learning", False),            # a real ESCO competency
+        ("Retrieval-Augmented Generation", False),
+        ("joao@empresa.com", False),
+        ("Rua das Flores 123", False),
+        ("", False),
+    ],
+)
+def test_person_name_detection(value, expected):
+    assert ats.looks_like_person_name(value) is expected
+
+
+def test_all_caps_names_are_rendered_normally():
+    assert ats._titleize("FELIPE AUGUSTO DE OLIVEIRA") == "Felipe Augusto de Oliveira"
+    assert ats._titleize("Ana Beatriz Mendes") == "Ana Beatriz Mendes"
+
+
+def test_rehydrate_restores_placeholders_for_display():
+    """The model writes about [ORGANIZACAO_REDACT_1]; the recruiter reads the company."""
+    text = "Atuou na [ORGANIZACAO_REDACT_1] em [LOCALIZACAO_REDACT_2]."
+    restored = ats.rehydrate(
+        text,
+        {"[ORGANIZACAO_REDACT_1]": "DataFlow", "[LOCALIZACAO_REDACT_2]": "Curitiba"},
+    )
+    assert restored == "Atuou na DataFlow em Curitiba."
+
+
+def test_rehydrate_leaves_unknown_placeholders_intact():
+    assert ats.rehydrate("Olá [NOME_REDACT_9].", {"[NOME_REDACT_1]": "Ana"}) == "Olá [NOME_REDACT_9]."
+
+
+def test_rehydrate_passes_through_empty_input():
+    assert ats.rehydrate(None, {"a": "b"}) is None
+    assert ats.rehydrate("texto", {}) == "texto"
+
+
+def test_summarize_cuts_on_a_word_boundary():
+    long_text = "palavra " * 60
+    result = ats.summarize(long_text, limit=40)
+    assert len(result) <= 41
+    assert result.endswith("…")
+    assert "palavr…" not in result
+
+
+def test_summarize_leaves_short_text_alone():
+    assert ats.summarize("Engenheira de dados sênior") == "Engenheira de dados sênior"

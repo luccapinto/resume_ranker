@@ -1,6 +1,6 @@
-Carlos Eduardo Almeida Santos
+Diego Ramalho Bastos
 
-E-mail: carlos.santos@email.com.br | Telefone: (11) 98765-4321 | CPF: 345.678.901-23 | São Paulo - SP
+E-mail: diego.bastos@email.com | Telefone: (51) 98748-2695 | CPF: 218.381.494-22 | São Paulo - SP
 
 RESUMO PROFISSIONAL
 DBA Oracle e SQL Server Sênior com mais de 12 anos de experiência em administração, tuning e alta disponibilidade de bancos de dados relacionais. Histórico consolidado em ambientes corporativos de grande porte, com foco em desempenho, segurança e continuidade de operações críticas. Especialista em migração de dados e otimização de consultas, reduzindo latências e custos operacionais. Atualmente em processo de migração de carreira para a área de dados, ampliando conhecimentos em engenharia de dados, modelagem analítica e ferramentas de big data, como Databricks e Apache Spark, para atuar na interseção entre infraestrutura de bancos e soluções de dados modernas.

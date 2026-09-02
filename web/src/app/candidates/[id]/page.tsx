@@ -275,7 +275,7 @@ export default function CandidateDetailPage() {
               <Panel className="p-5 lg:col-span-2">
                 <SectionTitle title="Trajetória consolidada pela IA" icon={Sparkles} />
                 <p className="whitespace-pre-line text-xs leading-relaxed text-[var(--text-secondary)]">
-                  {extracted?.narrative_experience ?? "—"}
+                  {data.narrative ?? extracted?.narrative_experience ?? "—"}
                 </p>
 
                 {extracted?.highlights?.length ? (

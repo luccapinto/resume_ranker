@@ -1,5 +1,5 @@
-LUCAS ALMEIDA FERREIRA
-lucas.almeida.ferreira@email.com | (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+LEONARDO SAMPAIO DUARTE
+leonardo.duarte@email.com | (31) 92100-0527 | São Paulo, SP | CPF: 985.032.509-77
 
 RESUMO PROFISSIONAL
 Engenheiro de Machine Learning sênior com mais de 8 anos de experiência focada em visão computacional. Especialista em desenvolvimento e deploy de modelos de Deep Learning utilizando PyTorch e OpenCV para aplicações em ambientes edge, como sistemas embarcados e dispositivos de baixo consumo. Histórico comprovado na otimização de pipelines de inferência, atingindo ganhos significativos de performance em produção. Perfil prático com forte atuação em projetos de classificação, detecção e segmentação de imagens, sem exposição relevante a Large Language Models.

@@ -1,6 +1,6 @@
-Lucas Almeida Santos
+Bruno Tavares Nogueira
 
-lucas.santos@email.com | (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+bruno.nogueira@email.com | (41) 94991-8508 | São Paulo, SP | CPF: 329.018.961-97
 
 RESUMO PROFISSIONAL
 Engenheiro de dados pleno com 5 anos de experiência na construção e manutenção de pipelines de dados escaláveis. Especialista em Apache Airflow, Python, SQL, dbt e Google BigQuery, com foco em modelagem dimensional, otimização de consultas e automação de processos de ETL. Experiência sólida em ambientes cloud (GCP) e boas práticas de versionamento. Sem atuação em streaming, mas com forte capacidade de adaptação a novas tecnologias. Busca desafios que exijam análise crítica, performance e governança de dados.

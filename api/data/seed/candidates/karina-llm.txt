@@ -1,5 +1,5 @@
-Marina Fernandes de Almeida
-marina.falmeida@email.com | (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+Karina Yamamoto Brito
+karina.brito@email.com | (21) 94181-5798 | São Paulo, SP | CPF: 010.723.016-01
 
 RESUMO PROFISSIONAL
 Engenheira de Machine Learning Sênior com 7 anos de experiência na concepção, desenvolvimento e deploy de sistemas de inteligência artificial em larga escala. Especialista em modelos de linguagem (LLMs), sistemas de Retrieval-Augmented Generation (RAG) e visão computacional. Profundo conhecimento do ecossistema PyTorch e Hugging Face, com forte atuação em orquestração de containers com Kubernetes e gerenciamento de ciclo de vida de modelos com MLflow. Autora de avaliações comparativas de frameworks RAG, publicadas em conferências nacionais de tecnologia. Experiência comprovada na redução de latência de inferência em 40% e na implementação de pipelines de busca semântica que reduziram o tempo de resposta de queries em 60%.
