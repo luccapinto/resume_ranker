@@ -268,3 +268,17 @@ def test_summarize_cuts_on_a_word_boundary():
 
 def test_summarize_leaves_short_text_alone():
     assert ats.summarize("Engenheira de dados sênior") == "Engenheira de dados sênior"
+
+
+def test_clean_labels_drops_bare_placeholders():
+    """A redacted company is not a skill, and showing the token reads as a bug."""
+    labels = ats.clean_labels(
+        ["Kubernetes", "[ORGANIZACAO_REDACT_2]", "  ", "AWS na [LOCALIZACAO_REDACT_1]"],
+        {"[ORGANIZACAO_REDACT_2]": "DataFlow", "[LOCALIZACAO_REDACT_1]": "Curitiba"},
+    )
+    assert labels == ["Kubernetes", "AWS na Curitiba"]
+
+
+def test_clean_labels_handles_missing_input():
+    assert ats.clean_labels(None, {}) == []
+    assert ats.clean_labels([], {"a": "b"}) == []

@@ -140,6 +140,25 @@ def rehydrate(text: Optional[str], redaction_map: Dict[str, str]) -> Optional[st
     return _PLACEHOLDER_RE.sub(lambda m: redaction_map.get(m.group(0), m.group(0)), text)
 
 
+def clean_labels(values: Optional[List[str]], redaction_map: Dict[str, str]) -> List[str]:
+    """Rehydrate a list of model-written labels and drop the ones that were pure PII.
+
+    The extractor sometimes lists a redacted company or place as a "skill". Once
+    rehydrated those read as noise, and a bare placeholder reads as a bug — so a
+    label that is *only* a placeholder is dropped entirely.
+    """
+    cleaned = []
+    for value in values or []:
+        if not value:
+            continue
+        if _PLACEHOLDER_RE.fullmatch(value.strip()):
+            continue
+        restored = rehydrate(value, redaction_map)
+        if restored and restored.strip():
+            cleaned.append(restored.strip())
+    return cleaned
+
+
 def summarize(text: Optional[str], limit: int = 180) -> Optional[str]:
     """Trim a headline to one line, cutting on a word boundary."""
     if not text:
@@ -311,12 +330,15 @@ def serialize_candidate(candidate: CandidateModel, include_profile: bool = False
         "source": candidate.source,
         "seniority": extracted.get("seniority"),
         "experience_years": extracted.get("experience_years"),
-        "skills": [
-            s.get("preferred_label") or s.get("original_term")
-            for s in (extracted.get("skills_normalized") or [])
-        ],
-        "certifications": extracted.get("certifications") or [],
-        "languages": extracted.get("languages") or [],
+        "skills": clean_labels(
+            [
+                s.get("preferred_label") or s.get("original_term")
+                for s in (extracted.get("skills_normalized") or [])
+            ],
+            rmap,
+        ),
+        "certifications": clean_labels(extracted.get("certifications"), rmap),
+        "languages": clean_labels(extracted.get("languages"), rmap),
         "highlights": [rehydrate(h, rmap) for h in (extracted.get("highlights") or [])],
         "narrative": rehydrate(extracted.get("narrative_experience"), rmap),
         "created_at": candidate.created_at,
@@ -343,17 +365,20 @@ def serialize_job(job: JobModel, db: Optional[Session] = None) -> Dict[str, Any]
         "status": job.status,
         "headcount": job.headcount,
         "owner": job.owner,
-        "must_have_skills": extracted.get("must_have_skills") or [],
-        "nice_to_have_skills": extracted.get("nice_to_have_skills") or [],
+        "must_have_skills": clean_labels(extracted.get("must_have_skills"), rmap),
+        "nice_to_have_skills": clean_labels(extracted.get("nice_to_have_skills"), rmap),
         # The model wrote these from the anonymised description, so they can
         # carry placeholders; restore them at the display boundary.
         "responsibilities": [
             rehydrate(r, rmap) for r in (extracted.get("responsibilities") or [])
         ],
-        "skills": [
-            s.get("preferred_label") or s.get("original_term")
-            for s in (extracted.get("skills_normalized") or [])
-        ],
+        "skills": clean_labels(
+            [
+                s.get("preferred_label") or s.get("original_term")
+                for s in (extracted.get("skills_normalized") or [])
+            ],
+            rmap,
+        ),
         "narrative": rehydrate(extracted.get("narrative_experience"), rmap),
         "experience_years": extracted.get("experience_years"),
         "created_at": job.created_at,
