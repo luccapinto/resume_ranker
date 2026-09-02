@@ -1,0 +1,58 @@
+Vanessa Lobato Guedes
+vanessa.guedes@email.com | (85) 93371-3088 | São Paulo, SP | CPF: 052.769.090-24
+
+RESUMO PROFISSIONAL
+Platform Engineer Sênior com mais de 8 anos de experiência em infraestrutura cloud native, especializado em Kubernetes, Go, Terraform, service mesh Istio, GitOps e FinOps. Histórico comprovado de liderança técnica em projetos de migração de workloads, redução de custos de nuvem e otimização de performance de sistemas distribuídos. Apaixonado por automação, observabilidade e governança de recursos, com forte atuação em equipes multidisciplinares e práticas de engenharia de plataforma.
+
+EXPERIÊNCIA PROFISSIONAL
+
+NuvemTech Soluções – São Paulo, SP
+Platform Engineer Sênior
+Mar/2022 - Presente
+- Liderou a migração de 200+ microsserviços para clusters Kubernetes gerenciados (EKS), reduzindo o tempo de deployment em 40% e aumentando a disponibilidade para 99,95%.
+- Implementou GitOps com ArgoCD e Flux, automatizando o rollout de 150 aplicações, o que eliminou 90% dos erros manuais de configuração.
+- Projetou e aplicou políticas de FinOps com Kubecost e Spot.io, reduzindo os custos de infraestrutura em 35% (economia anual de R$ 1,2 milhão) sem impactar a performance.
+- Configurou service mesh Istio com mTLS e observabilidade (Prometheus, Grafana, Jaeger), reduzindo a latência média entre serviços em 25% e melhorando a segurança da comunicação.
+- Desenvolveu operadores customizados em Go para gerenciar ciclo de vida de recursos da plataforma, diminuindo a carga operacional da equipe em 60%.
+
+DataFlow Sistemas – Rio de Janeiro, RJ
+Platform Engineer
+Jan/2019 - Fev/2022
+- Projetou e implementou clusters Kubernetes multi-ZA com Terraform e Helm, suportando 500+ pods e processamento de 10 TB de dados por dia.
+- Automatizou a gestão de segredos e políticas de rede com Istio e Vault, garantindo conformidade com LGPD e reduzindo incidentes de segurança em 70%.
+- Criou dashboards de FinOps e relatórios de custo por equipe (usando AWS Cost Explorer e custom scripts em Go), gerando economia de 20% em recursos ociosos.
+- Liderou a adoção de GitOps com GitLab CI e ArgoCD, unificando os pipelines de entrega e reduzindo o tempo de recuperação de falhas (MTTR) de 4 horas para 30 minutos.
+
+InovaTI Tecnologia – Belo Horizonte, MG
+DevOps Engineer
+Jun/2016 - Dez/2018
+- Migrou 50 servidores on-premise para AWS, utilizando Terraform e Ansible, reduzindo o custo operacional em 45% e o tempo de provisionamento de máquinas de 2 dias para 2 horas.
+- Implementou pipelines CI/CD com Jenkins e Kubernetes, automatizando testes e deploys, o que aumentou a frequência de releases de mensal para semanal.
+- Desenvolveu scripts em Go para monitoramento de métricas de custo e desempenho, gerando alertas que permitiram ajustes proativos e evitaram 3 incidentes graves de estouro de budget.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Engenharia da Computação – Universidade Federal de São Paulo (UNIFESP), 2012 - 2016
+Pós-graduação Lato Sensu em Arquitetura de Sistemas Distribuídos – Instituto de Tecnologia Aplicada (ITA), 2018 - 2019
+
+CERTIFICAÇÕES
+- Certified Kubernetes Administrator (CKA) – Linux Foundation, 2020
+- Certified Kubernetes Application Developer (CKAD) – Linux Foundation, 2021
+- HashiCorp Certified: Terraform Associate (003) – HashiCorp, 2022
+- AWS Certified Solutions Architect – Associate (SAA-C03) – Amazon, 2022
+- FinOps Certified Practitioner – FinOps Foundation, 2023
+
+COMPETÊNCIAS TÉCNICAS
+- Orquestração: Kubernetes (EKS, AKS, GKE), Helm, Kustomize, ArgoCD, Flux, Istio, Linkerd
+- Infraestrutura como Código: Terraform, Terragrunt, Ansible, Packer, AWS CloudFormation
+- Linguagens: Go (principal), Python, Bash, HCL
+- Cloud: AWS (ECS, Lambda, RDS, S3, VPC, IAM, Cost Explorer), GCP (GKE, Cloud Storage)
+- Observabilidade: Prometheus, Grafana, Loki, Jaeger, Datadog, New Relic
+- FinOps: Kubecost, Spot.io, CloudHealth, AWS Cost Explorer, custom dashboards
+- GitOps e CI/CD: GitLab CI, GitHub Actions, Jenkins, ArgoCD, Flux, Spinnaker
+- Service Mesh: Istio, Envoy, mTLS, circuit breaking, traffic shifting
+- Banco de Dados: PostgreSQL, Redis, MongoDB
+- Sistemas Operacionais: Linux (Ubuntu, Debian, CentOS), macOS
+
+IDIOMAS
+- Português: nativo
+- Inglês: avançado (leitura, escrita e conversação fluente – TOEIC 890)

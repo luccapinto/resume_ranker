@@ -1,0 +1,37 @@
+Engenheiro(a) de Machine Learning Sênior
+
+SOBRE A VAGA
+Buscamos uma pessoa engenheira de machine learning sênior para integrar nosso time de IA Aplicada. Você será responsável por todo o ciclo de vida de modelos, desde a prototipação até a operação em produção, com forte ênfase em avaliação quantitativa, guardrails e monitoramento contínuo. Trabalhamos com arquiteturas modernas de LLMs e sistemas de RAG, em um ambiente que valoriza boas práticas de engenharia e experimentação científica. A atuação é no modelo híbrido em São Paulo (SP), com regime CLT.
+
+RESPONSABILIDADES
+- Projetar, desenvolver e implantar sistemas de machine learning em produção, com foco em LLMs e RAG.
+- Implementar pipelines de avaliação quantitativa para medir desempenho, acurácia e segurança dos modelos.
+- Configurar guardrails (filtros de conteúdo, validação de saída) e sistemas de monitoramento (drift, latência, qualidade) em produção.
+- Colaborar com cientistas de dados e engenheiros para integrar modelos a aplicações usando Python e PyTorch.
+- Otimizar o deployment de modelos em Kubernetes, garantindo escalabilidade e resiliência.
+- Manter e evoluir a infraestrutura de MLflow, bancos vetoriais (Qdrant/pgvector) e pipelines de dados.
+- Participar de code reviews, definições de arquitetura e rituais ágeis do time.
+
+REQUISITOS OBRIGATÓRIOS
+1. Mínimo de 5 anos de experiência comprovada em engenharia de machine learning ou áreas correlatas.
+2. Domínio de Python e experiência avançada com PyTorch para implementação e otimização de modelos.
+3. Experiência prática com frameworks de LLMs (Hugging Face Transformers) e construção de sistemas RAG.
+4. Conhecimento sólido em bancos vetoriais como Qdrant ou pgvector.
+5. Experiência com MLflow para gerenciamento de experimentos e deploy de modelos.
+6. Vivência em ambientes conteinerizados e orquestração com Docker e Kubernetes.
+7. Capacidade de implementar pipelines de monitoramento e avaliação de modelos em produção.
+
+DIFERENCIAIS
+- Experiência com engenharia de prompt e técnicas avançadas (chain-of-thought, few-shot).
+- Histórico de fine-tuning de LLMs (LoRA, QLoRA) para domínios específicos.
+- Conhecimento em métricas de avaliação de RAG (fidelidade, relevância, recall contextual).
+- Vivência em times multidisciplinares com metodologias ágeis.
+
+BENEFÍCIOS
+- Vale-refeição/alimentação.
+- Plano de saúde e odontológico (sulAmérica ou similar).
+- Seguro de vida.
+- Auxílio home office mensal.
+- Bônus anual atrelado a resultados.
+- Acesso a plataformas de cursos e conferências de IA.
+- Horário flexível e sexta-feira de carga reduzida.

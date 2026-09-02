@@ -1,0 +1,54 @@
+José Carlos Tenório
+jose.tenorio@email.com | (41) 95047-2004 | São Paulo, SP | CPF: 747.030.987-09
+
+RESUMO PROFISSIONAL
+Product designer sênior com 7 anos de experiência em design de produtos digitais, focado na transição de carreira para Product Management. Especialista em Design Systems, pesquisa com usuários e prototipação em Figma, com sólida vivência em metodologias ágeis e liderança técnica de squads. Busco aplicar minha visão estratégica e habilidades de priorização para conduzir ciclos completos de produto, desde a descoberta até a entrega de valor mensurável para o negócio.
+
+EXPERIÊNCIA PROFISSIONAL
+
+NovaTech Soluções Digitais | Product Designer Sênior
+Fevereiro/2022 - Presente
+- Liderei a reestruturação do Design System da empresa, reduzindo o tempo de prototipação de novas telas em 40% e garantindo consistência visual em mais de 200 componentes reutilizáveis.
+- Conduzi mais de 60 entrevistas e testes de usabilidade com usuários finais, resultando em um aumento de 25% na satisfação geral (NPS) do principal aplicativo mobile.
+- Colaborei com 3 squads de produto para priorizar funcionalidades com base em dados de pesquisa e métricas de negócio, influenciando diretamente a redução de 15% na taxa de abandono do carrinho de compras.
+- Treinei e mentorei 4 designers júniores em práticas de design thinking e Figma, acelerando a integração da equipe e reduzindo o ciclo de feedback em 30%.
+- Defini e implementei métricas de sucesso para o redesenho do módulo de onboarding, que gerou uma economia de R$ 80 mil ao diminuir a necessidade de suporte manual no primeiro mês.
+
+Grupo Inovare | Product Designer Pleno
+Março/2019 - Janeiro/2022
+- Projetei e prototipei em Figma mais de 50 fluxos de interface para o sistema interno de gestão de vendas, aumentando a produtividade dos vendedores em 20%.
+- Realizei pesquisas etnográficas e testes A/B com amostras de 500 usuários, identificando gargalos que geraram uma redução de 35% na latência de navegação entre páginas críticas.
+- Criei e mantive o guia de estilos da plataforma web, utilizado por 5 squads de desenvolvimento, garantindo 98% de conformidade visual nos deploys.
+- Facilitei workshops de discovery com stakeholders de 3 áreas de negócio, resultando em uma redução de 20% em retrabalhos durante o desenvolvimento.
+- Colaborei com o time de dados para validar hipóteses de melhoria, alcançando um aumento de 12% na taxa de conversão de leads do portal.
+
+Studio Pixel Design | Product Designer Júnior
+Janeiro/2017 - Fevereiro/2019
+- Auxiliei na prototipação de wireframes e mockups em Figma para campanhas digitais, entregando 15 projetos por mês com 100% de pontualidade.
+- Participei de 12 ciclos de pesquisa com usuários, contribuindo com a análise qualitativa que embasou a reformulação do menu de navegação de um e-commerce.
+- Realizei testes de usabilidade com 8 participantes por sprint, identificando 30 melhorias de micro interações que reduziram erros de preenchimento em 18%.
+- Documentei personas e jornadas do usuário, alinhando as expectativas do time de desenvolvimento e diminuindo o tempo de reunião de alinhamento em 25%.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Design Digital | Universidade Federal de São Paulo (UNIFESP)
+Concluído em 2016
+
+MBA em Gestão de Produtos e Inovação | FIA Business School
+Concluído em 2023
+
+CERTIFICAÇÕES
+Product-led Growth Certification | Product School (2024)
+Professional Scrum Product Owner (PSPO I) | Scrum.org (2023)
+Google UX Design Professional Certificate | Coursera (2021)
+
+COMPETÊNCIAS TÉCNICAS
+Figma: design de interfaces, prototipação avançada, criação e gestão de component libraries e Design Systems, auto layout e variáveis.
+Pesquisa com usuários: planejamento e condução de testes de usabilidade, entrevistas, surveys, análise de heatmaps e funis.
+Ferramentas de produto: Miro, Notion, Jira, Confluence, Amplitude e Hotjar.
+Metodologias ágeis: Scrum, Kanban, Lean UX e OKRs.
+Prototipação em alta fidelidade, design thinking, mapeamento de jornada, análise qualitativa e quantitativa, testes A/B.
+
+IDIOMAS
+Português: Nativo
+Inglês: Avançado (leitura, escrita e conversação fluente)
+Espanhol: Intermediário (compreensão e conversação básica)

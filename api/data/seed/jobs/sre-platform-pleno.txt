@@ -1,0 +1,34 @@
+Site Reliability Engineer Pleno
+
+SOBRE A VAGA
+Buscamos um profissional de nível pleno para integrar o time de plataforma, responsável por garantir a confiabilidade e performance dos nossos sistemas. O trabalho é 100% remoto, em regime PJ, com foco em práticas de engenharia de confiabilidade. Você atuará diretamente na definição e acompanhamento de SLOs, gestão de error budget, automação de pipelines de CI/CD e resposta a incidentes. Nossa stack é baseada em Kubernetes, Terraform, AWS, GitOps com ArgoCD, além de monitoramento com Prometheus, Grafana e OpenTelemetry.
+
+RESPONSABILIDADES
+- Definir, monitorar e evoluir SLOs, SLIs e error budget dos serviços sob sua responsabilidade.
+- Projetar e implementar automações para pipelines de CI/CD utilizando GitOps, garantindo entregas seguras e frequentes.
+- Participar ativamente da resposta a incidentes, conduzindo análises de causa raiz e propondo melhorias preventivas.
+- Colaborar com squads de desenvolvimento para otimizar a resiliência e a performance das aplicações em produção.
+- Contribuir para a evolução da infraestrutura como código, revisando e melhorando módulos Terraform e configurações de cluster Kubernetes.
+
+REQUISITOS OBRIGATÓRIOS
+- 3 a 5 anos de experiência comprovada como SRE, DevOps ou Engenheiro de Plataforma.
+- Conhecimento sólido de Kubernetes em produção, incluindo gerenciamento de clusters, deployments e escalabilidade.
+- Experiência prática com Terraform para provisionamento e gerenciamento de infraestrutura na AWS.
+- Vivência em GitOps com ArgoCD (ou ferramentas similares) e pipelines de CI/CD.
+- Domínio de monitoramento e observabilidade com Prometheus e Grafana, incluindo configuração de alertas e dashboards.
+- Compreensão de conceitos de SRE: SLOs, error budget, toil reduction e blameless postmortems.
+
+DIFERENCIAIS
+- Conhecimento em Go para desenvolvimento de ferramentas internas ou operadores Kubernetes.
+- Experiência com service mesh (Istio, Linkerd ou Consul) e políticas de tráfego.
+- Noções de FinOps para otimização de custos em nuvem.
+- Contribuições em projetos open source relacionados à stack.
+- Experiência com OpenTelemetry para tracing distribuído e coleta de métricas.
+
+BENEFÍCIOS
+- Contrato PJ com remuneração compatível com o mercado.
+- Vale alimentação ou refeição mensal (R$ 800,00).
+- Plano de saúde e odontológico (sem coparticipação).
+- Auxílio home office de R$ 150,00 mensais.
+- Horário flexível e autonomia para organizar sua rotina.
+- Acesso a plataformas de cursos e eventos técnicos.

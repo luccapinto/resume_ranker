@@ -1,0 +1,53 @@
+Karina Yamamoto Brito
+karina.brito@email.com | (21) 94181-5798 | São Paulo, SP | CPF: 010.723.016-01
+
+RESUMO PROFISSIONAL
+Engenheira de Machine Learning Sênior com 7 anos de experiência na concepção, desenvolvimento e deploy de sistemas de inteligência artificial em larga escala. Especialista em modelos de linguagem (LLMs), sistemas de Retrieval-Augmented Generation (RAG) e visão computacional. Profundo conhecimento do ecossistema PyTorch e Hugging Face, com forte atuação em orquestração de containers com Kubernetes e gerenciamento de ciclo de vida de modelos com MLflow. Autora de avaliações comparativas de frameworks RAG, publicadas em conferências nacionais de tecnologia. Experiência comprovada na redução de latência de inferência em 40% e na implementação de pipelines de busca semântica que reduziram o tempo de resposta de queries em 60%.
+
+EXPERIÊNCIA PROFISSIONAL
+
+DataWise Solutions (São Paulo, SP)
+Cargo: Engenheira de Machine Learning Sênior
+Período: Março/2021 - Presente
+- Liderei a migração de modelos de NLP baseados em BERT para uma arquitetura de LLM proprietária (baseada em LLaMA 3) utilizando PyTorch e Hugging Face Transformers, resultando em uma melhoria de 22% na acurácia de respostas para o setor de atendimento ao cliente.
+- Projetei e implementei um sistema RAG para um assistente jurídico, utilizando Qdrant como vector store e um embedding model fine-tuned, reduzindo o tempo de busca de precedentes de 15 segundos para 2.5 segundos (83% de redução) e aumentando a taxa de respostas corretas em 35%.
+- Desenvolvi pipelines de CI/CD para modelos de ML no Kubernetes (AKS), automatizando o deploy de mais de 15 versões de modelo por mês utilizando MLflow para rastreamento de experimentos e versionamento.
+- Realizei um estudo aprofundado comparando frameworks de RAG (LangChain, LlamaIndex e Haystack), publicando um relatório interno que orientou a escolha da stack e resultou em uma economia de 200 horas de desenvolvimento na equipe.
+- Implementei um sistema de monitoramento de drift de dados e modelos no MLflow, reduzindo o tempo de detecção de anomalias de 3 dias para 2 horas.
+
+Nexus Tech (Rio de Janeiro, RJ)
+Cargo: Cientista de Machine Learning Pleno
+Período: Janeiro/2018 - Fevereiro/2021
+- Desenvolvi modelos de recomendação para e-commerce utilizando PyTorch e embeddings treinados com Negative Sampling, aumentando a taxa de conversão em carrinhos de compra em 18%.
+- Construí uma pipeline de inferência assíncrona usando Celery e Redis, integrada ao Kubernetes para escalabilidade horizontal, processando 500 requisições por segundo com latência média de 200 ms.
+- Implementei um sistema de fine-tuning de modelos BERT para classificação de reclamações, utilizando Hugging Face e ferramentas de data augmentation, resultando em um F1-score de 0.92, superando o baseline em 12 pontos percentuais.
+- Contribuí para a criação de um experiment tracker interno baseado em MLflow, que centralizou o registro de mais de 5.000 experimentos entre 4 equipes de ML.
+
+Instituto de Pesquisa em IA (São Paulo, SP)
+Cargo: Analista de Machine Learning Júnior
+Período: Janeiro/2016 - Dezembro/2017
+- Auxiliei na implementação de um modelo de segmentação semântica para imagens de satélite, utilizando PyTorch e a biblioteca Torchvision, alcançando uma precisão de 95% na identificação de regiões de desmatamento.
+- Criei scripts de automação para coleta e limpeza de datasets, processando mais de 10 milhões de registros de texto para treinar um modelo de linguagem do zero.
+- Realizei análises exploratórias de dados (EDA) que reduziram em 30% o tempo total de preparação dos dados para a equipe.
+
+FORMAÇÃO ACADÊMICA
+Mestrado em Ciência da Computação (ênfase em Aprendizado de Máquina) - Universidade Federal de São Paulo (UNIFESP), 2015-2017.
+Bacharelado em Engenharia da Computação - Universidade Estadual de Campinas (UNICAMP), 2011-2015.
+
+CERTIFICAÇÕES
+- Certified Kubernetes Application Developer (CKAD) - CNCF (2022)
+- Deep Learning Specialization - deeplearning.ai (Coursera, 2019)
+- AWS Certified Machine Learning - Specialty (2023)
+
+COMPETÊNCIAS TÉCNICAS
+Linguagens: Python (avançado), SQL (intermediário), C++ (básico).
+Frameworks e Bibliotecas: PyTorch, Hugging Face Transformers, Hugging Face Diffusers, LangChain, LlamaIndex, FastAPI.
+Ferramentas de MLOps: MLflow, Docker, Kubernetes (Helm, Kustomize), Apache Airflow, Git, DVC.
+Bancos de Dados e Vector Stores: PostgreSQL, Qdrant, Pinecone, Redis.
+Modelos e Técnicas: LLMs (LLaMA, Mistral, GPT), Retrieval-Augmented Generation (RAG), Fine-tuning (LoRA, QLoRA), Embeddings, Attention Mechanisms, Computer Vision (YOLO, ResNet).
+Cloud: AWS (SageMaker, S3, EC2), Google Cloud (Vertex AI).
+
+IDIOMAS
+Português: Nativo
+Inglês: Avançado (leitura, escrita e conversação fluente)
+Espanhol: Intermediário (leitura e comunicação básica)

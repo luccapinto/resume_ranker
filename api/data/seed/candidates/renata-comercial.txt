@@ -1,0 +1,45 @@
+Renata Bandeira Nunes
+renata.nunes@email.com | (61) 91695-4172 | São Paulo, SP | CPF: 298.389.072-43
+
+RESUMO PROFISSIONAL
+Analista Comercial Pleno com 4 anos de experiência focada em inteligência de vendas, análise de dados e CRM. Profundo conhecimento em Excel avançado para criação de dashboards e automação de relatórios, aliado ao uso diário do CRM Salesforce para gestão de pipeline e oportunidades. Possuo noções de SQL básico para consultas e extração de dados, visando subsidiar a tomada de decisão com indicadores de performance. Histórico de melhoria de processos comerciais que resultaram em redução de custos e aumento de produtividade.
+
+EXPERIÊNCIA PROFISSIONAL
+
+Grupo RS Soluções Ltda. - São Paulo, SP
+Analista Comercial Pleno
+Julho/2022 - Presente
+- Implementei um novo modelo de relatório de previsão de vendas no Salesforce, reduzindo em 35% o tempo de fechamento mensal da equipe de 12 analistas.
+- Criei dashboards em Excel avançado com integração de dados do Salesforce e sistema ERP, possibilitando a identificação de 15% de oportunidades de cross-sell em contas inativas.
+- Automatizei o processo de extração de dados de leads utilizando consultas SQL básicas, reduzindo o tempo de preparação de relatórios de 4 horas para 40 minutos semanais.
+- Participei ativamente do planejamento comercial, contribuindo para um aumento de 22% na taxa de conversão de leads qualificados em oportunidades no primeiro semestre de 2023.
+- Realizei a curadoria e limpeza de uma base de dados de 8.000 contatos no Salesforce, eliminando duplicidades e melhorando a acurácia dos relatórios de marketing em 18%.
+
+Nova Geração Comércio e Distribuição S.A. - Guarulhos, SP
+Analista Comercial Júnior
+Janeiro/2021 - Junho/2022
+- Monitorei diariamente o funil de vendas no CRM Salesforce para 15 vendedores, gerando relatórios semanais de acompanhamento que reduziram a latência de follow-up de clientes em 2 dias úteis.
+- Desenvolvi planilhas inteligentes em Excel avançado com macros e tabelas dinâmicas para consolidar dados de faturamento, identificando um desvio de 8% nos orçamentos previstos versus realizados.
+- Apoiei a área de Supply Chain com análises de sazonalidade de vendas, contribuindo para a redução de 12% nos custos de armazenagem de produtos com baixo giro.
+- Elaborei apresentações executivas semanais com insights de performance, resultando em uma economia de R$ 50 mil anuais em campanhas de marketing direcionadas a segmentos de baixa performance.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Administração de Empresas
+Universidade Metropolitana de São Paulo (UNIMESP)
+Concluído em Dezembro/2020
+
+CERTIFICAÇÕES
+- Certificação em Excel Avançado para Análise de Dados - Fundação Bradesco, 2021
+- Salesforce Administrator Basics (Trailhead), 2022
+- Workshop de SQL para Consultas e Relatórios - Alura, 2023
+
+COMPETÊNCIAS TÉCNICAS
+- Pacote Office (foco em Excel Avançado: tabelas dinâmicas, procv, índices, dashboards, macros básicas)
+- CRM Salesforce (gestão de oportunidades, criação de relatórios e dashboards, administração de contas e leads)
+- SQL Básico (consultas SELECT, JOIN, filtros WHERE, agregação de dados)
+- Power BI (visualização de dados em nível básico)
+- Ferramentas Google (Planilhas, Apresentações e Documentos)
+
+IDIOMAS
+- Português: Nativo
+- Inglês: Intermediário (leitura e interpretação de relatórios técnicos, conversação básica)

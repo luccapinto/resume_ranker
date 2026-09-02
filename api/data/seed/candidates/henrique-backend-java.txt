@@ -1,0 +1,49 @@
+Henrique Barbosa Vidal
+E-mail: henrique.vidal@email.com | Telefone: (81) 90424-1611 | Cidade: São Paulo, SP | CPF: 923.452.581-79
+
+RESUMO PROFISSIONAL
+Desenvolvedor backend pleno com 6 anos de experiência na construção e manutenção de sistemas corporativos de alta disponibilidade. Especialista no ecossistema Java, com profundo domínio do framework Spring Boot para desenvolvimento de microsserviços e APIs RESTful. Experiência consolidada em bancos de dados relacionais, especialmente PostgreSQL, e em sistemas de mensageria assíncrona com Apache Kafka. Foco em performance, escalabilidade e integridade dos dados, com histórico comprovado em entregas que reduziram latências, otimizaram consultas e automatizaram processos críticos.
+
+EXPERIÊNCIA PROFISSIONAL
+
+Senior Backend Developer, TechNova Soluções Digitais S.A., São Paulo - SP
+Abril/2022 - Presente
+- Liderei a migração de um monolito legado para uma arquitetura de microsserviços em Spring Boot, resultando em uma redução de 40% no tempo médio de deploy e aumento de 25% na frequência de entregas.
+- Projetei e implementei um pipeline de processamento de eventos em tempo real utilizando Apache Kafka, capaz de processar 2 milhões de transações diárias com latência média inferior a 100ms.
+- Otimizei consultas complexas em PostgreSQL, reduzindo em 60% o tempo de resposta de um relatório financeiro crítico, que antes levava mais de 3 minutos para ser gerado.
+- Participei ativamente da definição de contratos de APIs RESTful, garantindo versionamento e retrocompatibilidade entre 5 serviços diferentes.
+
+Backend Developer Pleno, DataFlow Tecnologia Ltda., São Paulo - SP
+Março/2020 - Março/2022
+- Desenvolvi e mantive uma API de integração bancária utilizando Spring Boot e Spring Data JPA, processando mais de 500 mil requisições por dia com disponibilidade de 99,9%.
+- Implementei um sistema de filas de processamento com Kafka e PostgreSQL para desacoplar o fluxo de notificações, reduzindo a sobrecarga no banco de dados em 35%.
+- Conduzi a reestruturação do modelo de dados no PostgreSQL, normalizando tabelas e adicionando índices eficientes, o que gerou uma economia de 30% no custo de armazenamento e melhorou a performance de consultas em 50%.
+- Colaborei com a equipe de QA para automatizar testes de integração e contrato, aumentando a cobertura de testes para 85% e reduzindo o número de bugs em produção.
+
+Desenvolvedor Java Júnior, SolvTech Sistemas Integrados, São Paulo - SP
+Janeiro/2018 - Fevereiro/2020
+- Atuei na manutenção evolutiva de um sistema de gestão empresarial (ERP) legado, utilizando Java 8 e Spring Boot para implementar novos módulos de relatórios.
+- Auxiliei na implementação de um mecanismo de cache distribuído com Redis, reduzindo a latência de consultas a dados de catálogo em 70%.
+- Desenvolvi scripts em SQL para migração e consistência de dados entre bases PostgreSQL, garantindo zero perda de dados durante a migração de um cliente com mais de 1 milhão de registros.
+- Realizei code reviews e contribuí para a padronização do estilo de código da equipe, utilizando ferramentas como SonarQube e Checkstyle.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Ciência da Computação, Universidade Federal de São Paulo (UNIFESP)
+Concluído em: Dezembro/2017
+
+CERTIFICAÇÕES
+- Oracle Certified Professional: Java SE 11 Developer (OCPJP)
+- AWS Certified Developer - Associate (DVA-C02)
+- Spring Professional Certification (VMware)
+
+COMPETÊNCIAS TÉCNICAS
+- Linguagens: Java (8, 11, 17), SQL (PostgreSQL)
+- Frameworks e Bibliotecas: Spring Boot, Spring Data JPA, Spring Security, Spring Cloud, Spring WebFlux
+- Mensageria: Apache Kafka (Producer, Consumer, Streams), Kafka Topics particionados
+- Banco de Dados: PostgreSQL (Performance Tuning, Indexação, PL/pgSQL, Migrações com Flyway)
+- Infraestrutura e Ferramentas: Docker, Kubernetes (K8s), Maven, Git, Jenkins, SonarQube, Prometheus, Grafana
+- Metodologias: SCRUM, Kanban, TDD, CI/CD
+
+IDIOMAS
+- Português: Nativo
+- Inglês: Avançado (leitura técnica fluente, conversação profissional para reuniões e documentação)

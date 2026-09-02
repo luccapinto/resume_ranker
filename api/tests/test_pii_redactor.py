@@ -231,3 +231,79 @@ def test_pii_redactor_initialization_exception():
             PIIRedactor()
             
     assert "Failed to initialize PII Redactor" in str(exc_info.value)
+
+
+# ── Regression: spans that destroyed the résumé's date ranges ───────────────
+from api.redactor import _clamp_spans_to_line, _looks_like_date  # noqa: E402
+
+
+@pytest.mark.parametrize(
+    "value,expected",
+    [
+        ("Fev/2020", True),
+        ("2018", True),
+        ("Mar/2020 - Mai/2022", True),
+        ("2018 - 2020", True),
+        ("Junho/2020", True),
+        ("Ana Souza", False),
+        ("São Paulo", False),
+        ("PayFlow Tecnologia", False),
+    ],
+)
+def test_date_fragments_are_recognised(value, expected):
+    assert _looks_like_date(value) is expected
+
+
+class _FakeResult:
+    def __init__(self, entity_type, start, end):
+        self.entity_type = entity_type
+        self.start = start
+        self.end = end
+
+
+def test_name_spans_are_clamped_at_the_line_break():
+    """A LOCATION span running into the next line would erase a job's end date."""
+    text = "Cargo | Jun/2022 - Presente\n- Definiu o roadmap."
+    over_extended = _FakeResult("LOCATION", text.index("Presente"), len(text))
+
+    clamped = _clamp_spans_to_line([over_extended], text)
+
+    assert len(clamped) == 1
+    assert text[clamped[0].start : clamped[0].end] == "Presente"
+
+
+def test_non_name_entities_are_never_clamped():
+    text = "CPF 307.298.596-06"
+    result = _FakeResult("CPF", 4, len(text))
+    assert _clamp_spans_to_line([result], text)[0].end == len(text)
+
+
+def test_a_span_that_is_only_whitespace_after_clamping_is_dropped():
+    text = "Cargo\n- item"
+    result = _FakeResult("PERSON", 5, len(text))  # starts on the newline itself
+    assert _clamp_spans_to_line([result], text) == []
+
+
+def test_employment_periods_survive_redaction():
+    """The end-to-end guarantee: dates must reach the extractor intact."""
+    redactor = PIIRedactor()
+    resume = (
+        "Xavier Andrade Lacerda\n"
+        "xavier.lacerda@email.com | (21) 99209-2546 | Rio de Janeiro, RJ\n\n"
+        "EXPERIÊNCIA PROFISSIONAL\n\n"
+        "PayFlow Tecnologia S.A.\n"
+        "Product Manager Pleno | Jun/2022 - Presente\n"
+        "- Definiu o roadmap de checkout.\n"
+        "Product Manager Júnior | Mar/2020 - Mai/2022\n"
+        "Analista de Produto | Fev/2018 - Fev/2020\n"
+    )
+    redacted, mapping = redactor.redact(resume)
+
+    for period in ("Jun/2022 - Presente", "Mar/2020 - Mai/2022", "Fev/2018 - Fev/2020"):
+        assert period in redacted, f"período '{period}' foi destruído pela anonimização"
+
+    # The identity itself must still be gone.
+    assert "Xavier Andrade Lacerda" not in redacted
+    assert "xavier.lacerda@email.com" not in redacted
+    assert "(21) 99209-2546" not in redacted
+    assert "[NOME_REDACT_1]" in mapping

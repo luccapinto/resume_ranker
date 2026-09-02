@@ -1,0 +1,49 @@
+Isabela Fontenele Cruz
+E-mail: isabela.cruz@email.com | Telefone: (85) 98343-6340 | São Paulo, SP | CPF: 898.769.076-89
+
+RESUMO PROFISSIONAL
+Desenvolvedora full stack júnior com 2 anos de experiência prática, formada em Análise e Desenvolvimento de Sistemas e certificada em bootcamp intensivo de desenvolvimento web. Domínio de JavaScript, React, Node.js e MongoDB, com capacidade de entregar funcionalidades completas do front-end ao back-end. Foco em código limpo, performance e usabilidade, com histórico de contribuições que reduziram latências, automatizaram processos e melhoraram indicadores de negócio em projetos reais.
+
+EXPERIÊNCIA PROFISSIONAL
+
+NexaTech Soluções Digitais, São Paulo, SP
+Desenvolvedora Full Stack Júnior | Jan/2023 - Atual
+- Desenvolvi e mantive o módulo de agendamento de um sistema de gestão de clínicas usando React, Node.js e MongoDB, reduzindo o tempo médio de agendamento em 40% (de 5 min para 3 min).
+- Criei APIs RESTful para integração com gateways de pagamento, resultando em aumento de 25% na taxa de conversão de agendamentos pagos no primeiro mês.
+- Implementei testes unitários com Jest e testes de integração para 80% das rotas críticas, diminuindo a ocorrência de bugs em produção em 35%.
+- Refatorei consultas agregadas no MongoDB, otimizando a geração de relatórios gerenciais que passaram a ser carregados em 2 segundos (antes 8 segundos), economia de 75% no tempo de espera dos usuários.
+- Participei de sprints semanais no Scrum, contribuindo com estimativas e code reviews para 4 entregas de release com zero retrabalho.
+
+CodeLab Tecnologia, São Paulo, SP
+Desenvolvedora Front-End Júnior | Jun/2022 - Dez/2022
+- Construí três landing pages responsivas para clientes do setor financeiro utilizando React, Styled Components e consumo de APIs REST, alcançando uma média de 92% de satisfação em testes A/B.
+- Reduzi o tamanho do bundle JavaScript em 20% ao implementar lazy loading e code splitting, melhorando o score de performance do Lighthouse de 55 para 85.
+- Colaborei na migração de uma aplicação legada de jQuery para React, reaproveitando componentes e reduzindo o tempo de renderização de listas em 30%.
+- Documentei componentes no Storybook, facilitando o onboarding de 3 novos desenvolvedores e reduzindo dúvidas recorrentes em 50%.
+- Realizei correções de bugs críticos em produção com prioridade, mantendo a disponibilidade do sistema acima de 99,5% no período.
+
+InovaSoft Tecnologia, São Paulo, SP
+Estagiária de Desenvolvimento | Jan/2022 - Mai/2022
+- Apoiei a equipe full stack na manutenção de sistemas internos utilizando JavaScript e Node.js, resolvendo em média 15 tickets por semana com SLA de 4 horas.
+- Automatizei rotinas manuais de backup de dados via scripts Node.js, economizando 10 horas mensais da equipe de infraestrutura.
+- Criei um painel administrativo básico com React e Chart.js para visualização de métricas, adotado por 3 gerentes para tomada de decisão semanal.
+- Participei da migração de dados de um banco MySQL para MongoDB, realizando scripts de transformação que processaram 50 mil registros sem perdas.
+
+FORMAÇÃO ACADÊMICA
+Tecnólogo em Análise e Desenvolvimento de Sistemas | Faculdade Impacta Tecnologia, São Paulo, SP
+Conclusão: Jul/2022
+
+CERTIFICAÇÕES
+- Bootcamp Full Stack JavaScript Developer (120h) – Digital Innovation One, 2022
+- Certificação MongoDB Basics – MongoDB University, 2022
+- Curso Node.js: APIs REST com Express e MongoDB (40h) – Alura, 2022
+- Curso React: Componentes, Hooks e Context API (30h) – Alura, 2021
+
+COMPETÊNCIAS TÉCNICAS
+Linguagens e Frameworks: JavaScript (ES6+), React (hooks, Context API, Styled Components), Node.js (Express, APIs REST), MongoDB (aggregation pipeline, indexes, Mongoose), HTML5, CSS3, Git/GitHub
+Ferramentas e Metodologias: Jest, Postman, Insomnia, Visual Studio Code, Scrum, Kanban, Figma (leitura de layouts), npm, Webpack, Vite
+Banco de Dados: MongoDB (NoSQL), MySQL (básico)
+
+IDIOMAS
+Português: Nativo
+Inglês: Intermediário (leitura e compreensão técnica, conversação básica)

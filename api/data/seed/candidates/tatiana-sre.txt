@@ -1,0 +1,55 @@
+Tatiana Rezende Peixoto
+tatiana.peixoto@email.com | (71) 97533-3630 | São Paulo, SP | CPF: 569.474.921-90
+
+RESUMO PROFISSIONAL
+SRE pleno com seis anos de experiência em plataformas cloud-native e automação de infraestrutura. Especialista em garantir alta disponibilidade e resiliência de sistemas críticos, utilizando Kubernetes, AWS e Terraform para provisionamento de ambientes. Experiência consolidada na implementação de observabilidade com Prometheus, Grafana e OpenTelemetry, além de entrega contínua com ArgoCD. Foco em reliability engineering, definição e monitoramento de SLOs, com forte atuação em regimes de plantão on-call e gestão de incidentes em larga escala.
+
+EXPERIÊNCIA PROFISSIONAL
+
+TechFlow Soluções em Nuvem - São Paulo, SP
+SRE Pleno - Março de 2022 - Presente
+- Redefini a estratégia de observabilidade do principal produto SaaS, implementando dashboards no Grafana com métricas do Prometheus e tracing distribuído via OpenTelemetry, o que reduziu o Mean Time to Detection (MTTD) de incidentes em 40%.
+- Migrei 80% das aplicações monolíticas para um cluster Kubernetes multi-zona na AWS, utilizando Terraform para gerenciamento de infraestrutura como código, resultando em uma economia de 30% nos custos mensais de infraestrutura.
+- Liderei a adoção do ArgoCD para GitOps, automatizando deploys em 15 ambientes de staging e produção, eliminando erros manuais e reduzindo o tempo de rollout de novas features de 2 horas para 15 minutos.
+- Estabeleci e operacionalizei um regime de on-call estruturado, com SLOs de 99,95% para a disponibilidade da API principal, utilizando alertas baseados em burn rate para evitar pages desnecessários.
+- Otimizei o pipeline de CI/CD, integrando testes de carga automatizados com K6, o que reduziu em 25% o número de regressões de performance em produção.
+
+DataCloud Sistemas - Rio de Janeiro, RJ
+SRE Júnior - Janeiro de 2020 - Fevereiro de 2022
+- Gerenciei e mantive um ambiente Kubernetes (EKS) com mais de 200 pods, garantindo auto-scaling eficiente e resolução de problemas de afinidade de rede, resultando em um aumento de 15% na utilização de recursos do cluster.
+- Configurei o stack de monitoramento com Prometheus e Grafana para coletar métricas de aplicações Node.js e Java, reduzindo o tempo de resposta a picos de tráfego em 35% com a criação de alertas proativos.
+- Implementei pipelines de deploy utilizando Helm Charts, padronizando a configuração de 10 microsserviços e reduzindo falhas de configuração em ambientes de staging em 60%.
+- Participei ativamente do plantão on-call semanal, resolvendo uma média de 20 incidentes por mês, com foco em contenção rápida e análise de causa raiz através de logs centralizados no Elasticsearch.
+- Auxiliei na migração de workloads on-premises para a AWS, utilizando Terraform para provisionar VPCs, subnets e security groups, cutando o tempo de provisionamento de uma nova stack de 3 dias para 4 horas.
+
+InnovaTech Serviços de TI - Belo Horizonte, MG
+Analista de Infraestrutura - Julho de 2018 - Dezembro de 2019
+- Administrei servidores Linux (CentOS e Ubuntu) em ambiente híbrido, automatizando tarefas de backup e manutenção com scripts em Python e Bash, o que reduziu o tempo gasto com tarefas repetitivas em 20 horas mensais.
+- Implementei um sistema básico de monitoramento com Nagios e Grafana para métricas de disponibilidade de servidores, contribuindo para a melhoria do SLA interno de 98% para 99,2%.
+- Realizei a documentação e o versionamento de procedimentos operacionais padrão, facilitando o onboarding de novos membros da equipe e reduzindo o tempo de treinamento em 30%.
+
+FORMAÇÃO ACADÊMICA
+
+Universidade Federal de Tecnologia (UFTec) - São Paulo, SP
+Bacharelado em Ciência da Computação - Concluído em 2018
+
+CERTIFICAÇÕES
+
+Certified Kubernetes Administrator (CKA) - CNCF (2022)
+AWS Certified Solutions Architect - Associate (2021)
+HashiCorp Certified: Terraform Associate (2023)
+
+COMPETÊNCIAS TÉCNICAS
+
+Orquestração e Infraestrutura: Kubernetes (EKS), Docker, Terraform, Helm, ArgoCD
+Cloud Computing: AWS (EC2, S3, RDS, VPC, IAM, Lambda)
+Observabilidade e Monitoramento: Prometheus, Grafana, OpenTelemetry, Alertmanager, Loki
+SRE e Confiabilidade: Definição e monitoramento de SLOs, SLIs, Gestão de Incidentes, On-Call, Postmortems
+Linguagens e Scripts: Python, Bash, Go (básico)
+Versionamento e CI/CD: Git, GitHub Actions, GitLab CI, K6
+Sistemas Operacionais: Linux (Ubuntu, CentOS), Shell Script
+
+IDIOMAS
+
+Português: Nativo
+Inglês: Avançado (leitura, escrita e conversação técnica)

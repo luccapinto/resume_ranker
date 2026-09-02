@@ -1,0 +1,50 @@
+Bruno Tavares Nogueira
+
+bruno.nogueira@email.com | (41) 94991-8508 | São Paulo, SP | CPF: 329.018.961-97
+
+RESUMO PROFISSIONAL
+Engenheiro de dados pleno com 5 anos de experiência na construção e manutenção de pipelines de dados escaláveis. Especialista em Apache Airflow, Python, SQL, dbt e Google BigQuery, com foco em modelagem dimensional, otimização de consultas e automação de processos de ETL. Experiência sólida em ambientes cloud (GCP) e boas práticas de versionamento. Sem atuação em streaming, mas com forte capacidade de adaptação a novas tecnologias. Busca desafios que exijam análise crítica, performance e governança de dados.
+
+EXPERIÊNCIA PROFISSIONAL
+
+DataBridge Soluções, São Paulo/SP
+Engenheiro de Dados Pleno
+Janeiro/2022 - Presente
+- Reduzi a latência dos pipelines de ETL em 40% ao migrar transformações legadas para dbt integrado ao BigQuery, processando diariamente mais de 5 TB de dados provenientes de fontes transacionais e APIs.
+- Projetei e orquestrei mais de 200 DAGs no Apache Airflow, implementando retentativas inteligentes e alertas no Slack, o que diminuiu falhas não monitoradas em 60% e garantiu SLAs de entrega em 99,5%.
+- Desenvolvi scripts em Python para validação automatizada de dados de entrada (profiling com pandas e great_expectations), reduzindo erros de qualidade em 30% e eliminando retrabalhos manuais.
+- Liderei a criação de um data warehouse moderno em BigQuery com modelagem star schemas, otimizando consultas analíticas e reduzindo o custo de armazenamento em 25% através de particionamento e clustering.
+
+NovaTech Analytics, São Paulo/SP
+Engenheiro de Dados Júnior
+Janeiro/2020 - Dezembro/2021
+- Modelei e implementei o data warehouse da empresa no BigQuery, utilizando dbt para criar camadas de staging e marts de negócio, o que reduziu o tempo de desenvolvimento de relatórios em 50% e o custo de consultas em 35%.
+- Criei pipelines de extração de dados via API com Python (requests, pandas) e carga incremental no BigQuery, processando mais de 2 milhões de registros diários e garantindo consistência com validações de chave primária.
+- Automatizei dashboards de monitoramento de pipelines no Data Studio (não utilizei streaming), consolidando métricas de sucesso e alertas que ajudaram a equipe a identificar gargalos e melhorar a disponibilidade geral dos dados.
+
+Consultoria PrimeData, São Paulo/SP
+Analista de Dados
+Janeiro/2018 - Dezembro/2019
+- Realizei análises exploratórias e consultas SQL complexas no BigQuery para apoiar a equipe de estratégia, gerando insights que orientaram a redução de churn em 15% ao longo de 12 meses.
+- Automatizei a geração de relatórios mensais de desempenho com Python (pandas, openpyxl) e envio por e-mail, economizando 15 horas/mês da equipe e eliminando erros manuais de consolidação.
+- Participei da migração de dados legados de sistemas on-premise para BigQuery, desenvolvendo scripts de transformação e validação que asseguraram zero perda de dados e 100% de integridade referencial.
+
+FORMAÇÃO ACADÊMICA
+
+Bacharelado em Ciência da Computação - Universidade Federal de São Paulo (UNIFESP), conclusão em 2017.
+Pós-Graduação em Engenharia de Dados - Pontifícia Universidade Católica de São Paulo (PUC-SP), conclusão em 2020.
+
+CERTIFICAÇÕES
+
+Google Cloud Professional Data Engineer (válida)
+dbt Analytics Engineering Certification
+Apache Airflow Fundamentals (Astronomer)
+
+COMPETÊNCIAS TÉCNICAS
+
+Apache Airflow, Python, SQL (BigQuery, PostgreSQL), dbt, Google BigQuery, Google Cloud Platform (GCP), Git, Linux, Modelagem dimensional, ETL/ELT, Otimização de consultas, Testes de dados, Great Expectations.
+
+IDIOMAS
+
+Português: Nativo
+Inglês: Avançado (leitura, escrita e conversação fluentes para reuniões técnicas e documentação)

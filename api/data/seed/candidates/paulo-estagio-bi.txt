@@ -1,0 +1,42 @@
+Paulo Sérgio Bittencourt
+paulo.bittencourt@email.com | (51) 93776-9443 | São Paulo - SP | CPF: 672.301.418-93
+
+RESUMO PROFISSIONAL
+Recém-formado em Estatística com experiência prática em análise de dados, modelagem estatística e visualização. Durante estágio de um ano, apliquei SQL, Power BI e Python para extrair insights, otimizar processos e gerar relatórios gerenciais. Busco oportunidade para contribuir com tomadas de decisão baseadas em dados, utilizando fundamentos estatísticos e ferramentas analíticas modernas.
+
+EXPERIÊNCIA PROFISSIONAL
+DataVault Soluções em Dados, São Paulo - SP
+Estagiário de Analytics
+Fev/2024 - Jan/2025
+- Desenvolvi painéis interativos no Power BI que reduziram em 30% o tempo de análise mensal de indicadores de desempenho da equipe comercial.
+- Escrevi consultas SQL complexas (joins, subconsultas, CTEs) para extrair e agregar dados de um banco PostgreSQL com mais de 2 milhões de registros, diminuindo o tempo de resposta de relatórios em 25%.
+- Implementei scripts em Python (pandas, matplotlib) para automatizar a limpeza e transformação de dados de vendas, eliminando 15 horas mensais de trabalho manual.
+- Realizei testes de hipótese e análises de correlação que auxiliaram na identificação de fatores que aumentaram a taxa de conversão de leads em 12% ao longo de três trimestres.
+
+Universidade Federal do ABC, Santo André - SP
+Iniciação Científica - Laboratório de Estatística Aplicada
+Mar/2023 - Dez/2023
+- Modelei séries temporais de dados meteorológicos utilizando Python (statsmodels, scikit-learn), alcançando erro médio absoluto 18% menor que o modelo de referência.
+- Elaborei relatórios estatísticos com Power BI para apresentar resultados parciais, integrando dados de sensores IoT e viabilizando a tomada de decisão em projeto de eficiência energética.
+- Colaborei na curadoria de um banco de dados com 500 mil observações, aplicando técnicas de detecção de outliers e imputação de missing values, o que elevou a qualidade dos dados em 40%.
+- Apresentei os resultados em congresso de iniciação científica, recebendo menção honrosa pela clareza na comunicação dos achados quantitativos.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Estatística
+Universidade Federal do ABC (UFABC)
+Conclusão: Dezembro/2024
+
+CERTIFICAÇÕES
+- Microsoft Certified: Data Analyst Associate (Power BI) – 2024
+- Google Data Analytics Professional Certificate – 2024
+- SQL for Data Analysis (Coursera - University of California, Davis) – 2023
+
+COMPETÊNCIAS TÉCNICAS
+- Linguagens: Python (pandas, numpy, scikit-learn, statsmodels, matplotlib), SQL (PostgreSQL, MySQL)
+- Ferramentas de BI: Power BI (DAX, M, modelagem de dados), Tableau (básico)
+- Estatística: testes de hipótese, regressão linear e logística, séries temporais, análise de cluster
+- Outros: Excel avançado (Power Query, tabelas dinâmicas), Git, Jupyter Notebook
+
+IDIOMAS
+- Português: nativo
+- Inglês: avançado (leitura, escrita e conversação) – TOEFL iBT 95 (2024)

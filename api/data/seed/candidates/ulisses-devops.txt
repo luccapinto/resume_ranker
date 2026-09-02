@@ -1,0 +1,45 @@
+Ulisses Amorim Botelho
+ulisses.botelho@email.com | (81) 95452-8359 | São Paulo - SP | CPF: 387.452.505-88
+
+RESUMO PROFISSIONAL
+Engenheiro DevOps pleno com 5 anos de experiência em automação de infraestrutura, pipelines de CI/CD e gerenciamento de ambientes em nuvem AWS. Sólido conhecimento em Docker, Jenkins e Ansible, com início de atuação em Kubernetes. Foco em otimização de processos, redução de custos operacionais e aumento da confiabilidade de sistemas. Histórico de entrega de projetos que resultaram em ganhos de desempenho e economia de recursos.
+
+EXPERIÊNCIA PROFISSIONAL
+
+DataFlow Tecnologia Ltda - São Paulo, SP
+Engenheiro DevOps Pleno
+Janeiro/2022 - Presente
+- Reduziu o tempo médio de deploy de aplicações de 45 minutos para 12 minutos (queda de 73%) ao migrar pipelines Jenkins para uma arquitetura baseada em contêineres Docker e orquestração inicial com Kubernetes.
+- Automatizou a configuração de 120 servidores EC2 com Ansible, eliminando falhas manuais e diminuindo o tempo de provisionamento de 4 horas para 35 minutos por servidor.
+- Implementou monitoramento e auto-scaling na AWS EC2, resultando em 99,95% de disponibilidade das aplicações e economia de 28% nos custos mensais de infraestrutura (redução de R$ 18.000 para R$ 12.960).
+- Configurou pipelines de CI/CD com Jenkins integrados ao GitHub Actions, aumentando a frequência de releases de semanais para diárias e reduzindo retrabalho em 60%.
+
+Nuvem Segura Sistemas - São Paulo, SP
+Engenheiro DevOps Júnior
+Março/2020 - Dezembro/2021
+- Criou e gerenciou ambientes de desenvolvimento e produção com Docker Compose e Docker Swarm, suportando 15 microsserviços e garantindo latência média inferior a 200ms.
+- Desenvolveu playbooks Ansible para deploy de aplicações web em instâncias EC2, reduzindo o tempo de setup de novos ambientes de 2 dias para 3 horas (75% de ganho).
+- Participou da migração de 30 workloads on-premises para AWS EC2, alcançando 40% de redução em custos operacionais e melhoria de 35% na performance de bancos de dados.
+- Automatizou backups e snapshots de volumes EBS com scripts Shell e cron jobs, garantindo RPO de 4 horas e RTO de 30 minutos, com 100% de sucesso nos testes de recuperação.
+
+InovaTI Soluções - São Paulo, SP
+Analista de Infraestrutura
+Junho/2018 - Fevereiro/2020
+- Administrou servidores Linux (Ubuntu e CentOS) para aplicações internas, mantendo 99,5% de uptime e resolvendo incidentes em SLA de 2 horas.
+- Implementou pipeline Jenkins para build e testes unitários de código Java, reduzindo o tempo de feedback de 1 hora para 8 minutos (87% de melhoria).
+- Utilizou Ansible para padronizar configurações de 50 máquinas virtuais, eliminando inconsistências e diminuindo chamados de suporte em 45%.
+- Auxiliou na migração de aplicações para contêineres Docker, treinando equipes internas e aumentando a eficiência de deploy em 50%.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Engenharia da Computação - Universidade Federal do Estado de São Paulo (UNIFESP), conclusão em 2018.
+
+CERTIFICAÇÕES
+- AWS Certified Solutions Architect – Associate (AWS, 2021)
+- Docker Certified Associate (Docker, 2020)
+
+COMPETÊNCIAS TÉCNICAS
+Docker (avançado), Jenkins (avançado), Ansible (avançado), AWS EC2 (avançado), Kubernetes (básico), Linux Administration, Git, Shell Script, Python, CI/CD Pipelines, Terraform (intermediário), Monitoramento (CloudWatch, Prometheus), Redes TCP/IP.
+
+IDIOMAS
+Português: nativo
+Inglês: avançado (leitura, escrita e conversação)

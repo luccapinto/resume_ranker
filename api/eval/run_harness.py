@@ -1,184 +1,280 @@
-import os
+"""Information-retrieval evaluation of the ranking pipeline.
+
+Relevance judgements come from the seed manifest: each synthetic résumé was
+written to be a `forte` / `moderado` / `baixo` fit for one specific job, which
+maps to graded relevance 3 / 2 / 0. Candidates written for a *different* job are
+graded 0 for this one, so every job has a full judged pool.
+
+    python -m api.eval.run_harness                 # compare configurations
+    python -m api.eval.run_harness --json out.json # also write the raw numbers
+
+Reported metrics: NDCG@5, NDCG@10 and MRR (first result with relevance ≥ 2).
+"""
+
+from __future__ import annotations
+
+import argparse
 import json
 import math
-from typing import List, Dict, Tuple
+import os
+import sys
+from typing import Dict, List, Optional, Tuple
+
 from sqlalchemy.orm import Session
-from qdrant_client import QdrantClient
 
-from api.database import SessionLocal
-from api.models import ProfileModel
-from sqlalchemy import text
-from api.embeddings import get_embedding_provider
-from api.search import hybrid_search_and_rerank
 from api.config import settings
+from api.database import SessionLocal, get_qdrant
+from api.embeddings import get_embedding_provider
+from api.models import CandidateModel, JobModel, ProfileModel
+from api.search import build_profile_texts, hybrid_search_and_rerank
 
-def dcg_at_k(r: List[float], k: int) -> float:
-    """Calculates Discounted Cumulative Gain (DCG) at rank K."""
-    r = r[:k]
-    dcg = 0.0
-    for idx, rel in enumerate(r):
-        dcg += (2**rel - 1.0) / math.log2(idx + 2.0)
-    return dcg
+# Progress must reach a redirected log immediately; block buffering makes these
+# scripts look frozen for the twenty minutes they take to run.
+sys.stdout.reconfigure(line_buffering=True)
 
-def ndcg_at_k(r: List[float], k: int, ideal_r: List[float]) -> float:
-    """Calculates Normalized Discounted Cumulative Gain (NDCG) at rank K."""
-    dcg_val = dcg_at_k(r, k)
-    # Ideal DCG is calculated from sorted ideal relevances
-    sorted_ideal = sorted(ideal_r, reverse=True)
-    idcg_val = dcg_at_k(sorted_ideal, k)
-    if idcg_val == 0.0:
-        return 0.0
-    return dcg_val / idcg_val
+FIT_TO_RELEVANCE = {"forte": 3, "moderado": 2, "baixo": 0}
+SEED_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "seed")
 
-def mean_reciprocal_rank(r: List[float], threshold: float = 2.0) -> float:
-    """Calculates Reciprocal Rank (RR) based on the first item with relevance >= threshold."""
-    for idx, rel in enumerate(r):
+
+# ── Metrics ─────────────────────────────────────────────────────────────────
+def dcg_at_k(relevances: List[float], k: int) -> float:
+    return sum((2**rel - 1.0) / math.log2(i + 2.0) for i, rel in enumerate(relevances[:k]))
+
+
+def ndcg_at_k(retrieved: List[float], k: int, ideal: List[float]) -> float:
+    idcg = dcg_at_k(sorted(ideal, reverse=True), k)
+    return dcg_at_k(retrieved, k) / idcg if idcg else 0.0
+
+
+def reciprocal_rank(relevances: List[float], threshold: float = 2.0) -> float:
+    for i, rel in enumerate(relevances):
         if rel >= threshold:
-            return 1.0 / (idx + 1.0)
+            return 1.0 / (i + 1.0)
     return 0.0
 
-def run_evaluation(
-    db: Session,
-    qdrant_client: QdrantClient,
-    qrels: Dict[str, Dict[str, int]],
-    weights: List[float]
-) -> Tuple[float, float, float]:
-    """Runs evaluation over all query/job keys in qrels and returns mean NDCG@5, NDCG@10, and MRR."""
-    provider = get_embedding_provider()
-    
-    total_ndcg_5 = 0.0
-    total_ndcg_10 = 0.0
-    total_mrr = 0.0
-    queries_run = 0
-    
-    for job_id_str, candidate_relevances in qrels.items():
-        job_id = int(job_id_str)
-        # Fetch job requirements
-        job_db = db.query(ProfileModel).filter(ProfileModel.id == job_id, ProfileModel.type == "job").first()
-        if not job_db:
-            continue
-            
-        ext_prof = job_db.extracted_profile
-        skills_normalized = ext_prof.get("skills_normalized", [])
-        skills_labels = [s.get("preferred_label") for s in skills_normalized if s.get("preferred_label")]
-        skills_text = " ".join(skills_labels)
-        if not skills_text:
-            skills_text = " ".join(ext_prof.get("skills_raw", []))
-            
-        narrative_text = ext_prof.get("narrative_experience", "")
-        
-        # Execute hybrid search with candidate collection
-        try:
-            results = hybrid_search_and_rerank(
-                client=qdrant_client,
-                collection="candidates",
-                query_text=narrative_text,
-                skills_text=skills_text,
-                provider=provider,
-                top_k_hybrid=20,
-                top_n_final=10,
-                rerank=True,
-                weights=weights
-            )
-        except Exception as e:
-            print(f"Query for job {job_id} failed: {e}")
-            continue
-            
-        # Map retrieved candidate IDs to their relevance judgments
-        retrieved_rels = []
-        for r in results:
-            cand_id_str = str(r["id"])
-            rel = candidate_relevances.get(cand_id_str, 0)
-            retrieved_rels.append(float(rel))
-            
-        # Get all relevance scores for the query to calculate ideal DCG
-        ideal_rels = [float(rel) for rel in candidate_relevances.values()]
-        
-        ndcg_5 = ndcg_at_k(retrieved_rels, 5, ideal_rels)
-        ndcg_10 = ndcg_at_k(retrieved_rels, 10, ideal_rels)
-        mrr = mean_reciprocal_rank(retrieved_rels, threshold=2.0)
-        
-        total_ndcg_5 += ndcg_5
-        total_ndcg_10 += ndcg_10
-        total_mrr += mrr
-        queries_run += 1
-        
-    if queries_run == 0:
-        return 0.0, 0.0, 0.0
-        
-    return (
-        total_ndcg_5 / queries_run,
-        total_ndcg_10 / queries_run,
-        total_mrr / queries_run
-    )
 
-def main():
-    # Load relevance judgments
-    qrels_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "qrels.json")
-    if not os.path.exists(qrels_path):
-        print(f"Qrels file not found at {qrels_path}")
-        return
-        
-    with open(qrels_path, "r", encoding="utf-8") as f:
-        qrels = json.load(f)
-        
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import sessionmaker
-    
-    # 1. Setup Postgres or SQLite
-    try:
-        db = SessionLocal()
-        # Test connection
-        db.execute(text("SELECT 1"))
-        print("Using real PostgreSQL database.")
-    except Exception:
-        print("Aviso: Falha ao conectar ao Postgres Docker. Usando SQLite local (api/eval/resume_ranker_eval.db).")
-        db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resume_ranker_eval.db")
-        engine_sqlite = create_engine(f"sqlite:///{db_path}")
-        db = sessionmaker(bind=engine_sqlite)()
-        
-    # 2. Setup Qdrant
-    try:
-        qdrant_client = QdrantClient(host=settings.QDRANT_HOST, port=settings.QDRANT_PORT)
-        qdrant_client.get_collections()
-        print("Using real Docker Qdrant client.")
-    except Exception:
-        print("Aviso: Falha ao conectar ao Qdrant Docker. Usando Qdrant local persistido no disco (api/eval/qdrant_storage).")
-        qdrant_storage_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "qdrant_storage")
-        qdrant_client = QdrantClient(path=qdrant_storage_path)
-    
-    # Check if database has profiles
-    candidate_count = db.query(ProfileModel).filter(ProfileModel.type == "candidate").count()
-    job_count = db.query(ProfileModel).filter(ProfileModel.type == "job").count()
-    
-    if candidate_count == 0 or job_count == 0:
-        print("Aviso: A base de dados está vazia ou sem perfis cadastrados.")
-        print("Por favor, execute o script de seeding primeiro: python -m api.eval.seed_data")
-        db.close()
-        return
-        
-    print(f"Iniciando Harness de Avaliação de Retrieval ({candidate_count} candidatos, {job_count} vagas)...")
-    print("-" * 75)
-    
-    # 3 distinct configurations to benchmark:
-    # 1. Balanced: [1.0, 1.0, 1.0] (skills, narrative, lexical)
-    # 2. Hard Skills Weighted: [2.0, 0.5, 1.0]
-    # 3. Narrative/Soft weighted: [0.5, 2.0, 0.5]
-    configs = [
-        {"name": "Balanced (Skills=1.0, Narrative=1.0, Lexical=1.0)", "weights": [1.0, 1.0, 1.0]},
-        {"name": "Hard Skills Heavy (Skills=2.0, Narrative=0.5, Lexical=1.0)", "weights": [2.0, 0.5, 1.0]},
-        {"name": "Narrative Heavy (Skills=0.5, Narrative=2.0, Lexical=0.5)", "weights": [0.5, 2.0, 0.5]},
+# ── Ground truth ────────────────────────────────────────────────────────────
+def build_qrels(db: Session) -> Dict[int, Dict[int, int]]:
+    """Map job profile id → {candidate profile id: graded relevance}."""
+    manifest_path = os.path.join(SEED_DIR, "manifest.json")
+    if not os.path.exists(manifest_path):
+        raise FileNotFoundError(
+            "manifest.json não encontrado — rode `python -m api.eval.generate_seed_corpus` primeiro."
+        )
+    with open(manifest_path, encoding="utf-8") as f:
+        manifest = json.load(f)
+
+    jobs_by_title = {j.title: j for j in db.query(JobModel).all()}
+    job_profile_by_slug = {
+        spec["slug"]: jobs_by_title[spec["title"]].profile_id
+        for spec in manifest["jobs"]
+        if spec["title"] in jobs_by_title
+    }
+
+    profiles_by_file = {
+        p.file_name: p.id
+        for p in db.query(ProfileModel).filter(ProfileModel.type == "candidate").all()
+    }
+
+    qrels: Dict[int, Dict[int, int]] = {pid: {} for pid in job_profile_by_slug.values()}
+    for spec in manifest["candidates"]:
+        candidate_profile_id = profiles_by_file.get(f"{spec['slug']}.txt")
+        if candidate_profile_id is None:
+            continue
+        target_job_profile = job_profile_by_slug.get(spec.get("job") or "")
+        for job_profile_id in qrels:
+            if job_profile_id == target_job_profile:
+                qrels[job_profile_id][candidate_profile_id] = FIT_TO_RELEVANCE[spec["fit"]]
+            else:
+                # Written for another role (or an outlier) — irrelevant here.
+                qrels[job_profile_id][candidate_profile_id] = 0
+    return qrels
+
+
+# ── Evaluation ──────────────────────────────────────────────────────────────
+def evaluate(
+    db: Session,
+    qrels: Dict[int, Dict[int, int]],
+    weights: Optional[List[float]],
+    rerank: bool,
+    top_k: int = 30,
+    top_n: int = 10,
+) -> Tuple[float, float, float, int]:
+    provider = get_embedding_provider()
+    client = get_qdrant()
+
+    totals = [0.0, 0.0, 0.0]
+    queries = 0
+
+    for job_profile_id, judgements in qrels.items():
+        job_profile = db.query(ProfileModel).filter(ProfileModel.id == job_profile_id).first()
+        if not job_profile:
+            continue
+
+        texts = build_profile_texts(job_profile.extracted_profile or {})
+        results = hybrid_search_and_rerank(
+            client=client,
+            collection="candidates",
+            query_text=texts["narrative_text"],
+            skills_text=texts["skills_text"],
+            provider=provider,
+            top_k_hybrid=top_k,
+            top_n_final=top_n,
+            rerank=rerank,
+            weights=weights,
+        )
+
+        retrieved = [float(judgements.get(r["id"], 0)) for r in results]
+        ideal = [float(v) for v in judgements.values()]
+
+        totals[0] += ndcg_at_k(retrieved, 5, ideal)
+        totals[1] += ndcg_at_k(retrieved, 10, ideal)
+        totals[2] += reciprocal_rank(retrieved)
+        queries += 1
+
+    if not queries:
+        return 0.0, 0.0, 0.0, 0
+    return totals[0] / queries, totals[1] / queries, totals[2] / queries, queries
+
+
+# Labels are English because they end up in the README table.
+SHIPPED = "RRF, default weights + cross-encoder"
+
+CONFIGURATIONS = [
+    ("Skills vector only (dense)", [1.0, 0.0, 0.0], False),
+    ("Narrative vector only (dense)", [0.0, 1.0, 0.0], False),
+    ("Lexical vector only (sparse)", [0.0, 0.0, 1.0], False),
+    ("RRF, equal weights, no rerank", [1.0, 1.0, 1.0], False),
+    ("RRF, default weights, no rerank", [1.0, 1.0, 0.5], False),
+    (SHIPPED, [1.0, 1.0, 0.5], True),
+    ("RRF, skills-heavy + cross-encoder", [1.5, 1.0, 0.5], True),
+    ("RRF, narrative-heavy + cross-encoder", [1.0, 1.5, 0.5], True),
+]
+
+
+README_MARKER = "<!-- EVAL_TABLE -->"
+README_END_MARKER = "<!-- /EVAL_TABLE -->"
+
+
+def to_markdown(rows: List[dict], reranker: str, jobs: int, candidates: int, judgements: int) -> str:
+    """Render the results as the table embedded in the README."""
+    best5 = max(rows, key=lambda r: r["ndcg@5"])
+    best10 = max(rows, key=lambda r: r["ndcg@10"])
+    lines = [
+        README_MARKER,
+        "",
+        "| Configuration | Weights | Rerank | NDCG@5 | NDCG@10 | MRR |",
+        "|---|---|:---:|---:|---:|---:|",
     ]
-    
-    print(f"{'Configuração':<50} | {'NDCG@5':<8} | {'NDCG@10':<8} | {'MRR':<6}")
-    print("-" * 80)
-    
-    for cfg in configs:
-        ndcg_5, ndcg_10, mrr = run_evaluation(db, qdrant_client, qrels, cfg["weights"])
-        print(f"{cfg['name']:<50} | {ndcg_5:8.4f} | {ndcg_10:8.4f} | {mrr:6.4f}")
-        
-    print("-" * 80)
-    db.close()
+    for row in rows:
+        weights = ", ".join(f"{w:g}" for w in row["weights"])
+        label = f"**{row['config']}** ← shipped" if row["config"] == SHIPPED else row["config"]
+        cell5 = f"**{row['ndcg@5']:.4f}**" if row is best5 else f"{row['ndcg@5']:.4f}"
+        cell10 = f"**{row['ndcg@10']:.4f}**" if row is best10 else f"{row['ndcg@10']:.4f}"
+        lines.append(
+            f"| {label} | `{weights}` | {'yes' if row['rerank'] else 'no'} | "
+            f"{cell5} | {cell10} | {row['mrr']:.4f} |"
+        )
+    lines += [
+        "",
+        f"<sub>{jobs} queries · {candidates} candidates · {judgements} graded judgements · "
+        f"reranker <code>{reranker}</code>. Best value per column in bold. "
+        f"Regenerate with <code>make eval</code>.</sub>",
+        "",
+        README_END_MARKER,
+    ]
+    return "\n".join(lines)
+
+
+def update_readme(markdown: str) -> None:
+    """Replace the table in the README, keeping everything around it intact."""
+    readme = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "README.md"
+    )
+    with open(readme, encoding="utf-8") as f:
+        content = f.read()
+
+    start = content.find(README_MARKER)
+    end = content.find(README_END_MARKER, start)
+    if start == -1 or end == -1:
+        print(
+            f"Marcadores {README_MARKER} … {README_END_MARKER} não encontrados no README; "
+            "nada a atualizar."
+        )
+        return
+
+    # Replace only what sits between the markers — the surrounding analysis is
+    # written by hand and must survive a regeneration.
+    with open(readme, "w", encoding="utf-8") as f:
+        f.write(content[:start] + markdown + content[end + len(README_END_MARKER) :])
+    print("README atualizado com a tabela de avaliação.")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--json", help="Caminho para gravar os resultados brutos")
+    parser.add_argument("--readme", action="store_true", help="Atualiza a tabela no README.md")
+    args = parser.parse_args()
+
+    db = SessionLocal()
+    try:
+        qrels = build_qrels(db)
+        judged = sum(len(v) for v in qrels.values())
+        candidates = db.query(CandidateModel).count()
+
+        print(f"Reranker: {settings.RERANKER_MODEL}")
+        print(f"Embeddings: {get_embedding_provider().name}")
+        print(f"{len(qrels)} vagas · {candidates} candidatos · {judged} julgamentos de relevância\n")
+
+        header = f"{'Configuration':<40}{'NDCG@5':>9}{'NDCG@10':>10}{'MRR':>8}"
+        print(header)
+        print("─" * len(header))
+
+        rows = []
+        for label, weights, rerank in CONFIGURATIONS:
+            ndcg5, ndcg10, mrr, queries = evaluate(db, qrels, weights, rerank)
+            rows.append(
+                {
+                    "config": label,
+                    "weights": weights,
+                    "rerank": rerank,
+                    "ndcg@5": round(ndcg5, 4),
+                    "ndcg@10": round(ndcg10, 4),
+                    "mrr": round(mrr, 4),
+                    "queries": queries,
+                }
+            )
+            print(f"{label:<40}{ndcg5:>9.4f}{ndcg10:>10.4f}{mrr:>8.4f}")
+
+        for metric in ("ndcg@5", "ndcg@10", "mrr"):
+            best = max(rows, key=lambda r: r[metric])
+            print(f"Melhor por {metric.upper():<8} {best['config']} ({best[metric]:.4f})")
+
+        if args.readme:
+            update_readme(
+                to_markdown(
+                    rows, settings.RERANKER_MODEL, len(qrels), candidates, judged
+                )
+            )
+
+        if args.json:
+            with open(args.json, "w", encoding="utf-8") as f:
+                json.dump(
+                    {
+                        "reranker": settings.RERANKER_MODEL,
+                        "embeddings": get_embedding_provider().name,
+                        "jobs": len(qrels),
+                        "candidates": candidates,
+                        "results": rows,
+                    },
+                    f,
+                    ensure_ascii=False,
+                    indent=2,
+                )
+            print(f"Resultados gravados em {args.json}")
+    finally:
+        db.close()
+
 
 if __name__ == "__main__":
     main()

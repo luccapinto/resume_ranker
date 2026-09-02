@@ -1,129 +1,294 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────────────────────
+   Design tokens
+   The chart palette is not decorative: the six categorical slots were run
+   through the CVD/contrast validator against this app's dark chart surface
+   (#151519) and pass every gate. Do not re-order or substitute them casually.
+   ───────────────────────────────────────────────────────────────────────── */
 :root {
-  --background: #09090b;
-  --foreground: #f4f4f5;
-  --border-color: rgba(255, 255, 255, 0.08);
-  color-scheme: dark; /* Forces native browser components to render in dark mode */
-}
-
-select {
   color-scheme: dark;
-  background-color: #18181b !important;
-  color: #ffffff !important;
-}
 
-select option {
-  background-color: #18181b !important;
-  color: #ffffff !important;
+  /* Planes */
+  --plane: #08080b;
+  --surface-1: #151519;
+  --surface-2: #1c1c22;
+  --surface-3: #24242c;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Ink */
+  --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+
+  /* Brand */
+  --accent: #6366f1;
+  --accent-soft: #818cf8;
+  --accent-2: #a855f7;
+
+  /* Chart chrome */
+  --grid: #26262c;
+  --axis: #33333c;
+
+  /* Categorical series — validated set, fixed order */
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+
+  /* Status — reserved, always paired with an icon + label */
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #d03b3b;
+
+  /* Ordinal blue ramp for the funnel (light → dark, floor at step 600) */
+  --ordinal-1: #b7d3f6;
+  --ordinal-2: #86b6ef;
+  --ordinal-3: #5598e7;
+  --ordinal-4: #2a78d6;
+  --ordinal-5: #1c5cab;
+  --ordinal-6: #184f95;
+
+  --background: var(--plane);
+  --foreground: var(--text-primary);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-plane: var(--plane);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-ink: var(--text-primary);
+  --color-ink-secondary: var(--text-secondary);
+  --color-ink-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-2: var(--accent-2);
+  --color-good: var(--status-good);
+  --color-warning: var(--status-warning);
+  --color-serious: var(--status-serious);
+  --color-critical: var(--status-critical);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+* {
+  border-color: var(--border);
+}
+
+html,
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  background-color: var(--plane);
+  color: var(--text-primary);
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Glassmorphism card utility */
-.glass-panel {
-  background: rgba(20, 20, 25, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-}
-
-.glass-panel-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.glass-panel-hover:hover {
-  background: rgba(25, 25, 35, 0.7);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 12px 40px 0 rgba(99, 102, 241, 0.15); /* subtle indigo glow */
-  transform: translateY(-2px);
-}
-
-.glass-input {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #fff;
-  transition: all 0.2s ease;
-}
-
-.glass-input:focus {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(99, 102, 241, 0.5); /* Indigo focus */
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
-}
-
-.glass-input option {
-  background-color: #18181b; /* Dark background for options in select */
-  color: #ffffff; /* White text for options */
-}
-
-/* Glowing backgrounds */
-.glow-bg-primary {
-  position: absolute;
-  top: -10%;
-  left: -10%;
-  width: 50%;
-  height: 50%;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0,0,0,0) 70%);
-  z-index: -1;
-  pointer-events: none;
-  filter: blur(80px);
-}
-
-.glow-bg-secondary {
-  position: absolute;
-  bottom: -10%;
-  right: -10%;
-  width: 50%;
-  height: 50%;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, rgba(0,0,0,0) 70%);
-  z-index: -1;
-  pointer-events: none;
-  filter: blur(80px);
-}
-
-/* Grid background */
-.grid-bg {
-  position: absolute;
+/* Ambient light behind the whole app — fixed so it never scrolls away. */
+body::before {
+  content: "";
+  position: fixed;
   inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-position: center;
-  z-index: -2;
+  z-index: -1;
   pointer-events: none;
+  background:
+    radial-gradient(900px 520px at 12% -8%, rgba(99, 102, 241, 0.16), transparent 62%),
+    radial-gradient(760px 460px at 92% 4%, rgba(168, 85, 247, 0.12), transparent 60%),
+    radial-gradient(700px 500px at 50% 108%, rgba(56, 135, 229, 0.08), transparent 60%);
 }
 
-/* Custom Scrollbar */
+/* ── Surfaces ──────────────────────────────────────────────────────────── */
+.panel {
+  background: rgba(21, 21, 25, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.panel-flat {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.panel-hover {
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.panel-hover:hover {
+  background: rgba(28, 28, 34, 0.82);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px -12px rgba(99, 102, 241, 0.28);
+}
+
+/* ── Controls ──────────────────────────────────────────────────────────── */
+.field {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.field:focus,
+.field:focus-visible {
+  outline: none;
+  border-color: var(--accent-soft);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+}
+
+.field::placeholder {
+  color: var(--text-muted);
+}
+
+select.field {
+  background-color: var(--surface-2);
+}
+
+select.field option {
+  background-color: var(--surface-2);
+  color: var(--text-primary);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: background-color 160ms ease, border-color 160ms ease, opacity 160ms ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  color: #fff;
+  border: 1px solid transparent;
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+/* ── Scrollbars ────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
+  background-clip: content-box;
+}
+
+/* ── Motion ────────────────────────────────────────────────────────────── */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.07), transparent);
+  animation: shimmer 1.6s infinite;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.pulse-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .skeleton::after,
+  .pulse-dot {
+    animation: none;
+  }
+  .panel-hover:hover {
+    transform: none;
+  }
+}
+
+/* Numeric columns that must line up vertically. */
+.tabular {
+  font-variant-numeric: tabular-nums;
 }

@@ -1,28 +1,69 @@
 import os
-from pydantic_settings import BaseSettings
+from typing import List
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
 
 class Settings(BaseSettings):
-    POSTGRES_USER: str = os.getenv("POSTGRES_USER", "postgres")
-    POSTGRES_PASSWORD: str = os.getenv("POSTGRES_PASSWORD", "postgrespassword")
-    POSTGRES_DB: str = os.getenv("POSTGRES_DB", "resume_ranker")
-    POSTGRES_HOST: str = os.getenv("POSTGRES_HOST", "localhost")
-    POSTGRES_PORT: int = int(os.getenv("POSTGRES_PORT", "5432"))
+    """Central application settings, loaded from environment or `api/.env`."""
 
-    QDRANT_HOST: str = os.getenv("QDRANT_HOST", "localhost")
-    QDRANT_PORT: int = int(os.getenv("QDRANT_PORT", "6333"))
+    model_config = SettingsConfigDict(
+        env_file=os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"),
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
-    EMBEDDING_PROVIDER: str = os.getenv("EMBEDDING_PROVIDER", "local")
-    EMBEDDING_MODEL_LOCAL: str = os.getenv("EMBEDDING_MODEL_LOCAL", "paraphrase-multilingual-MiniLM-L12-v2")
-    EMBEDDING_MODEL_OPENAI: str = os.getenv("EMBEDDING_MODEL_OPENAI", "text-embedding-3-small")
-    EMBEDDING_MODEL_VOYAGE: str = os.getenv("EMBEDDING_MODEL_VOYAGE", "voyage-multilingual-2")
-    OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
-    VOYAGE_API_KEY: str = os.getenv("VOYAGE_API_KEY", "")
+    # ── Storage ─────────────────────────────────────────────────────
+    POSTGRES_USER: str = "postgres"
+    POSTGRES_PASSWORD: str = "postgrespassword"
+    POSTGRES_DB: str = "resume_ranker"
+    POSTGRES_HOST: str = "localhost"
+    POSTGRES_PORT: int = 5432
+    DATABASE_URL: str = ""
+
+    QDRANT_HOST: str = "localhost"
+    QDRANT_PORT: int = 6333
+
+    # ── Embeddings ──────────────────────────────────────────────────
+    EMBEDDING_PROVIDER: str = "local"
+    EMBEDDING_MODEL_LOCAL: str = "paraphrase-multilingual-MiniLM-L12-v2"
+    EMBEDDING_MODEL_OPENAI: str = "text-embedding-3-small"
+    EMBEDDING_MODEL_VOYAGE: str = "voyage-multilingual-2"
+    RERANKER_MODEL: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+
+    OPENAI_API_KEY: str = ""
+    VOYAGE_API_KEY: str = ""
+
+    # ── LLM (OpenRouter) ────────────────────────────────────────────
+    OPENROUTER_API_KEY: str = ""
+    OPENROUTER_MODEL: str = "deepseek/deepseek-v4-flash"
+    OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
+    LLM_TIMEOUT_SECONDS: float = 90.0
+    LLM_MAX_RETRIES: int = 3
+
+    # ── App ─────────────────────────────────────────────────────────
+    CORS_ORIGINS: str = "http://localhost:3100,http://127.0.0.1:3100,http://localhost:3000"
+    PDF_STORAGE_DIR: str = ""
+    OBSERVABILITY_PAYLOAD_LIMIT: int = 4000
 
     @property
     def database_url(self) -> str:
-        return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+        if self.DATABASE_URL:
+            return self.DATABASE_URL
+        return (
+            f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
+            f"@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+        )
 
-    class Config:
-        env_file = ".env"
+    @property
+    def cors_origins(self) -> List[str]:
+        return [o.strip() for o in self.CORS_ORIGINS.split(",") if o.strip()]
+
+    @property
+    def pdf_dir(self) -> str:
+        """Absolute path for stored PDFs — independent of the process CWD."""
+        if self.PDF_STORAGE_DIR:
+            return self.PDF_STORAGE_DIR
+        return os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "pdfs")
+
 
 settings = Settings()

@@ -1,6 +1,8 @@
 import re
-from typing import List, Dict, Any, Tuple
-from presidio_analyzer import AnalyzerEngine, PatternRecognizer, Pattern, RecognizerResult
+from typing import Dict, Tuple
+
+from api import observability as obs
+from presidio_analyzer import AnalyzerEngine, PatternRecognizer, Pattern
 from presidio_analyzer.nlp_engine import NlpEngineProvider
 from presidio_analyzer.predefined_recognizers import EmailRecognizer, IpRecognizer
 
@@ -137,6 +139,55 @@ PII_WHITELIST = {
 }
 
 
+# Entity types where spaCy's NER regularly over-extends past the end of a name.
+_LINE_BOUND_ENTITIES = {"PERSON", "LOCATION", "ORGANIZATION"}
+
+# Date fragments the NER keeps mistaking for names — "Fev/2020", "2018 - 2020",
+# "Mar/2020 - Mai/2022". Redacting these erases the job's period, and the
+# extractor then reports zero years of experience for a senior candidate.
+_MONTHS = r"jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez"
+_DATE_LIKE = re.compile(
+    rf"^\s*(?:(?:{_MONTHS})[a-zç]*\.?\s*[/-]?\s*)?\d{{4}}"
+    rf"(?:\s*[-–—a]+\s*(?:(?:{_MONTHS})[a-zç]*\.?\s*[/-]?\s*)?\d{{4}})?\s*$",
+    re.IGNORECASE,
+)
+
+
+def _looks_like_date(value: str) -> bool:
+    return bool(_DATE_LIKE.match(value.strip()))
+
+
+def _clamp_spans_to_line(results, text: str):
+    """Stop name-like entities at the end of their own line.
+
+    spaCy will happily produce a LOCATION span that starts at "Presente" on a
+    résumé's date range and runs into the next bullet. Redacting that span wipes
+    out the job's end date, and the extractor then reports zero years of
+    experience. A person, place or company never legitimately spans a line
+    break in a résumé, so we cut the span there and drop it if nothing is left.
+    """
+    clamped = []
+    for result in results:
+        if result.entity_type not in _LINE_BOUND_ENTITIES:
+            clamped.append(result)
+            continue
+
+        span = text[result.start : result.end]
+        newline = span.find("\n")
+        if newline == -1:
+            clamped.append(result)
+            continue
+
+        end = result.start + newline
+        # Trailing whitespace would leave a placeholder glued to the line break.
+        while end > result.start and text[end - 1].isspace():
+            end -= 1
+        if end > result.start:
+            result.end = end
+            clamped.append(result)
+    return clamped
+
+
 class PIIRedactor:
     def __init__(self):
         try:
@@ -181,6 +232,15 @@ class PIIRedactor:
         if not text:
             return "", {}
 
+        with obs.span("pii.redact", kind=obs.KIND_PII, chars=len(text)) as sp:
+            redacted_text, redaction_map = self._redact(text)
+            sp.set(
+                entities_redacted=len(redaction_map),
+                entity_types=sorted({k.rsplit("_", 1)[0].strip("[") for k in redaction_map}),
+            )
+            return redacted_text, redaction_map
+
+    def _redact(self, text: str) -> Tuple[str, Dict[str, str]]:
         # Analyze the text for PII
         # We look for standard entities plus our custom CPF and RG
         entities_to_detect = [
@@ -195,7 +255,7 @@ class PIIRedactor:
         )
         
         # Sort results from left to right to allocate stable IDs
-        left_to_right = sorted(results, key=lambda x: x.start)
+        left_to_right = sorted(_clamp_spans_to_line(results, text), key=lambda x: x.start)
         
         # Define clean readable names for the placeholders
         entity_name_map = {
@@ -218,8 +278,13 @@ class PIIRedactor:
             original_val = text[res.start:res.end]
             entity_type = res.entity_type
             
-            # Skip false positive entities based on our whitelist
-            if entity_type in ["PERSON", "LOCATION", "ORGANIZATION"]:
+            # Skip false positives: whitelisted vocabulary, dates, and any
+            # "name" carrying digits (a person's name never does).
+            if entity_type in _LINE_BOUND_ENTITIES:
+                if _looks_like_date(original_val):
+                    continue
+                if entity_type == "PERSON" and any(ch.isdigit() for ch in original_val):
+                    continue
                 words = re.findall(r"\b[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇ]{3,}\b", original_val.lower())
                 if words and all(w in PII_WHITELIST for w in words):
                     continue

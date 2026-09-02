@@ -1,0 +1,39 @@
+Desenvolvedor(a) Full Stack Pleno
+
+SOBRE A VAGA
+Estamos contratando um(a) Desenvolvedor(a) Full Stack Pleno para atuar em nosso produto SaaS B2B, que já atende centenas de clientes em todo o Brasil. A posição é 100% remota, em regime CLT, e você integrará um time ágil e multidisciplinar. Utilizamos TypeScript em toda a stack, com React e Next.js no front-end e Node.js com NestJS no back-end, banco PostgreSQL, contêineres Docker e infraestrutura em AWS. Buscamos profissionais com autonomia para conduzir funcionalidades do início ao fim, desde a análise até a entrega, incluindo testes automatizados e participação ativa em code reviews.
+
+RESPONSABILIDADES
+- Desenvolver e manter funcionalidades full stack, do front-end ao back-end, seguindo boas práticas de arquitetura e design de software.
+- Escrever testes unitários e de integração, garantindo cobertura adequada e qualidade do código.
+- Revisar pull requests dos colegas, contribuindo com feedback construtivo e alinhado aos padrões do time.
+- Participar de rituais ágeis (daily, planning, review e retrospectiva), colaborando na definição das tarefas e estimativas.
+- Auxiliar na documentação técnica e na evolução do design system interno.
+
+REQUISITOS OBRIGATÓRIOS
+- Mínimo de 3 anos de experiência comprovada como desenvolvedor full stack.
+- Sólida experiência com TypeScript em produção.
+- Domínio de React e Next.js para aplicações modernas (SSR, SSG, hooks, contexto).
+- Conhecimento avançado em Node.js e NestJS (REST, injeção de dependência, módulos).
+- Experiência com PostgreSQL, incluindo modelagem de dados, consultas complexas e migrations.
+- Proficiência com Docker para criação e versionamento de ambientes.
+- Vivência com serviços AWS (EC2, S3, RDS, Lambda ou Elastic Beanstalk).
+- Experiência em escrever testes automatizados (Jest, React Testing Library ou similar).
+
+DIFERENCIAIS
+- Conhecimento em GraphQL (Apollo, TypeGraphQL).
+- Experiência com Tailwind CSS e construção de design systems customizados.
+- Familiaridade com ferramentas de CI/CD (GitHub Actions, CircleCI).
+- Participação em projetos open source ou contribuições em comunidades.
+- Noções de práticas de observabilidade (logging, métricas, tracing).
+
+BENEFÍCIOS
+- Salário compatível com o mercado, em regime CLT.
+- Vale-refeição/alimentação (R$ 30/dia).
+- Plano de saúde e odontológico sem coparticipação.
+- Seguro de vida.
+- Auxílio home office (R$ 100/mês).
+- Bônus semestral por metas atingidas.
+- Horário flexível com jornada de 40h semanais (semana comprimida opcional).
+- Acesso a plataformas de cursos (Alura, Udemy) e orçamento anual para conferências.
+- Cultura de feedback 360° e plano de desenvolvimento individual (PDI).

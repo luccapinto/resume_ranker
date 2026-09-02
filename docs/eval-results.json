@@ -1,0 +1,112 @@
+{
+  "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+  "embeddings": "local:paraphrase-multilingual-MiniLM-L12-v2",
+  "jobs": 6,
+  "candidates": 28,
+  "results": [
+    {
+      "config": "Skills vector only (dense)",
+      "weights": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "rerank": false,
+      "ndcg@5": 0.7516,
+      "ndcg@10": 0.8222,
+      "mrr": 0.9167,
+      "queries": 6
+    },
+    {
+      "config": "Narrative vector only (dense)",
+      "weights": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "rerank": false,
+      "ndcg@5": 0.5989,
+      "ndcg@10": 0.6281,
+      "mrr": 0.7778,
+      "queries": 6
+    },
+    {
+      "config": "Lexical vector only (sparse)",
+      "weights": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rerank": false,
+      "ndcg@5": 0.8674,
+      "ndcg@10": 0.9097,
+      "mrr": 1.0,
+      "queries": 6
+    },
+    {
+      "config": "RRF, equal weights, no rerank",
+      "weights": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "rerank": false,
+      "ndcg@5": 0.8605,
+      "ndcg@10": 0.8926,
+      "mrr": 1.0,
+      "queries": 6
+    },
+    {
+      "config": "RRF, default weights, no rerank",
+      "weights": [
+        1.0,
+        1.0,
+        0.5
+      ],
+      "rerank": false,
+      "ndcg@5": 0.8517,
+      "ndcg@10": 0.9086,
+      "mrr": 1.0,
+      "queries": 6
+    },
+    {
+      "config": "RRF, default weights + cross-encoder",
+      "weights": [
+        1.0,
+        1.0,
+        0.5
+      ],
+      "rerank": true,
+      "ndcg@5": 0.8416,
+      "ndcg@10": 0.9117,
+      "mrr": 1.0,
+      "queries": 6
+    },
+    {
+      "config": "RRF, skills-heavy + cross-encoder",
+      "weights": [
+        1.5,
+        1.0,
+        0.5
+      ],
+      "rerank": true,
+      "ndcg@5": 0.8416,
+      "ndcg@10": 0.9117,
+      "mrr": 1.0,
+      "queries": 6
+    },
+    {
+      "config": "RRF, narrative-heavy + cross-encoder",
+      "weights": [
+        1.0,
+        1.5,
+        0.5
+      ],
+      "rerank": true,
+      "ndcg@5": 0.8416,
+      "ndcg@10": 0.9117,
+      "mrr": 1.0,
+      "queries": 6
+    }
+  ]
+}

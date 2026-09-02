@@ -1,0 +1,55 @@
+Ana Beatriz Mendes
+E-mail: ana.mendes@email.com | Telefone: (21) 99153-9050 | São Paulo, SP | CPF: 856.723.092-67
+
+RESUMO PROFISSIONAL
+Engenheira de dados sênior com 8 anos de experiência em arquitetura, desenvolvimento e otimização de pipelines de dados em larga escala. Especialista em processamento streaming com Apache Kafka e Spark Structured Streaming, orquestração com Apache Airflow, transformações com dbt e armazenamento em Snowflake na nuvem AWS. Liderou a migração de arquitetura batch para streaming em uma plataforma de dados, resultando em redução de latência de 4 horas para menos de 2 minutos e economia de 35% em custos de infraestrutura. Apaixonada por data quality, governança e automação de processos.
+
+EXPERIÊNCIA PROFISSIONAL
+
+DataFlow Solutions | Engenheira de Dados Sênior
+Junho/2020 - Presente
+- Projetou e implementou pipeline de streaming em tempo real usando Kafka e Spark Structured Streaming, processando 50 milhões de eventos/dia com latência média de 200ms.
+- Liderou a migração de 80% dos jobs batch (Airflow + Spark) para streaming, reduzindo o tempo de disponibilidade dos dados de 4 horas para 2 minutos e diminuindo custos de computação em 35%.
+- Desenvolveu modelos de dados no dbt otimizados para Snowflake, melhorando a performance de queries em 40% e reduzindo o tempo de refresh de 3 horas para 45 minutos.
+- Implementou orquestração de pipelines com Airflow, automatizando 120+ DAGs e reduzindo erros manuais em 95%, garantindo SLA de 99,9% de disponibilidade.
+- Gerenciou clusters AWS (EMR, MSK, S3, Redshift) e otimizou alocação de recursos, economizando R$ 150 mil/ano em custos de nuvem.
+
+InfoTech Brasil | Engenheira de Dados Plena
+Janeiro/2018 - Maio/2020
+- Construiu data lake na AWS (S3 + Glue + Athena) para centralizar dados de 12 sistemas transacionais, processando 2 TB/dia com Spark e Airflow.
+- Desenvolveu pipelines de ingestão de dados via Kafka Connect para 15 fontes externas, garantindo throughput de 10 msgs/s com tolerância a falhas.
+- Criou scripts de transformação em PySpark para limpeza e agregação de dados, reduzindo o tempo de processamento de 6 horas para 1,5 hora.
+- Implementou monitoramento de qualidade de dados com métricas de completude e consistência, elevando a confiabilidade dos dashboards de 85% para 99%.
+
+NexaData | Analista de Dados Sênior
+Março/2016 - Dezembro/2017
+- Modelou e implementou data warehouse dimensional no Snowflake, atendendo 5 áreas de negócio e suportando consultas analíticas com tempo de resposta abaixo de 2 segundos.
+- Automatizou rotinas de ETL com Airflow e Spark, eliminando 20 horas semanais de trabalho manual dos analistas.
+- Desenvolveu dashboards no Metabase e Tableau integrados ao Snowflake, fornecendo insights em tempo real que aumentaram a eficiência operacional em 15%.
+- Participou da migração de banco on-premise para AWS RDS, garantindo zero downtime e economia de 40% em licenças.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Ciência da Computação - Universidade Federal de São Paulo (UNIFESP)
+Concluído em 2015
+
+MBA em Engenharia de Dados e Big Data - Faculdade de Tecnologia do Estado de São Paulo (FATEC)
+Concluído em 2018
+
+CERTIFICAÇÕES
+- AWS Certified Solutions Architect – Associate (2021)
+- Confluent Certified Developer for Apache Kafka (2022)
+- dbt Certified Developer (2023)
+- SnowPro Core Certification – Snowflake (2023)
+- Apache Airflow Fundamentals (2022)
+
+COMPETÊNCIAS TÉCNICAS
+Processamento de dados: Apache Kafka, Apache Spark (PySpark, Structured Streaming), Apache Airflow, dbt
+Armazenamento e banco: Snowflake, Amazon S3, Amazon Redshift, Amazon RDS
+Cloud e infraestrutura: AWS (EC2, EMR, MSK, Glue, Lambda, CloudWatch, IAM)
+Linguagens: Python, SQL, Scala (básico)
+Ferramentas: Git, Docker, Kubernetes, Terraform, Jenkins, Metabase, Tableau, Postman
+
+IDIOMAS
+Português: nativo
+Inglês: avançado (leitura, escrita e conversação)
+Espanhol: intermediário (compreensão e leitura)
