@@ -19,6 +19,10 @@ from typing import Callable, Dict, List, Tuple
 
 from api.llm import get_llm
 
+# Progress must reach a redirected log immediately; block buffering makes these
+# scripts look frozen for the twenty minutes they take to run.
+sys.stdout.reconfigure(line_buffering=True)
+
 SEED_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "seed")
 
 JOBS: List[Dict] = [

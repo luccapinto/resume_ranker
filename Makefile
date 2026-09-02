@@ -30,11 +30,11 @@ install:
 	cd web && npm install
 
 corpus:
-	cd $(CURDIR) && api/.venv/bin/python -m api.eval.generate_seed_corpus
+	cd $(CURDIR) && api/.venv/bin/python -u -m api.eval.generate_seed_corpus
 
 seed:
-	cd $(CURDIR) && api/.venv/bin/python -m api.eval.seed_ats --reset
-	cd $(CURDIR) && api/.venv/bin/python -m api.eval.explain_shortlists --top 3
+	cd $(CURDIR) && api/.venv/bin/python -u -m api.eval.seed_ats --reset
+	cd $(CURDIR) && api/.venv/bin/python -u -m api.eval.explain_shortlists --top 3
 
 dev-api:
 	cd $(CURDIR) && api/.venv/bin/uvicorn api.main:app --reload --port 8000
@@ -59,10 +59,10 @@ screenshots:
 	cd web && npm run build && (npm run start &) && sleep 8 && npm run screenshots
 
 eval:
-	cd $(CURDIR) && api/.venv/bin/python -m api.eval.run_harness --readme
+	cd $(CURDIR) && api/.venv/bin/python -u -m api.eval.run_harness --readme
 
 calibrate:
-	cd $(CURDIR) && api/.venv/bin/python -m api.eval.calibrate_scores
+	cd $(CURDIR) && api/.venv/bin/python -u -m api.eval.calibrate_scores
 
 clean:
 	rm -rf api/.venv web/node_modules web/.next api/data/pdfs

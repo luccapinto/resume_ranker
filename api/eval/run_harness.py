@@ -17,6 +17,7 @@ import argparse
 import json
 import math
 import os
+import sys
 from typing import Dict, List, Optional, Tuple
 
 from sqlalchemy.orm import Session
@@ -26,6 +27,10 @@ from api.database import SessionLocal, get_qdrant
 from api.embeddings import get_embedding_provider
 from api.models import CandidateModel, JobModel, ProfileModel
 from api.search import build_profile_texts, hybrid_search_and_rerank
+
+# Progress must reach a redirected log immediately; block buffering makes these
+# scripts look frozen for the twenty minutes they take to run.
+sys.stdout.reconfigure(line_buffering=True)
 
 FIT_TO_RELEVANCE = {"forte": 3, "moderado": 2, "baixo": 0}
 SEED_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "seed")

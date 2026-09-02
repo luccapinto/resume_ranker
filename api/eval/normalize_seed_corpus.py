@@ -19,8 +19,13 @@ from __future__ import annotations
 import argparse
 import os
 import re
+import sys
 import unicodedata
 from typing import Dict, List, Optional, Tuple
+
+# Progress must reach a redirected log immediately; block buffering makes these
+# scripts look frozen for the twenty minutes they take to run.
+sys.stdout.reconfigure(line_buffering=True)
 
 SEED_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "seed", "candidates"

@@ -215,6 +215,13 @@ Anonymisation runs **before** the first external call, using Microsoft Presidio 
 
 The recruiter-facing name is recovered from the résumé's opening lines or the redaction map, validated against a name pattern *and* against the ESCO taxonomy — because spaCy will happily tag `Kimball`, `Logstash` and `DAGs` as people. Anything the taxonomy recognises as a competency is rejected as a name.
 
+**The most expensive bug in this project lived here.** Anonymisation was quietly destroying employment dates, and the extractor was reporting *zero years of experience* for senior candidates — five of twenty-eight in the demo corpus. Two NER failures, both invisible until you looked at what the model actually received:
+
+- spaCy produced a `LOCATION` span starting at `Presente` in `Jun/2022 - Presente` that ran past the end of the line and into the next bullet. Redacting it erased the period and the start of the following sentence. Name-like entities are now clamped to their own line — no real person, place or company crosses a line break in a résumé.
+- Date fragments were themselves tagged as names: `Fev/2020`, `2018 - 2020`, `Mar/2020 - Mai/2022`. Those are rejected outright now, along with any `PERSON` span containing a digit.
+
+It is a good argument for the side-by-side viewer: the bug was obvious the moment the two texts sat next to each other, and invisible in every metric.
+
 Text the model writes comes back peppered with tokens like `[ORGANIZACAO_REDACT_1]`. Those are rehydrated at the display boundary, so the recruiter reads real company names in a summary the model wrote without ever seeing them.
 
 ---

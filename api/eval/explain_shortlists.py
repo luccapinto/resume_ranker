@@ -22,6 +22,10 @@ from api.database import SessionLocal
 from api.explain import generate_match_explanation
 from api.models import ApplicationModel, JobModel
 
+# Progress must reach a redirected log immediately; block buffering makes these
+# scripts look frozen for the twenty minutes they take to run.
+sys.stdout.reconfigure(line_buffering=True)
+
 
 def explain_one(application_id: int) -> Tuple[int, str]:
     """Run one explanation in its own session and trace."""

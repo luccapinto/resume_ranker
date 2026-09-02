@@ -12,6 +12,7 @@ classes — which is what `SCORE_MIDPOINT` in `api/search.py` is set to.
 from __future__ import annotations
 
 import statistics
+import sys
 from typing import List
 
 from api.config import settings
@@ -26,6 +27,10 @@ from api.search import (
     hybrid_search_and_rerank,
     normalize_score,
 )
+
+# Progress must reach a redirected log immediately; block buffering makes these
+# scripts look frozen for the twenty minutes they take to run.
+sys.stdout.reconfigure(line_buffering=True)
 
 RELEVANT_THRESHOLD = 2  # graded relevance ≥ 2 counts as "should be shortlisted"
 
