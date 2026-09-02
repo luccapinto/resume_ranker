@@ -10,7 +10,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Qdrant](https://img.shields.io/badge/Qdrant-vector%20db-DC244C?style=flat-square&logo=qdrant&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?style=flat-square&logo=postgresql&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-186%20passing-0ca30c?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-201%20passing-0ca30c?style=flat-square)
 
 </div>
 
@@ -51,7 +51,7 @@ The product is a working ATS: publish a job, drop in résumés, get a ranked sho
 ## What makes it different
 
 **1. The score is calibrated, not invented.**
-A cross-encoder emits an unbounded logit. Passing it through a sigmoid centred on zero is arbitrary — on Portuguese résumés it crushed every candidate into single digits. Instead, the decision boundary was *measured* against labelled data: raw `-3.49` separates relevant from irrelevant candidates with **95.8% accuracy**, so that value became the midpoint of the display scale. A score of 50 now means exactly one thing: the reranker considers this person relevant.
+A cross-encoder emits an unbounded logit. Passing it through a sigmoid centred on zero is arbitrary — on Portuguese résumés it crushed every candidate into single digits. Instead, the decision boundary was *measured* against labelled data: raw `-2.93` separates relevant from irrelevant candidates with **95.2% accuracy**, so that value became the midpoint of the display scale. A score of 50 now means exactly one thing: the reranker considers this person relevant.
 
 **2. Every quote is verified against the source.**
 The LLM writes the analysis, but each citation it produces is checked verbatim (case-, accent- and whitespace-insensitive) against the candidate's own text. Unverified quotes are shown and flagged, not hidden — a hallucination you can see is a hallucination you can act on.
@@ -150,10 +150,27 @@ make eval
 
 <!-- EVAL_TABLE -->
 
-Two findings worth stating plainly:
+| Configuration | Weights | Rerank | NDCG@5 | NDCG@10 | MRR |
+|---|---|:---:|---:|---:|---:|
+| Skills vector only (dense) | `1, 0, 0` | no | **0.8849** | 0.8978 | 1.0000 |
+| Narrative vector only (dense) | `0, 1, 0` | no | 0.5456 | 0.6665 | 0.8333 |
+| Lexical vector only (sparse) | `0, 0, 1` | no | 0.8586 | 0.8757 | 0.9167 |
+| RRF, equal weights, no rerank | `1, 1, 1` | no | 0.8731 | 0.9009 | 1.0000 |
+| RRF, default weights, no rerank | `1, 1, 0.5` | no | 0.8765 | 0.9180 | 1.0000 |
+| **RRF, default weights + cross-encoder** ← shipped | `1, 1, 0.5` | yes | 0.8768 | **0.9202** | 1.0000 |
+| RRF, skills-heavy + cross-encoder | `1.5, 1, 0.5` | yes | 0.8768 | 0.9202 | 1.0000 |
+| RRF, narrative-heavy + cross-encoder | `1, 1.5, 0.5` | yes | 0.8768 | 0.9202 | 1.0000 |
 
-- **The lexical vector alone is surprisingly strong** on technical résumés, because tool names are literal tokens. It is not a fallback; it is a first-class strategy.
-- **A multilingual reranker was tried and rejected.** `mmarco-mMiniLMv2-L12-H384` produced a nicer-looking score distribution on Portuguese text but *worse* ranking quality. The English `ms-marco-MiniLM-L-6-v2` won on NDCG, so it stayed — and the score scale was fixed by calibration instead of by swapping models. The measurement overruled the intuition.
+<sub>6 queries · 28 candidates · 168 graded judgements · reranker <code>cross-encoder/ms-marco-MiniLM-L-6-v2</code>. Best value per column in bold. Regenerate with <code>make eval</code>.</sub>
+
+Four things this table says, including the inconvenient ones:
+
+- **The narrative vector is the weak one** (NDCG@5 0.55). Career prose is where seniority and scope live, but on its own it confuses a data engineer with an ML engineer. It earns its place in the fusion, not on its own.
+- **The skills vector alone edges out the full pipeline at NDCG@5** — 0.8849 against 0.8768. With six queries that gap is inside the noise, but it is real and worth reporting rather than hiding. The hybrid wins where it matters more for a shortlist that runs past the podium: **NDCG@10 0.9202 vs 0.8978**.
+- **The cross-encoder barely moves the ranking here** (0.9180 → 0.9202 at @10). Its real contribution in this system is not the ordering, it is producing a *joint* score that can be calibrated into a number a recruiter can read. On a corpus this clean, RRF has already done most of the work.
+- **A multilingual reranker was tried and rejected.** `mmarco-mMiniLMv2-L12-H384` produced a much nicer-looking score distribution on Portuguese text — and *worse* ranking quality (NDCG@5 0.53 against 0.88 on an earlier run of this same harness). The English model stayed, and the ugly score scale was fixed by calibration instead of by swapping models. The measurement overruled the intuition.
+
+Weight variations above the default make no difference on this corpus, which is itself informative: the fusion is not sensitive to tuning at this scale, so the default stays at `1, 1, 0.5`.
 
 The calibration itself is reproducible:
 
@@ -342,7 +359,7 @@ resume_ranker/
 │   ├── routers/              # HTTP surface
 │   ├── eval/                 # corpus generation, seeding, IR harness, calibration
 │   ├── data/seed/            # the committed demo corpus
-│   └── tests/                # 186 backend tests
+│   └── tests/                # 201 backend tests
 ├── web/
 │   ├── src/app/              # dashboard, jobs, candidates, copilot, fairness, observability
 │   ├── src/components/       # UI primitives, charts, ATS widgets, copilot cards

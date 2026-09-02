@@ -52,12 +52,14 @@ def get_cross_encoder():
 
 
 # Calibration of the 0–100 display scale, measured on the seed corpus with
-# `python -m api.eval.calibrate_scores`: scanning every threshold, raw = -3.49
-# separates judged-relevant from judged-irrelevant candidates with 95.8%
+# `python -m api.eval.calibrate_scores`: scanning every threshold, raw = -2.93
+# separates judged-relevant from judged-irrelevant candidates with 95.2%
 # accuracy. Anchoring the midpoint there makes "score ≥ 50" mean exactly "the
 # reranker considers this candidate relevant", instead of an arbitrary sigmoid
 # around zero that crushed every Portuguese résumé into single digits.
-SCORE_MIDPOINT = -3.5
+# The temperature spreads the two classes apart: with 1.8 the median relevant
+# candidate lands near 75 and the median irrelevant one near 8.
+SCORE_MIDPOINT = -2.9
 SCORE_TEMPERATURE = 1.8
 
 

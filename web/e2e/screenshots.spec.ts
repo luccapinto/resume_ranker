@@ -64,7 +64,7 @@ test("04 — análise da IA com evidências verificadas", async ({ page }) => {
     timeout: 90_000,
   });
 
-  const card = page.locator("main .panel").filter({ hasText: "Analisar com IA" }).first();
+  const card = page.getByTestId("ranked-candidate").first();
   await card.getByRole("button", { name: "Analisar com IA" }).click();
   await expect(card.getByText("Evidências citadas")).toBeVisible({ timeout: 180_000 });
 

@@ -132,21 +132,78 @@ def evaluate(
     return totals[0] / queries, totals[1] / queries, totals[2] / queries, queries
 
 
+# Labels are English because they end up in the README table.
+SHIPPED = "RRF, default weights + cross-encoder"
+
 CONFIGURATIONS = [
-    ("Somente skills (denso)", [1.0, 0.0, 0.0], False),
-    ("Somente trajetória (denso)", [0.0, 1.0, 0.0], False),
-    ("Somente lexical (esparso)", [0.0, 0.0, 1.0], False),
-    ("RRF equilibrado, sem rerank", [1.0, 1.0, 1.0], False),
-    ("RRF padrão, sem rerank", [1.0, 1.0, 0.5], False),
-    ("RRF padrão + cross-encoder", [1.0, 1.0, 0.5], True),
-    ("RRF skills-pesado + cross-encoder", [1.5, 1.0, 0.5], True),
-    ("RRF trajetória-pesado + cross-encoder", [1.0, 1.5, 0.5], True),
+    ("Skills vector only (dense)", [1.0, 0.0, 0.0], False),
+    ("Narrative vector only (dense)", [0.0, 1.0, 0.0], False),
+    ("Lexical vector only (sparse)", [0.0, 0.0, 1.0], False),
+    ("RRF, equal weights, no rerank", [1.0, 1.0, 1.0], False),
+    ("RRF, default weights, no rerank", [1.0, 1.0, 0.5], False),
+    (SHIPPED, [1.0, 1.0, 0.5], True),
+    ("RRF, skills-heavy + cross-encoder", [1.5, 1.0, 0.5], True),
+    ("RRF, narrative-heavy + cross-encoder", [1.0, 1.5, 0.5], True),
 ]
+
+
+README_MARKER = "<!-- EVAL_TABLE -->"
+
+
+def to_markdown(rows: List[dict], reranker: str, jobs: int, candidates: int, judgements: int) -> str:
+    """Render the results as the table embedded in the README."""
+    best5 = max(rows, key=lambda r: r["ndcg@5"])
+    best10 = max(rows, key=lambda r: r["ndcg@10"])
+    lines = [
+        README_MARKER,
+        "",
+        "| Configuration | Weights | Rerank | NDCG@5 | NDCG@10 | MRR |",
+        "|---|---|:---:|---:|---:|---:|",
+    ]
+    for row in rows:
+        weights = ", ".join(f"{w:g}" for w in row["weights"])
+        label = f"**{row['config']}** ← shipped" if row["config"] == SHIPPED else row["config"]
+        cell5 = f"**{row['ndcg@5']:.4f}**" if row is best5 else f"{row['ndcg@5']:.4f}"
+        cell10 = f"**{row['ndcg@10']:.4f}**" if row is best10 else f"{row['ndcg@10']:.4f}"
+        lines.append(
+            f"| {label} | `{weights}` | {'yes' if row['rerank'] else 'no'} | "
+            f"{cell5} | {cell10} | {row['mrr']:.4f} |"
+        )
+    lines += [
+        "",
+        f"<sub>{jobs} queries · {candidates} candidates · {judgements} graded judgements · "
+        f"reranker <code>{reranker}</code>. Best value per column in bold. "
+        f"Regenerate with <code>make eval</code>.</sub>",
+    ]
+    return "\n".join(lines)
+
+
+def update_readme(markdown: str) -> None:
+    """Replace the table in the README, keeping everything around it intact."""
+    readme = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "README.md"
+    )
+    with open(readme, encoding="utf-8") as f:
+        content = f.read()
+
+    start = content.find(README_MARKER)
+    if start == -1:
+        print(f"Marcador {README_MARKER} não encontrado no README; nada a atualizar.")
+        return
+
+    # The block runs until the next top-level separator.
+    end = content.find("\n\nTwo findings", start)
+    if end == -1:
+        end = content.find("\n\n---", start)
+    with open(readme, "w", encoding="utf-8") as f:
+        f.write(content[:start] + markdown + content[end:])
+    print("README atualizado com a tabela de avaliação.")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--json", help="Caminho para gravar os resultados brutos")
+    parser.add_argument("--readme", action="store_true", help="Atualiza a tabela no README.md")
     args = parser.parse_args()
 
     db = SessionLocal()
@@ -159,7 +216,7 @@ def main() -> None:
         print(f"Embeddings: {get_embedding_provider().name}")
         print(f"{len(qrels)} vagas · {candidates} candidatos · {judged} julgamentos de relevância\n")
 
-        header = f"{'Configuração':<40}{'NDCG@5':>9}{'NDCG@10':>10}{'MRR':>8}"
+        header = f"{'Configuration':<40}{'NDCG@5':>9}{'NDCG@10':>10}{'MRR':>8}"
         print(header)
         print("─" * len(header))
 
@@ -179,8 +236,16 @@ def main() -> None:
             )
             print(f"{label:<40}{ndcg5:>9.4f}{ndcg10:>10.4f}{mrr:>8.4f}")
 
-        best = max(rows, key=lambda r: r["ndcg@5"])
-        print(f"\nMelhor configuração por NDCG@5: {best['config']} ({best['ndcg@5']:.4f})")
+        for metric in ("ndcg@5", "ndcg@10", "mrr"):
+            best = max(rows, key=lambda r: r[metric])
+            print(f"Melhor por {metric.upper():<8} {best['config']} ({best[metric]:.4f})")
+
+        if args.readme:
+            update_readme(
+                to_markdown(
+                    rows, settings.RERANKER_MODEL, len(qrels), candidates, judged
+                )
+            )
 
         if args.json:
             with open(args.json, "w", encoding="utf-8") as f:

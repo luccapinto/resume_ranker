@@ -101,7 +101,7 @@ export default function DashboardPage() {
         }
       />
 
-      {overview.loading || !data ? (
+      {!data ? (
         <LoadingGrid />
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -141,7 +141,7 @@ export default function DashboardPage() {
             subtitle="Distribuição das candidaturas por etapa"
             icon={Gauge}
           />
-          {overview.loading || !data ? (
+          {!data ? (
             <Skeleton className="h-48" />
           ) : data.applications_total === 0 ? (
             <EmptyState
@@ -191,7 +191,7 @@ export default function DashboardPage() {
             }
           />
 
-          {metrics.loading ? (
+          {metrics.loading && !m ? (
             <Skeleton className="h-48" />
           ) : metrics.error ? (
             <ErrorState error={metrics.error} onRetry={metrics.reload} />
@@ -275,7 +275,7 @@ export default function DashboardPage() {
           subtitle="Tudo que aconteceu no funil, incluindo o que a IA fez"
           icon={Activity}
         />
-        {overview.loading || !data ? (
+        {!data ? (
           <Skeleton className="h-40" />
         ) : data.recent_activity.length === 0 ? (
           <EmptyState title="Nada aconteceu ainda" />

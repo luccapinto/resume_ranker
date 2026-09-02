@@ -39,7 +39,7 @@ dev-api:
 	cd $(CURDIR) && api/.venv/bin/uvicorn api.main:app --reload --port 8000
 
 dev-web:
-	cd web && npm run dev -- --port 3100
+	cd web && npm run dev
 
 test:
 	cd $(CURDIR) && api/.venv/bin/python -m pytest api/tests -q
@@ -53,8 +53,12 @@ lint:
 build:
 	cd web && npm run build
 
+# Screenshots come from a production build so the dev overlay never shows up.
+screenshots:
+	cd web && npm run build && (npm run start &) && sleep 8 && npm run screenshots
+
 eval:
-	cd $(CURDIR) && api/.venv/bin/python -m api.eval.run_harness
+	cd $(CURDIR) && api/.venv/bin/python -m api.eval.run_harness --readme
 
 calibrate:
 	cd $(CURDIR) && api/.venv/bin/python -m api.eval.calibrate_scores

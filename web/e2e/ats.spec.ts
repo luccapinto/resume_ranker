@@ -78,7 +78,7 @@ test.describe("vagas e ranqueamento", () => {
     await waitForRanking(page);
 
     // The podium is rendered with a real, bounded score.
-    const firstCard = page.locator("main .panel").filter({ hasText: "Analisar com IA" }).first();
+    const firstCard = page.getByTestId("ranked-candidate").first();
     await expect(firstCard).toBeVisible();
     await expect(firstCard.getByText(/das competências da vaga/)).toBeVisible();
 
@@ -98,7 +98,7 @@ test.describe("vagas e ranqueamento", () => {
     await page.goto(`/jobs/${jobId}`);
     await waitForRanking(page);
 
-    const firstCard = page.locator("main .panel").filter({ hasText: "Analisar com IA" }).first();
+    const firstCard = page.getByTestId("ranked-candidate").first();
     await firstCard.getByRole("button", { name: /Analisar com IA|Ver análise da IA/ }).click();
 
     await expect(firstCard.getByText("Como este candidato foi encontrado")).toBeVisible();
@@ -111,7 +111,7 @@ test.describe("vagas e ranqueamento", () => {
     await page.goto(`/jobs/${jobId}`);
     await waitForRanking(page);
 
-    const firstCard = page.locator("main .panel").filter({ hasText: "Analisar com IA" }).first();
+    const firstCard = page.getByTestId("ranked-candidate").first();
     await firstCard.getByRole("button", { name: "Analisar com IA" }).click();
 
     await expect(firstCard.getByText("Evidências citadas")).toBeVisible({ timeout: 120_000 });

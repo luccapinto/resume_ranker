@@ -242,7 +242,7 @@ export function RankedCandidateCard({
   };
 
   return (
-    <Panel hover className="animate-fade-up overflow-hidden">
+    <Panel hover data-testid="ranked-candidate" className="animate-fade-up overflow-hidden">
       <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-start">
         <Avatar initials={entry.candidate.initials} rank={entry.rank} />
 

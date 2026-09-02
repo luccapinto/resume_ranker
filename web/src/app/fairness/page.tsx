@@ -164,7 +164,7 @@ export default function FairnessPage() {
 
       <Panel className="p-5">
         <SectionTitle title="Histórico de auditorias" icon={History} />
-        {logs.loading ? (
+        {logs.loading && !logs.data ? (
           <Skeleton className="h-40" />
         ) : logs.error ? (
           <ErrorState error={logs.error} onRetry={logs.reload} />
