@@ -14,7 +14,8 @@ import path from "node:path";
 const API = process.env.E2E_API_BASE ?? "http://localhost:8000";
 const OUT = path.resolve(__dirname, "../../docs/screenshots");
 
-test.beforeAll(() => fs.mkdirSync(OUT, { recursive: true }));
+// Plain call rather than a hook: creating a directory needs no test lifecycle.
+fs.mkdirSync(OUT, { recursive: true });
 
 /** Let fade-in animations settle so nothing is captured mid-transition. */
 async function settle(page: Page, ms = 900) {

@@ -48,8 +48,23 @@ const MATCH_TYPE_LABELS: Record<string, string> = {
   unmapped: "não mapeada",
 };
 
+const PLACEHOLDER = /^\[[A-Z_]+_\d+\]$/;
+
 function SkillTaxonomy({ candidate }: { candidate: Candidate }) {
-  const normalized = candidate.profile?.extracted_profile?.skills_normalized ?? [];
+  const normalized = React.useMemo(() => {
+    const all = candidate.profile?.extracted_profile?.skills_normalized ?? [];
+    const seen = new Set<string>();
+    return all.filter((skill) => {
+      // A redaction placeholder is PII noise, not a competency.
+      if (PLACEHOLDER.test((skill.preferred_label ?? skill.original_term ?? "").trim())) return false;
+      // Several résumé terms map to the same ESCO concept; show it once.
+      const key = `${skill.match_type}:${skill.preferred_label ?? skill.original_term}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }, [candidate]);
+
   if (normalized.length === 0) {
     return <p className="text-xs text-[var(--text-muted)]">Nenhuma competência normalizada.</p>;
   }
@@ -155,6 +170,15 @@ export default function CandidateDetailPage() {
   const [tab, setTab] = React.useState<TabKey>("perfil");
   const candidate = useAsync<Candidate>(() => api.candidate(candidateId), [candidateId]);
 
+  // "Best score" must be the best one, not whichever application came back first.
+  const bestApplication = React.useMemo(
+    () =>
+      [...(candidate.data?.applications ?? [])].sort(
+        (a, b) => (b.ai_score ?? -1) - (a.ai_score ?? -1),
+      )[0],
+    [candidate.data],
+  );
+
   if (candidate.error) {
     return (
       <Panel>
@@ -240,13 +264,13 @@ export default function CandidateDetailPage() {
             </Panel>
 
             <Panel className="flex flex-col items-center justify-center gap-2 p-4">
-              {data.applications?.length ? (
+              {bestApplication ? (
                 <>
-                  <ScoreRing value={data.applications[0].ai_score ?? 0} size={68} />
+                  <ScoreRing value={bestApplication.ai_score ?? 0} size={68} />
                   <p className="text-center text-[11px] text-[var(--text-muted)]">
                     melhor score em<br />
                     <span className="text-[var(--text-secondary)]">
-                      {data.applications[0].job?.title ?? "uma vaga"}
+                      {bestApplication.job?.title ?? "uma vaga"}
                     </span>
                   </p>
                 </>
@@ -314,7 +338,9 @@ export default function CandidateDetailPage() {
                       {extracted.education.map((e, i) => (
                         <li key={i} className="text-xs">
                           <p className="text-[var(--text-secondary)]">
-                            {e.degree} em {e.field}
+                            {e.field && !e.degree.toLowerCase().includes(e.field.toLowerCase())
+                              ? `${e.degree} em ${e.field}`
+                              : e.degree}
                           </p>
                           <p className="text-[11px] text-[var(--text-muted)]">{e.year ?? "—"}</p>
                         </li>

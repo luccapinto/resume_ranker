@@ -246,8 +246,15 @@ class IngestionService:
         profile = self.extractor.extract(redacted_text, schema)
 
         profile_dict = profile.model_dump(mode="json")
+        # The extractor occasionally lists a redaction placeholder as a skill;
+        # it is PII noise, not a competency, and must not reach the taxonomy.
+        profile_dict["skills_raw"] = [
+            skill.strip()
+            for skill in (profile_dict.get("skills_raw") or [])
+            if skill and skill.strip() and not _PLACEHOLDER_RE.fullmatch(skill.strip())
+        ]
         profile_dict["skills_normalized"] = [
-            s.model_dump() for s in self.normalizer.normalize_batch(profile_dict.get("skills_raw") or [])
+            s.model_dump() for s in self.normalizer.normalize_batch(profile_dict["skills_raw"])
         ]
 
         trace = obs.current_trace()

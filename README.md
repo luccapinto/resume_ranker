@@ -10,7 +10,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Qdrant](https://img.shields.io/badge/Qdrant-vector%20db-DC244C?style=flat-square&logo=qdrant&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?style=flat-square&logo=postgresql&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-212%20passing-0ca30c?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-213%20passing-0ca30c?style=flat-square)
 
 </div>
 
@@ -378,7 +378,7 @@ resume_ranker/
 │   ├── routers/              # HTTP surface
 │   ├── eval/                 # corpus generation, seeding, IR harness, calibration
 │   ├── data/seed/            # the committed demo corpus
-│   └── tests/                # 212 backend tests
+│   └── tests/                # 213 backend tests
 ├── web/
 │   ├── src/app/              # dashboard, jobs, candidates, copilot, fairness, observability
 │   ├── src/components/       # UI primitives, charts, ATS widgets, copilot cards

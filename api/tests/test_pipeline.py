@@ -221,3 +221,31 @@ def test_skills_normalize_endpoint(client):
     assert response.status_code == 200
     labels = [s["preferred_label"] for s in response.json()]
     assert labels == ["Python", "Kubernetes"]
+
+
+def test_redaction_placeholders_never_become_skills(db_session, ingestion, fake_provider):
+    """The extractor sometimes lists [ORGANIZACAO_REDACT_1] as a competency."""
+    from api.schemas import CandidateProfile, SeniorityEnum
+
+    ingestion.extractor.extract.return_value = CandidateProfile(
+        seniority=SeniorityEnum.PLENO,
+        skills_raw=["Python", "[ORGANIZACAO_REDACT_1]", "  ", "Kubernetes"],
+        experience_years=5.0,
+        education=[],
+        certifications=[],
+        languages=["Português"],
+        narrative_experience="Atuou em plataformas.",
+        headline="Engenheiro de plataforma",
+        current_title="SRE",
+        highlights=[],
+    )
+
+    with (
+        patch("api.ats.get_qdrant", return_value=MagicMock()),
+        patch("api.ats.get_embedding_provider", return_value=fake_provider),
+    ):
+        profile = ingestion.build_profile(db_session, "texto qualquer", "candidate")
+
+    assert profile.extracted_profile["skills_raw"] == ["Python", "Kubernetes"]
+    labels = [s["original_term"] for s in profile.extracted_profile["skills_normalized"]]
+    assert all("REDACT" not in label for label in labels)

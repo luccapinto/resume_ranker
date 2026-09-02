@@ -37,3 +37,6 @@ api/eval/*.db
 api/eval/qdrant_storage/
 docs/screenshots/*.tmp.png
 .run/
+web/test-results/
+web/playwright-report/
+test-results/
