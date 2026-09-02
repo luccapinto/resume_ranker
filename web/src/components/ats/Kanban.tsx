@@ -90,7 +90,8 @@ export function KanbanBoard({
   };
 
   return (
-    <div className="-mx-1 flex gap-3 overflow-x-auto px-1 pb-2">
+    // items-start: an empty column should not stretch to the tallest one.
+    <div className="-mx-1 flex items-start gap-3 overflow-x-auto px-1 pb-2">
       {columns.map((column, index) => (
         <section
           key={column.key}

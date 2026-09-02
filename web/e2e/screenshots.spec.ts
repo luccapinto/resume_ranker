@@ -75,14 +75,21 @@ test("04 — análise da IA com evidências verificadas", async ({ page }) => {
 });
 
 test("05 — funil kanban", async ({ page }) => {
-  const job = await firstJob();
+  // A job with candidates spread across the funnel, not one big rejected pile.
+  const jobs = await (await fetch(`${API}/ats/jobs`)).json();
+  const job = jobs.find((j: { title: string }) => j.title.includes("Engenheiro(a) de Dados")) ?? jobs[0];
   await page.goto(`/jobs/${job.id}`);
   await page.waitForResponse((r) => r.url().includes("/rank") && r.status() === 200, {
     timeout: 90_000,
   });
   await page.getByRole("tab", { name: /Funil/ }).click();
   await expect(page.getByText("Triagem inicial")).toBeVisible();
-  await shoot(page, "05-funil-kanban");
+
+  // Frame the board itself instead of whatever happened to be in the viewport.
+  const board = page.locator("main > div").filter({ hasText: "Triagem inicial" }).last();
+  await board.scrollIntoViewIfNeeded();
+  await settle(page);
+  await board.screenshot({ path: path.join(OUT, "05-funil-kanban.png") });
 });
 
 test("06 — comparador de PII", async ({ page }) => {

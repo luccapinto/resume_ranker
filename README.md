@@ -33,6 +33,7 @@ The product is a working ATS: publish a job, drop in résumés, get a ranked sho
 - [What makes it different](#what-makes-it-different)
 - [Architecture](#architecture)
 - [How the ranking works](#how-the-ranking-works)
+- [The ATS itself](#the-ats-itself)
 - [Retrieval evaluation](#retrieval-evaluation)
 - [Explainability: the citation guardrail](#explainability-the-citation-guardrail)
 - [Privacy: the PII boundary](#privacy-the-pii-boundary)
@@ -137,6 +138,38 @@ The interface exposes all of it. Each result carries the rank it held in *each* 
 </div>
 
 Hard requirements stay out of the vector space entirely: minimum years of experience, accepted seniority levels and mandatory certifications are **Qdrant payload filters** applied before scoring. Semantic similarity should never talk someone into a role that requires a certification they don't hold.
+
+---
+
+## The ATS itself
+
+The ranking has to land somewhere, and that somewhere is an ordinary hiring workflow: jobs with a status and a headcount, a talent pool, applications moving through a funnel, and a timeline of everything that happened — including what the AI did.
+
+<div align="center">
+
+![Jobs](docs/screenshots/02-vagas.png)
+
+</div>
+
+Each job card carries its own funnel. Publishing a job runs the description through the exact same pipeline as a résumé — redaction, structured extraction, ESCO normalisation, vector indexing — because the matching is symmetric.
+
+<div align="center">
+
+![Hiring funnel](docs/screenshots/05-funil-kanban.png)
+
+</div>
+
+Cards carry the AI score, the fit badge and the model's one-line summary, and dragging one writes a timeline entry with the author and the transition. The stages are `sourced → screening → interview → offer → hired`, with `rejected` as a lateral exit.
+
+The candidate page is where the extraction becomes inspectable: the consolidated career narrative, the quantified highlights, and every résumé term mapped onto the ESCO taxonomy — grouped by *how* it matched, so an exact hit and a lucky embedding guess are not presented as the same thing.
+
+<div align="center">
+
+![Candidate profile](docs/screenshots/07-candidato.png)
+
+</div>
+
+The engine is bidirectional. The same three vectors that rank candidates for a job also rank jobs for a candidate, and the candidate page runs that reverse query.
 
 ---
 
