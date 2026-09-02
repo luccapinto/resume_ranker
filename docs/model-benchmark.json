@@ -1,0 +1,115 @@
+[
+  {
+    "model": "openai/gpt-oss-120b",
+    "median_latency_s": 1.49,
+    "worst_latency_s": 2.48,
+    "mean_year_error": 2.209,
+    "exact_years": 0,
+    "seniority_hits": 7,
+    "valid": 8,
+    "attempts": 8,
+    "cost_per_extraction_usd": 0.001631,
+    "errors": []
+  },
+  {
+    "model": "google/gemini-2.5-flash-lite",
+    "median_latency_s": 4.4,
+    "worst_latency_s": 16.9,
+    "mean_year_error": 0.594,
+    "exact_years": 1,
+    "seniority_hits": 7,
+    "valid": 7,
+    "attempts": 8,
+    "cost_per_extraction_usd": 0.000737,
+    "errors": [
+      "olivia-bi-junior: schema inválido"
+    ]
+  },
+  {
+    "model": "openai/gpt-4.1-nano",
+    "median_latency_s": 5.34,
+    "worst_latency_s": 8.91,
+    "mean_year_error": 0.375,
+    "exact_years": 7,
+    "seniority_hits": 8,
+    "valid": 8,
+    "attempts": 8,
+    "cost_per_extraction_usd": 0.000336,
+    "errors": []
+  },
+  {
+    "model": "z-ai/glm-4.7-flash",
+    "median_latency_s": 11.41,
+    "worst_latency_s": 566.69,
+    "mean_year_error": null,
+    "exact_years": 0,
+    "seniority_hits": 0,
+    "valid": 0,
+    "attempts": 8,
+    "cost_per_extraction_usd": 0.008475,
+    "errors": [
+      "ana-kafka: schema inválido",
+      "xavier-pm-fintech: schema inválido",
+      "olivia-bi-junior: schema inválido",
+      "wagner-infra: schema inválido",
+      "karina-llm: schema inválido"
+    ]
+  },
+  {
+    "model": "mistralai/mistral-small-24b-instruct-2501",
+    "median_latency_s": 12.99,
+    "worst_latency_s": 27.36,
+    "mean_year_error": 0.5,
+    "exact_years": 5,
+    "seniority_hits": 6,
+    "valid": 6,
+    "attempts": 8,
+    "cost_per_extraction_usd": 0.000113,
+    "errors": [
+      "felipe-fullstack: {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'mistralai/mistral-small-24b-instruct-2501 is temporarily rate-limited upstream. Please ",
+      "isabela-fullstack-junior: {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'mistralai/mistral-small-24b-instruct-2501 is temporarily rate-limited upstream. Please "
+    ]
+  },
+  {
+    "model": "qwen/qwen3.7-flash",
+    "median_latency_s": 22.8,
+    "worst_latency_s": 30.06,
+    "mean_year_error": 0.59,
+    "exact_years": 1,
+    "seniority_hits": 5,
+    "valid": 5,
+    "attempts": 8,
+    "cost_per_extraction_usd": 0.000515,
+    "errors": [
+      "olivia-bi-junior: {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'qwen/qwen3.7-flash is temporarily rate-limited upstream. Please retry shortly, or add y",
+      "wagner-infra: {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'qwen/qwen3.7-flash is temporarily rate-limited upstream. Please retry shortly, or add y",
+      "karina-llm: {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'qwen/qwen3.7-flash is temporarily rate-limited upstream. Please retry shortly, or add y"
+    ]
+  },
+  {
+    "model": "deepseek/deepseek-v4-flash",
+    "median_latency_s": 23.69,
+    "worst_latency_s": 46.15,
+    "mean_year_error": 0.5,
+    "exact_years": 5,
+    "seniority_hits": 7,
+    "valid": 7,
+    "attempts": 8,
+    "cost_per_extraction_usd": 0.000732,
+    "errors": [
+      "ana-kafka: schema inválido"
+    ]
+  },
+  {
+    "model": "openai/gpt-5-nano",
+    "median_latency_s": 34.04,
+    "worst_latency_s": 50.03,
+    "mean_year_error": 2.26,
+    "exact_years": 0,
+    "seniority_hits": 8,
+    "valid": 8,
+    "attempts": 8,
+    "cost_per_extraction_usd": 0.002068,
+    "errors": []
+  }
+]
