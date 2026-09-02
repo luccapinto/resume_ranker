@@ -39,6 +39,11 @@ class Settings(BaseSettings):
     OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
     LLM_TIMEOUT_SECONDS: float = 90.0
     LLM_MAX_RETRIES: int = 3
+    # OpenRouter serves one model from many providers whose throughput differs by
+    # more than an order of magnitude. "throughput" asks it to prefer the fast
+    # ones; see the note in api/llm.py.
+    OPENROUTER_PROVIDER_SORT: str = "throughput"
+    OPENROUTER_IGNORE_PROVIDERS: str = ""
 
     # ── App ─────────────────────────────────────────────────────────
     CORS_ORIGINS: str = "http://localhost:3100,http://127.0.0.1:3100,http://localhost:3000"

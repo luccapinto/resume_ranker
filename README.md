@@ -10,7 +10,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Qdrant](https://img.shields.io/badge/Qdrant-vector%20db-DC244C?style=flat-square&logo=qdrant&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?style=flat-square&logo=postgresql&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-213%20passing-0ca30c?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-216%20passing-0ca30c?style=flat-square)
 
 </div>
 
@@ -411,7 +411,7 @@ resume_ranker/
 │   ├── routers/              # HTTP surface
 │   ├── eval/                 # corpus generation, seeding, IR harness, calibration
 │   ├── data/seed/            # the committed demo corpus
-│   └── tests/                # 213 backend tests
+│   └── tests/                # 216 backend tests
 ├── web/
 │   ├── src/app/              # dashboard, jobs, candidates, copilot, fairness, observability
 │   ├── src/components/       # UI primitives, charts, ATS widgets, copilot cards
@@ -446,6 +446,10 @@ The backend suite covers RRF arithmetic, score calibration, filter construction,
 **Why identity lives outside the AI path.** Keeping the name in a separate table isn't a workaround for anonymisation — it *is* the design. The pipeline reads only from the redacted text; the ATS reads only from its own columns. The guarantee is structural, and there is a test that asserts the raw text never reaches the extractor.
 
 **Why charts are hand-rolled.** A charting library would have been faster, but the constraints here (validated CVD-safe palette against a specific dark surface, table view on every chart, status never carried by colour alone, a Gantt-style span waterfall) are easier to satisfy directly than to configure around.
+
+**Why provider routing is pinned.** OpenRouter serves one model from a dozen providers, and their throughput differs by ~20×. Measured on this workload: the slowest endpoint delivered **5.7 output tokens/s** against 114 for the fastest, and 12% of the calls landed there and burned **52% of all LLM time**. Requesting `provider: {sort: "throughput"}` cut worst-case latency from 104 s to 28 s on an A/B of the same prompt. Each span records the observed tokens/s, so a slow provider looks like a slow provider instead of a slow model.
+
+**Why reasoning is left on.** This model spends ~79% of its generated tokens thinking before answering, which is most of the remaining latency and cost. Turning that off is 2.4× faster — and on the hardest extraction (summing three overlapping employment periods) it got the answer wrong where reasoning got it right. `effort: "low"` matched full accuracy but showed no reliable latency win at this sample size. So the knob stays where it is: the measurement did not earn the change.
 
 **Why singletons.** `get_embedding_provider()` used to construct a fresh `SentenceTransformer` on every request — seconds of model loading per call. Both it and the Qdrant client are now process-wide.
 

@@ -139,6 +139,20 @@ class LLMClient:
             "temperature": temperature,
             "usage": {"include": True},
         }
+
+        # OpenRouter serves the same model from a dozen providers, and their
+        # throughput differs by ~20×. Measured on this workload: the slowest
+        # endpoint delivered 5.7 tokens/s against 114 tokens/s for the fastest,
+        # and 12% of the calls landed there and burned 52% of the total LLM time.
+        # Sorting by throughput is the single biggest latency win available here.
+        provider_prefs: Dict[str, Any] = {}
+        if settings.OPENROUTER_PROVIDER_SORT:
+            provider_prefs["sort"] = settings.OPENROUTER_PROVIDER_SORT
+        ignored = [p.strip() for p in settings.OPENROUTER_IGNORE_PROVIDERS.split(",") if p.strip()]
+        if ignored:
+            provider_prefs["ignore"] = ignored
+        if provider_prefs:
+            payload["provider"] = provider_prefs
         if max_tokens:
             payload["max_tokens"] = max_tokens
         if response_schema:
@@ -157,6 +171,7 @@ class LLMClient:
             sp.set(
                 temperature=temperature,
                 structured_output=bool(response_schema),
+                provider_sort=provider_prefs.get("sort"),
                 tools=[t["function"]["name"] for t in tools] if tools else [],
             )
 
@@ -213,12 +228,16 @@ class LLMClient:
                         cost_usd=cost_usd,
                     )
                     sp.record_output(result.content or result.tool_calls)
+                    elapsed = max(sp.duration_ms / 1000.0, 1e-6)
                     sp.set(
                         attempts=attempt,
                         finish_reason=result.finish_reason,
                         provider_name=body.get("provider"),
                         generation_id=body.get("id"),
                         tool_calls_returned=len(result.tool_calls),
+                        # Surfaced so a slow provider is visible in the trace
+                        # rather than looking like a slow model.
+                        output_tokens_per_second=round(completion_tokens / elapsed, 1),
                     )
                     return result
 

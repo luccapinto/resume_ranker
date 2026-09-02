@@ -213,3 +213,51 @@ def test_pricing_falls_back_to_the_model_family():
 
 def test_pricing_returns_zero_for_an_unknown_model():
     assert _estimate_cost("alguem/modelo-desconhecido", 1000, 1000) == 0.0
+
+
+# ── Provider routing ────────────────────────────────────────────────────────
+def test_provider_preferences_are_sent(client, monkeypatch):
+    """OpenRouter's slowest endpoint for this model runs ~20x below the fastest."""
+    from api.config import settings
+
+    monkeypatch.setattr(settings, "OPENROUTER_PROVIDER_SORT", "throughput")
+    monkeypatch.setattr(settings, "OPENROUTER_IGNORE_PROVIDERS", "SlowCorp, Outra")
+
+    with patch("httpx.Client") as http:
+        post = http.return_value.__enter__.return_value.post
+        post.return_value = _http_response(200, _ok_body())
+        client.complete([{"role": "user", "content": "oi"}])
+
+    sent = post.call_args.kwargs["json"]
+    assert sent["provider"] == {"sort": "throughput", "ignore": ["SlowCorp", "Outra"]}
+
+
+def test_provider_key_is_omitted_when_unconfigured(client, monkeypatch):
+    from api.config import settings
+
+    monkeypatch.setattr(settings, "OPENROUTER_PROVIDER_SORT", "")
+    monkeypatch.setattr(settings, "OPENROUTER_IGNORE_PROVIDERS", "")
+
+    with patch("httpx.Client") as http:
+        post = http.return_value.__enter__.return_value.post
+        post.return_value = _http_response(200, _ok_body())
+        client.complete([{"role": "user", "content": "oi"}])
+
+    assert "provider" not in post.call_args.kwargs["json"]
+
+
+def test_throughput_is_recorded_on_the_span(client):
+    """A slow provider must be visible in the trace, not look like a slow model."""
+    captured = []
+    obs.set_sink(captured.append)
+    try:
+        with patch("httpx.Client") as http:
+            http.return_value.__enter__.return_value.post.return_value = _http_response(200, _ok_body())
+            with obs.trace("teste"):
+                client.complete([{"role": "user", "content": "oi"}])
+    finally:
+        obs.set_sink(None)
+
+    span = captured[0].spans[0]
+    assert span.attributes["provider_sort"] == "throughput"
+    assert span.attributes["output_tokens_per_second"] > 0
