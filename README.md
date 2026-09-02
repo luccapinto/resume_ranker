@@ -10,7 +10,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Qdrant](https://img.shields.io/badge/Qdrant-vector%20db-DC244C?style=flat-square&logo=qdrant&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?style=flat-square&logo=postgresql&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-201%20passing-0ca30c?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-203%20passing-0ca30c?style=flat-square)
 
 </div>
 
@@ -257,6 +257,8 @@ Every meaningful unit of work runs inside a **span**, and spans nest automatical
 
 Per LLM span: model, prompt and completion tokens, USD cost (taken from the provider's own `usage.cost`, with a local price table as fallback), truncated prompt and response, finish reason and retry count.
 
+The "where is the time going" breakdown plots **self time** — each span's duration minus its children's. A parent contains its children, so summing raw durations attributes the same LLM call to both `llm` and the `logic` wrapper around it, and the chart says the wrapper is the bottleneck. It never is.
+
 Clicking a trace opens the execution waterfall, where each span is positioned by its real offset from the start of the operation. Clicking a span shows exactly what went in and what came out.
 
 <div align="center">
@@ -359,7 +361,7 @@ resume_ranker/
 │   ├── routers/              # HTTP surface
 │   ├── eval/                 # corpus generation, seeding, IR harness, calibration
 │   ├── data/seed/            # the committed demo corpus
-│   └── tests/                # 201 backend tests
+│   └── tests/                # 203 backend tests
 ├── web/
 │   ├── src/app/              # dashboard, jobs, candidates, copilot, fairness, observability
 │   ├── src/components/       # UI primitives, charts, ATS widgets, copilot cards

@@ -382,7 +382,7 @@ function ObservabilityDashboard() {
             <Panel className="p-5">
               <ChartFrame
                 title="Tempo por camada do pipeline"
-                hint="Soma da duração de todos os spans"
+                hint="Tempo próprio: a duração de cada span menos a dos filhos"
                 legend={
                   <Legend
                     items={m.by_kind.slice(0, 6).map((k) => ({
@@ -393,14 +393,14 @@ function ObservabilityDashboard() {
                 }
                 table={
                   <DataTable
-                    columns={["Camada", "Execuções", "Erros", "p50", "p95", "Total"]}
+                    columns={["Camada", "Execuções", "Erros", "p50", "p95", "Tempo próprio"]}
                     rows={m.by_kind.map((k) => [
                       KIND_LABELS[k.kind] ?? k.kind,
                       k.count,
                       k.errors,
                       formatMs(k.p50_ms),
                       formatMs(k.p95_ms),
-                      formatMs(k.total_ms),
+                      formatMs(k.self_ms),
                     ])}
                   />
                 }
@@ -409,7 +409,7 @@ function ObservabilityDashboard() {
                   data={m.by_kind.slice(0, 6).map((k) => ({
                     key: k.kind,
                     label: KIND_LABELS[k.kind] ?? k.kind,
-                    value: k.total_ms,
+                    value: k.self_ms,
                     secondary: `${k.count} spans · p95 ${formatMs(k.p95_ms)}${k.errors ? ` · ${k.errors} erro(s)` : ""}`,
                   }))}
                   valueFormat={formatMs}

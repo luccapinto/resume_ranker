@@ -6,7 +6,7 @@ help:
 	@echo "  make up          Sobe Postgres e Qdrant (Docker)"
 	@echo "  make down        Derruba a infraestrutura"
 	@echo "  make install     Instala dependências de backend e frontend"
-	@echo "  make seed        Popula o ATS com o corpus de demonstração"
+	@echo "  make seed        Popula o ATS com o corpus de demonstração e analisa os shortlists"
 	@echo "  make dev-api     Sobe a API em http://localhost:8000"
 	@echo "  make dev-web     Sobe o frontend em http://localhost:3100"
 	@echo "  make test        Roda a suíte de testes do backend"
@@ -34,6 +34,7 @@ corpus:
 
 seed:
 	cd $(CURDIR) && api/.venv/bin/python -m api.eval.seed_ats --reset
+	cd $(CURDIR) && api/.venv/bin/python -m api.eval.explain_shortlists --top 3
 
 dev-api:
 	cd $(CURDIR) && api/.venv/bin/uvicorn api.main:app --reload --port 8000

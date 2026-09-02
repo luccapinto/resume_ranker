@@ -357,6 +357,8 @@ export interface Metrics {
     p95_ms: number;
     avg_ms: number;
     total_ms: number;
+    /** Duration excluding nested spans — the honest "where did the time go". */
+    self_ms: number;
   }[];
   by_operation: {
     name: string;

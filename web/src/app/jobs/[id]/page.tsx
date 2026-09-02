@@ -246,10 +246,26 @@ export default function JobDetailPage() {
         <div className="mb-5 grid gap-4 lg:grid-cols-3">
           <Panel className="p-4 lg:col-span-2">
             <SectionTitle title="Requisitos extraídos pela IA" icon={FileText} />
-            {data.narrative ? (
-              <p className="mb-4 text-xs leading-relaxed text-[var(--text-secondary)]">
-                {data.narrative}
-              </p>
+            {data.responsibilities?.length ? (
+              <div className="mb-4">
+                <p className="mb-1.5 text-[10px] uppercase tracking-wide text-[var(--text-muted)]">
+                  Responsabilidades
+                </p>
+                <ul className="space-y-1.5">
+                  {data.responsibilities.slice(0, 6).map((item, i) => (
+                    <li
+                      key={i}
+                      className="flex gap-2 text-xs leading-relaxed text-[var(--text-secondary)]"
+                    >
+                      <span
+                        aria-hidden
+                        className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[var(--accent-soft)]"
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ) : null}
             <div className="space-y-3">
               <div>

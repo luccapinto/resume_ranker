@@ -146,6 +146,17 @@ def get_trace(db: Session, trace_id: str) -> Optional[Dict[str, Any]]:
     return payload
 
 
+def _self_times(spans: List[SpanModel]) -> Dict[str, float]:
+    """Duration each span spent on its own work, excluding its direct children."""
+    children_ms: Dict[str, float] = {}
+    for span in spans:
+        if span.parent_id:
+            children_ms[span.parent_id] = children_ms.get(span.parent_id, 0.0) + span.duration_ms
+    return {
+        span.id: max(0.0, span.duration_ms - children_ms.get(span.id, 0.0)) for span in spans
+    }
+
+
 def _percentile(values: List[float], p: float) -> float:
     """Nearest-rank percentile; returns 0.0 for an empty sample."""
     if not values:
@@ -172,13 +183,30 @@ def get_metrics(db: Session, window_hours: int = 24) -> Dict[str, Any]:
         spans = db.query(SpanModel).filter(SpanModel.trace_id.in_(trace_ids)).all()
 
     # Latency + error rate broken down by pipeline layer.
+    #
+    # A parent span's duration contains its children's, so summing raw durations
+    # double-counts: `extract.CandidateProfile` wraps `llm.extract`, and the LLM
+    # time would be attributed to both. "Where is the time going?" needs *self*
+    # time — the span's own duration minus what its direct children consumed.
+    self_ms = _self_times(spans)
+
     by_kind: Dict[str, Dict[str, Any]] = {}
     for s in spans:
         bucket = by_kind.setdefault(
-            s.kind, {"kind": s.kind, "count": 0, "errors": 0, "durations": [], "cost_usd": 0.0, "tokens": 0}
+            s.kind,
+            {
+                "kind": s.kind,
+                "count": 0,
+                "errors": 0,
+                "durations": [],
+                "self_ms": 0.0,
+                "cost_usd": 0.0,
+                "tokens": 0,
+            },
         )
         bucket["count"] += 1
         bucket["durations"].append(s.duration_ms)
+        bucket["self_ms"] += self_ms.get(s.id, s.duration_ms)
         bucket["cost_usd"] += s.cost_usd or 0.0
         bucket["tokens"] += (s.prompt_tokens or 0) + (s.completion_tokens or 0)
         if s.status == obs.STATUS_ERROR:
@@ -191,9 +219,10 @@ def get_metrics(db: Session, window_hours: int = 24) -> Dict[str, Any]:
         bucket["p95_ms"] = _percentile(d, 95)
         bucket["avg_ms"] = round(sum(d) / len(d), 2) if d else 0.0
         bucket["total_ms"] = round(sum(d), 2)
+        bucket["self_ms"] = round(bucket["self_ms"], 2)
         bucket["cost_usd"] = round(bucket["cost_usd"], 6)
         kinds.append(bucket)
-    kinds.sort(key=lambda k: k["total_ms"], reverse=True)
+    kinds.sort(key=lambda k: k["self_ms"], reverse=True)
 
     # Same breakdown, but by operation name — useful to spot a slow endpoint.
     by_op: Dict[str, Dict[str, Any]] = {}

@@ -222,3 +222,45 @@ def test_observability_endpoints_are_reachable(client):
     assert client.get("/observability/traces").status_code == 200
     assert client.get("/observability/metrics").status_code == 200
     assert client.get("/observability/traces/nao-existe").status_code == 404
+
+
+def test_self_time_excludes_nested_spans(db_session):
+    """Summing raw durations double-counts a parent and its child."""
+    now = dt.datetime.now()
+    db_session.add(
+        TraceModel(
+            id="t1", name="ingest", status="ok", duration_ms=1000.0, total_tokens=0,
+            total_cost_usd=0.0, llm_calls=1, span_count=2, trace_metadata={}, started_at=now,
+        )
+    )
+    db_session.add_all(
+        [
+            # The wrapper spends 900ms, of which 850ms is the LLM call inside it.
+            SpanModel(
+                id="parent", trace_id="t1", name="extract.Candidate", kind="logic", status="ok",
+                duration_ms=900.0, attributes={},
+            ),
+            SpanModel(
+                id="child", trace_id="t1", parent_id="parent", name="llm.extract", kind="llm",
+                status="ok", duration_ms=850.0, attributes={},
+            ),
+        ]
+    )
+    db_session.commit()
+
+    by_kind = {k["kind"]: k for k in telemetry.get_metrics(db_session)["by_kind"]}
+
+    assert by_kind["logic"]["total_ms"] == 900.0   # raw duration is unchanged
+    assert by_kind["logic"]["self_ms"] == 50.0     # …but only 50ms was its own work
+    assert by_kind["llm"]["self_ms"] == 850.0
+    # The layer that actually spent the time sorts first.
+    assert telemetry.get_metrics(db_session)["by_kind"][0]["kind"] == "llm"
+
+
+def test_self_time_never_goes_negative(db_session):
+    """Clock skew between sibling spans must not produce a negative bar."""
+    spans = [
+        SpanModel(id="p", trace_id="t", name="p", kind="logic", status="ok", duration_ms=10.0, attributes={}),
+        SpanModel(id="c", trace_id="t", parent_id="p", name="c", kind="llm", status="ok", duration_ms=99.0, attributes={}),
+    ]
+    assert telemetry._self_times(spans)["p"] == 0.0

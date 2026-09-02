@@ -227,7 +227,7 @@ export default function DashboardPage() {
               <div className="mt-5">
                 <ChartFrame
                   title="Onde o tempo é gasto"
-                  hint="Tempo acumulado por camada do pipeline"
+                  hint="Tempo próprio por camada — spans aninhados não são contados duas vezes"
                   legend={
                     <Legend
                       items={m.by_kind
@@ -235,19 +235,19 @@ export default function DashboardPage() {
                         .map((k) => ({
                           label: KIND_LABELS[k.kind] ?? k.kind,
                           color: KIND_COLORS[k.kind] ?? "var(--series-1)",
-                          value: formatMs(k.total_ms),
+                          value: formatMs(k.self_ms),
                         }))}
                     />
                   }
                   table={
                     <DataTable
-                      columns={["Camada", "Execuções", "p50", "p95", "Total"]}
+                      columns={["Camada", "Execuções", "p50", "p95", "Tempo próprio"]}
                       rows={m.by_kind.map((k) => [
                         KIND_LABELS[k.kind] ?? k.kind,
                         k.count,
                         formatMs(k.p50_ms),
                         formatMs(k.p95_ms),
-                        formatMs(k.total_ms),
+                        formatMs(k.self_ms),
                       ])}
                     />
                   }
@@ -256,7 +256,7 @@ export default function DashboardPage() {
                     data={m.by_kind.slice(0, 6).map((k) => ({
                       key: k.kind,
                       label: KIND_LABELS[k.kind] ?? k.kind,
-                      value: k.total_ms,
+                      value: k.self_ms,
                       secondary: `${k.count} execuções · p95 ${formatMs(k.p95_ms)}`,
                     }))}
                     valueFormat={formatMs}
