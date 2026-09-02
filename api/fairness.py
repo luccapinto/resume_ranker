@@ -107,9 +107,9 @@ INSTITUTION_REPLACEMENTS: Dict[str, str] = {
 
 AXES: Dict[str, Tuple[str, Dict[str, str]]] = {
     "genero": ("Troca de marcadores de gênero (masculino → feminino)", GENDER_REPLACEMENTS),
-    "nome": ("Troca de nomes próprios e sobrenomes", NAME_REPLACEMENTS),
+    "nome": ("Troca do nome do candidato por outro de sinal demográfico distinto", NAME_REPLACEMENTS),
     "idade": ("Deslocamento de anos de formação e senioridade etária", AGE_REPLACEMENTS),
-    "instituicao": ("Troca de instituições de ensino de elite por instituições menos renomadas", INSTITUTION_REPLACEMENTS),
+    "instituicao": ("Troca da instituição de ensino por uma menos renomada", INSTITUTION_REPLACEMENTS),
 }
 
 
@@ -135,8 +135,95 @@ def _apply_replacements(text: str, table: Dict[str, str]) -> Tuple[str, List[dic
     return swapped, swaps
 
 
-def generate_counterfactual_text(text: str, axis: str = "genero") -> Tuple[str, List[dict]]:
-    """Produce the counterfactual variant of `text` for one bias axis."""
+# Counterfactual identities for the `nome` axis. A fixed lookup table only fires
+# when a résumé happens to contain one of the listed names, which made the axis
+# report "not applicable" for most real candidates. The detected name is swapped
+# for one of these instead, varying the demographic signal a name carries.
+COUNTERFACTUAL_NAMES = [
+    "Aisha Nakamura Okonkwo",
+    "Mohammed Al-Rashid Haddad",
+    "Yeshi Dorjee Tenzin",
+    "Ingrid Sørensen Halvorsen",
+    "Xiomara Quispe Mamani",
+]
+
+# Institutions are fictional in the demo corpus and unbounded in the real world,
+# so the axis matches the *pattern* of a named institution rather than a list.
+_INSTITUTION_RE = re.compile(
+    r"\b(?:Universidade|Faculdade|Instituto|Centro Universitário|Escola Superior|"
+    r"Fundação|Pontifícia Universidade)"
+    r"(?:\s+(?:[A-ZÀ-Ý][\wÀ-ÿ'’-]+|d[aeo]s?|e|em|de)){1,5}",
+)
+GENERIC_INSTITUTION = "Faculdade Municipal do Interior"
+
+
+def _swap_detected_names(text: str, names: List[str]) -> Tuple[str, List[dict]]:
+    """Replace the names the PII layer detected, full form and given name."""
+    swapped = text
+    swaps: List[dict] = []
+
+    for index, original in enumerate(names):
+        original = " ".join((original or "").split())
+        if len(original) < 3:
+            continue
+        replacement = COUNTERFACTUAL_NAMES[index % len(COUNTERFACTUAL_NAMES)]
+        for source, target in ((original, replacement), (original.upper(), replacement.upper())):
+            pattern = re.compile(r"\b" + re.escape(source) + r"\b")
+            found = pattern.findall(swapped)
+            if found:
+                swapped = pattern.sub(target, swapped)
+                swaps.append({"original": source, "replacement": target, "count": len(found)})
+
+        # Later mentions usually use the given name alone.
+        given_old, given_new = original.split()[0], replacement.split()[0]
+        if len(given_old) > 2:
+            pattern = re.compile(r"\b" + re.escape(given_old) + r"\b")
+            found = pattern.findall(swapped)
+            if found:
+                swapped = pattern.sub(given_new, swapped)
+                swaps.append({"original": given_old, "replacement": given_new, "count": len(found)})
+
+    return swapped, swaps
+
+
+def _swap_institutions(text: str) -> Tuple[str, List[dict]]:
+    """Downgrade any named institution to a generic, low-prestige one."""
+    swaps: List[dict] = []
+    seen: Dict[str, int] = {}
+
+    def replace(match: "re.Match[str]") -> str:
+        original = match.group(0).strip()
+        seen[original] = seen.get(original, 0) + 1
+        return GENERIC_INSTITUTION
+
+    swapped = _INSTITUTION_RE.sub(replace, text)
+    for original, count in seen.items():
+        if original != GENERIC_INSTITUTION:
+            swaps.append({"original": original, "replacement": GENERIC_INSTITUTION, "count": count})
+    return swapped, swaps
+
+
+def generate_counterfactual_text(
+    text: str, axis: str = "genero", detected_names: Optional[List[str]] = None
+) -> Tuple[str, List[dict]]:
+    """Produce the counterfactual variant of `text` for one bias axis.
+
+    `detected_names` comes from the PII redaction map, so the `nome` axis works
+    on whoever the résumé is actually about instead of a hard-coded list.
+    """
+    if axis == "nome":
+        swapped, swaps = _swap_detected_names(text, detected_names or [])
+        if swaps:
+            return swapped, swaps
+        # No detected name — fall back to the static table of common names.
+        return _apply_replacements(text, NAME_REPLACEMENTS)
+
+    if axis == "instituicao":
+        swapped, swaps = _swap_institutions(text)
+        if swaps:
+            return swapped, swaps
+        return _apply_replacements(text, INSTITUTION_REPLACEMENTS)
+
     _, table = AXES.get(axis, AXES["genero"])
     return _apply_replacements(text, table)
 
@@ -165,6 +252,36 @@ def _profile_doc_text(extracted: dict) -> str:
     return f"{texts['skills_text']} {texts['narrative_text']}".strip()
 
 
+# Extracted fields that are free text and therefore carry demographic markers.
+_SWAPPABLE_FIELDS = ("narrative_experience", "headline", "current_title")
+
+
+def _swap_extracted_profile(
+    fallback: dict, axis: str, detected_names: Optional[List[str]]
+) -> dict:
+    """Apply the counterfactual to the *extracted* profile, not just the résumé.
+
+    Scoring reads `skills_text` and `narrative_experience`, so reusing the
+    original extraction verbatim would feed the reranker an identical document
+    and report a delta of exactly zero for every candidate — an audit that always
+    passes because it never changed anything. The swap is applied to the text
+    fields that actually reach the scorer.
+    """
+    swapped = copy.deepcopy(fallback)
+    for field_name in _SWAPPABLE_FIELDS:
+        value = swapped.get(field_name)
+        if isinstance(value, str) and value:
+            swapped[field_name], _ = generate_counterfactual_text(value, axis, detected_names)
+
+    highlights = swapped.get("highlights")
+    if isinstance(highlights, list):
+        swapped["highlights"] = [
+            generate_counterfactual_text(h, axis, detected_names)[0] if isinstance(h, str) else h
+            for h in highlights
+        ]
+    return swapped
+
+
 def _rebuild_profile(
     text: str,
     redactor: PIIRedactor,
@@ -172,15 +289,18 @@ def _rebuild_profile(
     normalizer: SkillNormalizer,
     fallback: dict,
     deep: bool,
+    axis: str = "genero",
+    detected_names: Optional[List[str]] = None,
 ) -> dict:
-    """Re-run the ingestion pipeline on the counterfactual text.
+    """Produce the extracted profile of the counterfactual variant.
 
-    With `deep=False` we reuse the original extraction (fast, isolates the
-    retrieval layer). With `deep=True` we re-extract via the LLM, which also puts
-    the extraction step itself under audit.
+    With `deep=False` the original extraction is reused with the demographic
+    markers swapped in its free-text fields — fast, and it isolates the
+    retrieval and reranking layers. With `deep=True` the LLM re-extracts from
+    the counterfactual résumé, putting the extraction step itself under audit.
     """
     if not deep:
-        return copy.deepcopy(fallback)
+        return _swap_extracted_profile(fallback, axis, detected_names)
 
     redacted, _ = redactor.redact(text)
     try:
@@ -189,7 +309,7 @@ def _rebuild_profile(
         extracted = extractor.extract(redacted, CandidateProfile).model_dump(mode="json")
     except Exception as exc:  # noqa: BLE001 — audit must survive a flaky LLM
         obs.annotate(deep_extraction_failed=str(exc)[:200])
-        return copy.deepcopy(fallback)
+        return _swap_extracted_profile(fallback, axis, detected_names)
 
     extracted["skills_normalized"] = [
         s.model_dump() for s in normalizer.normalize_batch(extracted.get("skills_raw") or [])
@@ -222,6 +342,13 @@ def run_counterfactual_bias_audit(
         if not candidate_profile or not job_profile:
             raise ValueError(f"Candidato {candidate_id} ou vaga {job_id} não encontrados.")
 
+        # Names the PII layer already found — the `nome` axis swaps these.
+        detected_names = [
+            value
+            for placeholder, value in (candidate_profile.redaction_map or {}).items()
+            if placeholder.startswith("[NOME_REDACT_")
+        ]
+
         job_texts = build_profile_texts(job_profile.extracted_profile)
         query_text = f"{job_texts['skills_text']} {job_texts['narrative_text']}".strip()
 
@@ -244,19 +371,41 @@ def run_counterfactual_bias_audit(
         variants: List[_Scorable] = []
         axis_swaps: Dict[str, List[dict]] = {}
         axis_profiles: Dict[str, dict] = {}
+        axis_skipped: Dict[str, str] = {}
 
         for axis in axes:
             with obs.span(f"fairness.variant.{axis}", kind=obs.KIND_LOGIC):
-                cf_text, swaps = generate_counterfactual_text(candidate_profile.raw_text, axis)
+                cf_text, swaps = generate_counterfactual_text(
+                    candidate_profile.raw_text, axis, detected_names=detected_names
+                )
                 axis_swaps[axis] = swaps
                 if not swaps:
                     # Nothing to flip on this axis — record it rather than faking a swap.
+                    axis_skipped[axis] = "Nenhum marcador desse eixo foi encontrado no currículo."
                     continue
                 cf_extracted = _rebuild_profile(
-                    cf_text, redactor, extractor, normalizer, candidate_profile.extracted_profile, deep
+                    cf_text,
+                    redactor,
+                    extractor,
+                    normalizer,
+                    candidate_profile.extracted_profile,
+                    deep,
+                    axis=axis,
+                    detected_names=detected_names,
                 )
+                variant_text = _profile_doc_text(cf_extracted)
+                if variant_text == original_doc.text:
+                    # The marker exists in the résumé but not in the text the
+                    # scorer actually reads, so a shallow run would report a
+                    # delta of zero without having tested anything.
+                    axis_skipped[axis] = (
+                        "O marcador existe no currículo, mas não no texto extraído que alimenta o "
+                        "ranqueamento — rode a auditoria profunda para testar este eixo."
+                    )
+                    continue
+
                 axis_profiles[axis] = cf_extracted
-                variants.append(_Scorable(key=f"axis:{axis}", text=_profile_doc_text(cf_extracted)))
+                variants.append(_Scorable(key=f"axis:{axis}", text=variant_text))
 
         scores = _cross_encoder_scores(query_text, [original_doc] + variants + pool_docs)
         original_score = scores.get("original", 0.0)
@@ -277,7 +426,9 @@ def run_counterfactual_bias_audit(
                         "axis": axis,
                         "description": description,
                         "applicable": False,
-                        "reason": "Nenhum marcador desse eixo foi encontrado no currículo.",
+                        "reason": axis_skipped.get(
+                            axis, "Nenhum marcador desse eixo foi encontrado no currículo."
+                        ),
                         "swaps": [],
                         "original_score": normalize_score(original_score),
                         "counterfactual_score": normalize_score(original_score),

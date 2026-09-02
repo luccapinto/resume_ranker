@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import {
+  AlertTriangle,
   ArrowRight,
   Award,
   Braces,
@@ -15,10 +16,11 @@ import {
   Sparkles,
   Target,
 } from "lucide-react";
-import type { MatchExplanation, RankedCandidate } from "@/lib/types";
+import type { Fit, MatchExplanation, RankedCandidate } from "@/lib/types";
 import { api } from "@/lib/api";
 import { Badge, Button, FitBadge, Panel, SkillChips, cn } from "@/components/ui/primitives";
 import { ScoreRing, formatMs } from "@/components/charts";
+import { Markdown } from "@/components/ui/Markdown";
 
 const STRATEGY_LABELS: Record<string, string> = {
   skills: "Vetor de competências",
@@ -88,14 +90,25 @@ function RetrievalTrace({ entry }: { entry: RankedCandidate }) {
   );
 }
 
-export function ExplanationPanel({ explanation }: { explanation: MatchExplanation }) {
+export function ExplanationPanel({
+  explanation,
+  scoreFit,
+}: {
+  explanation: MatchExplanation;
+  /** Fit derived from the calibrated retrieval score, for comparison. */
+  scoreFit?: Fit;
+}) {
   const check = explanation.hallucination_check;
   const allVerified = check.total > 0 && check.verified === check.total;
+  const disagrees = scoreFit !== undefined && scoreFit !== explanation.fit;
 
   return (
     <div className="space-y-4">
       <div className="rounded-xl border border-white/8 bg-white/[0.02] p-3.5">
         <div className="mb-2 flex flex-wrap items-center gap-2">
+          <span className="text-[10px] uppercase tracking-wide text-[var(--text-muted)]">
+            Leitura da IA
+          </span>
           <FitBadge fit={explanation.fit} />
           <Badge tone="neutral" icon={Sparkles}>
             confiança {(explanation.confidence * 100).toFixed(0)}%
@@ -104,7 +117,20 @@ export function ExplanationPanel({ explanation }: { explanation: MatchExplanatio
             {explanation.generated_by.split("/").pop()}
           </Badge>
         </div>
-        <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{explanation.explanation}</p>
+        {disagrees ? (
+          <div className="mb-2.5 flex items-start gap-1.5 rounded-lg border border-white/8 bg-white/[0.02] px-2.5 py-1.5 text-[11px] leading-relaxed text-[var(--text-muted)]">
+            <AlertTriangle className="mt-0.5 h-3 w-3 shrink-0 text-[var(--status-warning)]" />
+            <span>
+              O score de recuperação classifica como{" "}
+              <strong className="font-medium text-[var(--text-secondary)]">{scoreFit}</strong>, mas a
+              análise textual discorda. São dois sinais diferentes: o score mede similaridade com a
+              vaga; a análise lê os requisitos um a um.
+            </span>
+          </div>
+        ) : null}
+        <div className="text-sm text-[var(--text-secondary)]">
+          <Markdown content={explanation.explanation} />
+        </div>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
@@ -346,7 +372,7 @@ export function RankedCandidateCard({
           ) : error ? (
             <p className="text-xs text-[var(--status-critical)]">{error}</p>
           ) : explanation ? (
-            <ExplanationPanel explanation={explanation} />
+            <ExplanationPanel explanation={explanation} scoreFit={entry.fit} />
           ) : null}
         </div>
       ) : null}

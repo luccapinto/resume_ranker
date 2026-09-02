@@ -112,36 +112,42 @@ test("08 — copiloto conversacional", async ({ page }) => {
   const job = await firstJob();
   await page.goto("/copilot");
   await page
-    .getByPlaceholder(/quem são os 5 melhores/)
+    .getByPlaceholder(/Pergunte sobre suas vagas/)
     .fill(`Quais são os 5 candidatos mais aderentes à vaga ${job.title}? Comente os dois primeiros.`);
   await page.keyboard.press("Enter");
 
   await expect(page.getByText(/Ranking —/)).toBeVisible({ timeout: 240_000 });
-  await shoot(page, "08-copiloto", true);
+
+  // The transcript lives in its own scroll container and auto-scrolls to the
+  // bottom; rewind it so the question and the answer are both in frame.
+  await page.evaluate(() => {
+    const scroller = document.querySelector("main .panel > div.overflow-y-auto");
+    scroller?.scrollTo({ top: 0 });
+  });
+  await shoot(page, "08-copiloto");
 });
 
 test("09 — observabilidade", async ({ page }) => {
   await page.goto("/observability");
   await expect(page.getByText("Tempo por camada do pipeline")).toBeVisible();
-  await shoot(page, "09-observabilidade", true);
+  // fullPage would be dominated by the trace list; the metrics are the story.
+  await shoot(page, "09-observabilidade");
 });
 
 test("10 — cascata de um trace", async ({ page }) => {
   await page.goto("/observability");
   await expect(page.getByText("Traces recentes")).toBeVisible();
 
-  // Prefer a trace with LLM calls so the span detail is interesting.
-  const row = page.locator("button").filter({ hasText: /copilot\.chat|ats\.rank|seed\./ }).first();
+  // Prefer a trace with LLM calls, so the span detail has a prompt to show.
+  const row = page.locator("button").filter({ hasText: /seed\.explain|copilot\.chat|explain\.pair/ }).first();
   await row.click();
   await expect(page.getByText("Cascata de execução")).toBeVisible();
 
   const dialog = page.getByRole("dialog");
-  const llmSpan = dialog.locator("button").filter({ hasText: /llm\./ }).first();
-  if (await llmSpan.count()) {
-    await llmSpan.click();
-  } else {
-    await dialog.locator("button").nth(2).click();
-  }
+  const llmSpan = dialog.getByTestId("span-row").filter({ hasText: /llm\./ }).first();
+  await (await llmSpan.count() ? llmSpan : dialog.getByTestId("span-row").first()).click();
+  await expect(dialog.getByText(/Atributos|Entrada enviada/).first()).toBeVisible();
+
   await settle(page);
   await dialog.screenshot({ path: path.join(OUT, "10-trace.png") });
 });
@@ -149,8 +155,18 @@ test("10 — cascata de um trace", async ({ page }) => {
 test("11 — auditoria de viés", async ({ page }) => {
   test.setTimeout(240_000);
   await page.goto("/fairness");
-  await page.locator("select").first().selectOption({ index: 1 });
-  await page.locator("select").nth(1).selectOption({ index: 1 });
+
+  // Pick a pair where every axis has something to flip, so the report is not
+  // four "not applicable" rows.
+  const jobSelect = page.locator("select").first();
+  const candidateSelect = page.locator("select").nth(1);
+  const jobId = (await (await fetch(`${API}/ats/jobs`)).json()).find(
+    (j: { title: string }) => j.title.includes("Site Reliability"),
+  ).id;
+  const candidateId = (await (await fetch(`${API}/ats/candidates?q=Henrique`)).json())[0].id;
+  await jobSelect.selectOption(String(jobId));
+  await candidateSelect.selectOption(String(candidateId));
+
   await page.getByRole("button", { name: "Auditar" }).click();
   await expect(page.getByText(/limite de tolerância/)).toBeVisible({ timeout: 200_000 });
   await shoot(page, "11-equidade", true);

@@ -17,6 +17,7 @@ import type { CopilotCard, CopilotResponse, CopilotTools, Job } from "@/lib/type
 import { PageHeader } from "@/components/layout/AppShell";
 import { Badge, Button, Panel, SectionTitle, cn } from "@/components/ui/primitives";
 import { CopilotCardView } from "@/components/copilot/Cards";
+import { Markdown } from "@/components/ui/Markdown";
 import { formatMs } from "@/components/charts";
 
 interface Turn {
@@ -88,7 +89,11 @@ function Message({ turn }: { turn: Turn }) {
             )}
           >
             {!isUser ? <ToolTrail turn={turn} /> : null}
-            <p className="whitespace-pre-wrap">{turn.content}</p>
+            {isUser ? (
+              <p className="whitespace-pre-wrap">{turn.content}</p>
+            ) : (
+              <Markdown content={turn.content} />
+            )}
           </div>
         </div>
       </div>
@@ -255,8 +260,8 @@ export default function CopilotPage() {
                     void send(input);
                   }
                 }}
-                placeholder="Ex: quem são os 5 melhores candidatos para a vaga de SRE?"
-                className="field max-h-40 min-h-[42px] flex-1 resize-none px-3 py-2.5 text-sm"
+                placeholder="Pergunte sobre suas vagas e candidatos…"
+                className="field max-h-40 min-h-[44px] flex-1 resize-none px-3 py-3 text-sm leading-tight"
               />
               <Button
                 type="submit"
@@ -264,7 +269,7 @@ export default function CopilotPage() {
                 icon={ArrowUp}
                 loading={busy}
                 disabled={!input.trim()}
-                className="h-[42px] px-3"
+                className="h-[44px] px-3"
               >
                 <span className="sr-only">Enviar</span>
               </Button>

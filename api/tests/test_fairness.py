@@ -31,14 +31,42 @@ def test_swaps_respect_word_boundaries():
     assert "eleição" in swapped
 
 
-def test_name_axis_swaps_given_names_and_surnames():
+def test_name_axis_swaps_the_name_the_pii_layer_detected():
+    """The axis must work on whoever the résumé is about, not a hard-coded list."""
+    swapped, swaps = generate_counterfactual_text(
+        "Tatiana Rezende Peixoto lidera o time. Tatiana atua com Kubernetes.",
+        "nome",
+        detected_names=["Tatiana Rezende Peixoto"],
+    )
+    assert "Tatiana" not in swapped
+    assert swaps
+    # Both the full name and the later given-name mention were replaced.
+    assert sum(s["count"] for s in swaps) >= 2
+
+
+def test_name_axis_falls_back_to_the_static_table():
     swapped, swaps = generate_counterfactual_text("João Silva trabalhou na área.", "nome")
     assert "João" not in swapped
     assert "Silva" not in swapped
     assert len(swaps) == 2
 
 
-def test_institution_axis_swaps_elite_universities():
+def test_institution_axis_matches_any_named_institution():
+    """Real institutions are unbounded, so the axis matches the pattern."""
+    for original in (
+        "Universidade Nova Aurora",
+        "Instituto de Tecnologia Avançada",
+        "Pontifícia Universidade Católica",
+    ):
+        swapped, swaps = generate_counterfactual_text(
+            f"Bacharelado - {original} | 2016", "instituicao"
+        )
+        assert original not in swapped, original
+        assert swaps[0]["original"] == original
+
+
+def test_institution_axis_falls_back_to_the_elite_list_for_acronyms():
+    """USP and FGV are acronyms, not "Universidade X" — the static table covers them."""
     swapped, _ = generate_counterfactual_text("Bacharel pela USP, MBA na FGV.", "instituicao")
     assert "USP" not in swapped
     assert "FGV" not in swapped
@@ -87,7 +115,7 @@ def audit_fixtures(db_session):
         extracted_profile={
             "skills_raw": ["Python"],
             "skills_normalized": [{"preferred_label": "Python", "concept_uri": "u/py"}],
-            "narrative_experience": "Liderou times de desenvolvimento.",
+            "narrative_experience": "O candidato é um desenvolvedor sênior formado em 2015. Ele lidera times.",
         },
     )
     db_session.add_all([job, candidate])
@@ -139,6 +167,7 @@ def test_a_moved_score_fails_the_audit(audit_fixtures, fake_provider):
 
 def test_an_axis_without_markers_is_reported_as_not_applicable(audit_fixtures, fake_provider):
     audit_fixtures["candidate"].raw_text = "Profissional de tecnologia."
+    audit_fixtures["candidate"].redaction_map = {}
     audit_fixtures["db"].commit()
 
     cross_encoder = MagicMock()
@@ -150,6 +179,25 @@ def test_an_axis_without_markers_is_reported_as_not_applicable(audit_fixtures, f
     assert axis["applicable"] is False
     assert axis["passed"] is True
     assert "Nenhum marcador" in axis["reason"]
+
+
+def test_a_marker_absent_from_the_extracted_text_is_reported_honestly(audit_fixtures, fake_provider):
+    """A shallow audit that cannot change the scored document must say so."""
+    audit_fixtures["candidate"].extracted_profile = {
+        "skills_raw": ["Python"],
+        "skills_normalized": [{"preferred_label": "Python", "concept_uri": "u/py"}],
+        # No gendered marker here, though the résumé itself has one.
+        "narrative_experience": "Atuou em plataformas de dados.",
+    }
+    audit_fixtures["db"].commit()
+
+    cross_encoder = MagicMock()
+    cross_encoder.predict.side_effect = lambda pairs: [1.0] * len(pairs)
+
+    axis = _run(audit_fixtures, cross_encoder, fake_provider, axes=["genero"])["axes"][0]
+
+    assert axis["applicable"] is False
+    assert "auditoria profunda" in axis["reason"]
 
 
 def test_the_audit_is_written_to_the_log(audit_fixtures, fake_provider):
@@ -236,3 +284,38 @@ def test_the_audit_never_writes_to_qdrant(audit_fixtures, fake_provider):
 
     qdrant.upsert.assert_not_called()
     qdrant.delete.assert_not_called()
+
+
+def test_the_shallow_audit_actually_changes_the_scored_document(audit_fixtures, fake_provider):
+    """Reusing the original extraction verbatim would make every audit pass for free."""
+    from api.fairness import _profile_doc_text, _swap_extracted_profile
+
+    original = {
+        "narrative_experience": "O candidato é um desenvolvedor sênior. Ele liderou o time.",
+        "headline": "Desenvolvedor sênior",
+        "skills_normalized": [{"preferred_label": "Python", "concept_uri": "u/py"}],
+    }
+    swapped = _swap_extracted_profile(original, "genero", detected_names=[])
+
+    assert swapped["narrative_experience"] != original["narrative_experience"]
+    assert "desenvolvedora" in swapped["narrative_experience"]
+    assert _profile_doc_text(swapped) != _profile_doc_text(original)
+    # The original must not be mutated in place.
+    assert "desenvolvedor sênior" in original["narrative_experience"]
+
+
+def test_the_shallow_swap_reaches_the_cross_encoder(audit_fixtures, fake_provider):
+    """The reranker must receive two genuinely different documents."""
+    seen: list[str] = []
+
+    def predict(pairs):
+        seen.extend(doc for _, doc in pairs)
+        return [1.0] * len(pairs)
+
+    cross_encoder = MagicMock()
+    cross_encoder.predict.side_effect = predict
+
+    _run(audit_fixtures, cross_encoder, fake_provider, axes=["genero"])
+
+    # First doc is the original, second is the counterfactual.
+    assert seen[0] != seen[1]

@@ -391,8 +391,8 @@ def explain_application(application_id: int, db: Session = Depends(get_db)):
             candidate_extracted=candidate_profile.extracted_profile,
             job_extracted=job_profile.extracted_profile,
         )
+        # The stored fit stays score-derived; see api/ats.py:fit_from_score.
         app.ai_summary = explanation["summary"]
-        app.ai_fit = explanation["fit"]
         app.trace_id = trace.id
         ats_service.log_activity(
             db, app.id, "ai_explain", explanation["summary"], actor="IA",

@@ -153,6 +153,7 @@ CONFIGURATIONS = [
 
 
 README_MARKER = "<!-- EVAL_TABLE -->"
+README_END_MARKER = "<!-- /EVAL_TABLE -->"
 
 
 def to_markdown(rows: List[dict], reranker: str, jobs: int, candidates: int, judgements: int) -> str:
@@ -179,6 +180,8 @@ def to_markdown(rows: List[dict], reranker: str, jobs: int, candidates: int, jud
         f"<sub>{jobs} queries · {candidates} candidates · {judgements} graded judgements · "
         f"reranker <code>{reranker}</code>. Best value per column in bold. "
         f"Regenerate with <code>make eval</code>.</sub>",
+        "",
+        README_END_MARKER,
     ]
     return "\n".join(lines)
 
@@ -192,16 +195,18 @@ def update_readme(markdown: str) -> None:
         content = f.read()
 
     start = content.find(README_MARKER)
-    if start == -1:
-        print(f"Marcador {README_MARKER} não encontrado no README; nada a atualizar.")
+    end = content.find(README_END_MARKER, start)
+    if start == -1 or end == -1:
+        print(
+            f"Marcadores {README_MARKER} … {README_END_MARKER} não encontrados no README; "
+            "nada a atualizar."
+        )
         return
 
-    # The block runs until the next top-level separator.
-    end = content.find("\n\nTwo findings", start)
-    if end == -1:
-        end = content.find("\n\n---", start)
+    # Replace only what sits between the markers — the surrounding analysis is
+    # written by hand and must survive a regeneration.
     with open(readme, "w", encoding="utf-8") as f:
-        f.write(content[:start] + markdown + content[end:])
+        f.write(content[:start] + markdown + content[end + len(README_END_MARKER) :])
     print("README atualizado com a tabela de avaliação.")
 
 

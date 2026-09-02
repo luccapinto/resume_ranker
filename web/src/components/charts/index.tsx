@@ -513,6 +513,8 @@ export function Waterfall({
           <li key={span.id}>
             <button
               type="button"
+              data-testid="span-row"
+              data-span-kind={span.kind}
               onClick={onSelect ? () => onSelect(span.id) : undefined}
               className={cn(
                 "grid w-full grid-cols-[minmax(160px,240px)_1fr_64px] items-center gap-3 rounded-lg px-2 py-1.5 text-left transition-colors",

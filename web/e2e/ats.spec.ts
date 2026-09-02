@@ -49,10 +49,10 @@ test.describe("visão geral", () => {
     await expect(page.getByRole("heading", { name: "Visão geral" })).toBeVisible();
     await expect(page.getByText("Vagas abertas")).toBeVisible();
     await expect(page.getByText("Banco de talentos")).toBeVisible();
-    await expect(page.getByText("Funil de contratação")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Funil de contratação" })).toBeVisible();
 
     // The observability panel must show real traces, not the empty state.
-    await expect(page.getByText("Saúde do pipeline de IA")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Saúde do pipeline de IA" })).toBeVisible();
     await expect(page.getByText("Nenhuma execução registrada")).toHaveCount(0);
   });
 
@@ -116,7 +116,7 @@ test.describe("vagas e ranqueamento", () => {
 
     await expect(firstCard.getByText("Evidências citadas")).toBeVisible({ timeout: 120_000 });
     await expect(firstCard.getByText(/verificadas no currículo/)).toBeVisible();
-    await expect(firstCard.getByText("Pontos fortes")).toBeVisible();
+    await expect(firstCard.getByText("Pontos fortes", { exact: true })).toBeVisible();
     await expect(firstCard.getByText("Perguntas sugeridas para a entrevista")).toBeVisible();
   });
 
@@ -205,8 +205,8 @@ test.describe("observabilidade", () => {
     await page.goto("/observability");
 
     await expect(page.getByRole("heading", { name: "Observabilidade" })).toBeVisible();
-    await expect(page.getByText("Latência p95")).toBeVisible();
-    await expect(page.getByText("Custo acumulado")).toBeVisible();
+    await expect(page.getByText("Latência p95", { exact: true })).toBeVisible();
+    await expect(page.getByText("Custo acumulado", { exact: true })).toBeVisible();
     await expect(page.getByText("Tempo por camada do pipeline")).toBeVisible();
     await expect(page.getByText("Traces recentes")).toBeVisible();
   });
@@ -218,8 +218,8 @@ test.describe("observabilidade", () => {
     await expect(page.getByText("Cascata de execução")).toBeVisible();
 
     // Clicking a span in the waterfall reveals its attributes.
-    await page.getByRole("dialog").locator("button").filter({ hasText: /\./ }).nth(1).click();
-    await expect(page.getByRole("dialog").getByText(/Atributos|Entrada enviada/)).toBeVisible();
+    await page.getByRole("dialog").getByTestId("span-row").first().click();
+    await expect(page.getByRole("dialog").getByText(/Atributos|Entrada enviada/).first()).toBeVisible();
   });
 
   test("o gráfico de latência oferece a visão em tabela", async ({ page }) => {
@@ -242,7 +242,7 @@ test.describe("copiloto", () => {
     const title = jobs.find((j: { id: number }) => j.id === jobId).title;
 
     await page
-      .getByPlaceholder(/quem são os 5 melhores/)
+      .getByPlaceholder(/Pergunte sobre suas vagas/)
       .fill(`Liste os 5 melhores candidatos para a vaga ${title}.`);
     await page.keyboard.press("Enter");
 

@@ -618,7 +618,6 @@ def rank_job(
                 app = db.query(ApplicationModel).filter(ApplicationModel.id == entry["application_id"]).first()
                 if app:
                     app.ai_summary = explanation["summary"]
-                    app.ai_fit = explanation["fit"]
                     log_activity(
                         db,
                         app.id,

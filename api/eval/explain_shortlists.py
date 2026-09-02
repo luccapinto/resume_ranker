@@ -48,8 +48,10 @@ def explain_one(application_id: int) -> Tuple[int, str]:
                 candidate_extracted=candidate_profile.extracted_profile,
                 job_extracted=job_profile.extracted_profile,
             )
+            # ai_fit stays derived from the calibrated score so the badge and the
+            # ring never contradict each other; the model's own verdict lives in
+            # the analysis payload.
             app.ai_summary = explanation["summary"]
-            app.ai_fit = explanation["fit"]
             app.trace_id = trace.id
 
             from api.ats import log_activity

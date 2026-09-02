@@ -10,7 +10,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Qdrant](https://img.shields.io/badge/Qdrant-vector%20db-DC244C?style=flat-square&logo=qdrant&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?style=flat-square&logo=postgresql&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-203%20passing-0ca30c?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-212%20passing-0ca30c?style=flat-square)
 
 </div>
 
@@ -59,8 +59,8 @@ The LLM writes the analysis, but each citation it produces is checked verbatim (
 **3. Identity is recovered locally, never sent to a model.**
 PII is stripped before the first external call. The recruiter still sees the real name, e-mail and phone, because those are restored from the redaction map on the way to the screen. The side-by-side viewer proves it: left is the original document, right is the exact text the model received.
 
-**4. Bias is tested, not asserted.**
-Four demographic axes — gender, name, age and university prestige — are each flipped in isolation and pushed through the same scoring path. The delta is measured and reported per axis.
+**4. Bias is tested, not asserted — and the test finds things.**
+Four demographic axes — gender, name, age and institution — are each flipped in isolation and pushed through the same scoring path. On the demo corpus the audit flags a 3.2% score movement on the age axis for one candidate, above the 1% threshold. When an axis cannot be meaningfully tested, the report says that instead of reporting a perfect score.
 
 **5. Everything is traced.**
 Latency, tokens, cost, prompts, responses and errors, per pipeline layer, with a clickable execution waterfall.
@@ -152,27 +152,29 @@ make eval
 
 | Configuration | Weights | Rerank | NDCG@5 | NDCG@10 | MRR |
 |---|---|:---:|---:|---:|---:|
-| Skills vector only (dense) | `1, 0, 0` | no | **0.8849** | 0.8978 | 1.0000 |
-| Narrative vector only (dense) | `0, 1, 0` | no | 0.5456 | 0.6665 | 0.8333 |
-| Lexical vector only (sparse) | `0, 0, 1` | no | 0.8586 | 0.8757 | 0.9167 |
-| RRF, equal weights, no rerank | `1, 1, 1` | no | 0.8731 | 0.9009 | 1.0000 |
-| RRF, default weights, no rerank | `1, 1, 0.5` | no | 0.8765 | 0.9180 | 1.0000 |
-| **RRF, default weights + cross-encoder** ← shipped | `1, 1, 0.5` | yes | 0.8768 | **0.9202** | 1.0000 |
-| RRF, skills-heavy + cross-encoder | `1.5, 1, 0.5` | yes | 0.8768 | 0.9202 | 1.0000 |
-| RRF, narrative-heavy + cross-encoder | `1, 1.5, 0.5` | yes | 0.8768 | 0.9202 | 1.0000 |
+| Skills vector only (dense) | `1, 0, 0` | no | 0.7516 | 0.8222 | 0.9167 |
+| Narrative vector only (dense) | `0, 1, 0` | no | 0.5989 | 0.6281 | 0.7778 |
+| Lexical vector only (sparse) | `0, 0, 1` | no | **0.8674** | 0.9097 | 1.0000 |
+| RRF, equal weights, no rerank | `1, 1, 1` | no | 0.8605 | 0.8926 | 1.0000 |
+| RRF, default weights, no rerank | `1, 1, 0.5` | no | 0.8517 | 0.9086 | 1.0000 |
+| **RRF, default weights + cross-encoder** ← shipped | `1, 1, 0.5` | yes | 0.8416 | **0.9117** | 1.0000 |
+| RRF, skills-heavy + cross-encoder | `1.5, 1, 0.5` | yes | 0.8416 | 0.9117 | 1.0000 |
+| RRF, narrative-heavy + cross-encoder | `1, 1.5, 0.5` | yes | 0.8416 | 0.9117 | 1.0000 |
 
 <sub>6 queries · 28 candidates · 168 graded judgements · reranker <code>cross-encoder/ms-marco-MiniLM-L-6-v2</code>. Best value per column in bold. Regenerate with <code>make eval</code>.</sub>
 
+<!-- /EVAL_TABLE -->
+
 Four things this table says, including the inconvenient ones:
 
-- **The narrative vector is the weak one** (NDCG@5 0.55). Career prose is where seniority and scope live, but on its own it confuses a data engineer with an ML engineer. It earns its place in the fusion, not on its own.
-- **The skills vector alone edges out the full pipeline at NDCG@5** — 0.8849 against 0.8768. With six queries that gap is inside the noise, but it is real and worth reporting rather than hiding. The hybrid wins where it matters more for a shortlist that runs past the podium: **NDCG@10 0.9202 vs 0.8978**.
-- **The cross-encoder barely moves the ranking here** (0.9180 → 0.9202 at @10). Its real contribution in this system is not the ordering, it is producing a *joint* score that can be calibrated into a number a recruiter can read. On a corpus this clean, RRF has already done most of the work.
-- **A multilingual reranker was tried and rejected.** `mmarco-mMiniLMv2-L12-H384` produced a much nicer-looking score distribution on Portuguese text — and *worse* ranking quality (NDCG@5 0.53 against 0.88 on an earlier run of this same harness). The English model stayed, and the ugly score scale was fixed by calibration instead of by swapping models. The measurement overruled the intuition.
+- **The narrative vector is the weak one** (NDCG@5 0.60). Career prose is where seniority and scope live, but on its own it confuses a data engineer with an ML engineer. It earns its place in the fusion, not on its own.
+- **The best *single* strategy is unstable across corpus revisions; the fusion is not.** This corpus was regenerated three times while extraction bugs were being fixed. Across those runs the leading single vector flipped between `skills` (0.88, then 0.75) and `lexical` (0.86, then 0.87), while `RRF + cross-encoder` sat within a hair of the best NDCG@10 every single time. At six queries a 0.03 gap between single strategies is noise; the *consistency* of the fusion is the signal, and it is why the fusion ships.
+- **The cross-encoder barely moves the ranking here** (0.9086 → 0.9117 at @10). Its real contribution in this system is not the ordering — it is producing a *joint* score that can be calibrated into a number a recruiter can read. On a corpus this clean, RRF has already done most of the work.
+- **A multilingual reranker was tried and rejected.** `mmarco-mMiniLMv2-L12-H384` produced a much nicer-looking score distribution on Portuguese text — and *worse* ranking quality (NDCG@5 0.53 against 0.88 on the same harness). The English model stayed, and the ugly score scale was fixed by calibration instead of by swapping models. The measurement overruled the intuition.
 
-Weight variations above the default make no difference on this corpus, which is itself informative: the fusion is not sensitive to tuning at this scale, so the default stays at `1, 1, 0.5`.
+Weight variations above the default change nothing on this corpus, which is itself informative: the fusion is not sensitive to tuning at this scale, so the default stays at `1, 1, 0.5`.
 
-The calibration itself is reproducible:
+The calibration is reproducible too:
 
 ```bash
 make calibrate
@@ -233,9 +235,9 @@ Clone the résumé, flip one demographic marker, run both versions through the *
 | Axis | What gets swapped |
 |---|---|
 | `genero` | Pronouns and gendered job titles |
-| `nome` | Given names and surnames, varying the demographic signal |
+| `nome` | The name the PII layer detected, for one carrying a different demographic signal |
 | `idade` | Graduation years and tenure phrasing |
-| `instituicao` | Elite universities → lesser-known institutions |
+| `instituicao` | Any named institution → a generic, low-prestige one |
 
 <div align="center">
 
@@ -243,10 +245,16 @@ Clone the résumé, flip one demographic marker, run both versions through the *
 
 </div>
 
-Two details that matter:
+**The audit finds things.** In that screenshot it flags a 3.24% score movement on the age axis for one candidate — over the 1% threshold, on a résumé where nothing but graduation years changed. That is the entire point of building it.
 
-- Scoring happens **in process**, against a live pool of real candidates. The original audit wrote temporary IDs into the production collection, which polluted concurrent searches; it now touches nothing.
-- The delta is computed on the **calibrated 0–100 scale**, not on raw logits. Cross-encoder scores are signed, so a percentage over a negative number is meaningless — the original implementation passed every audit involving a negative score for exactly that reason.
+Four details that matter, three of which were bugs:
+
+- **The shallow audit used to test nothing.** With `deep=False` it reused the original extraction verbatim, so the reranker scored two *identical* documents and every axis reported a delta of exactly 0.000%. It now applies the swap to the extracted text fields that actually reach the scorer.
+- **An axis that cannot be tested says so.** If a marker exists in the résumé but not in the extracted text the ranking reads, the report marks that axis untestable and points at `--deep` — instead of quietly reporting a perfect score.
+- **`nome` and `instituicao` were lookup tables** of a dozen names and eight universities, so they reported "not applicable" for most real candidates. `nome` now swaps whatever the PII layer detected; `instituicao` matches the *pattern* of a named institution.
+- **The delta is computed on the calibrated 0–100 scale**, not on raw logits. Cross-encoder scores are signed, so a percentage over a negative number is meaningless — the original implementation passed every audit involving a negative score for exactly that reason.
+
+Scoring happens **in process**, against a live pool of real candidates, so the audit produces a rank movement as well as a score delta. The original implementation wrote temporary IDs into the production collection and polluted concurrent searches; it now writes nothing.
 
 `--deep` additionally re-runs the LLM extraction on the counterfactual, putting the extraction step itself under audit.
 
@@ -275,6 +283,8 @@ Clicking a trace opens the execution waterfall, where each span is positioned by
 </div>
 
 The guarantees are the boring but important ones: an exception marks the span *and* the trace and is re-raised; the trace is flushed even when the request blows up; and a failure to persist telemetry is logged and swallowed, because instrumentation must never take down a request.
+
+One deliberate exception: a **4xx is recorded but not counted as a failure**. Asking for a job that doesn't exist is a correct 404, and letting it inflate the error rate is how a dashboard stops being useful — the real outages get buried under expected client errors. The status code lands in the trace metadata either way.
 
 ---
 
@@ -368,7 +378,7 @@ resume_ranker/
 │   ├── routers/              # HTTP surface
 │   ├── eval/                 # corpus generation, seeding, IR harness, calibration
 │   ├── data/seed/            # the committed demo corpus
-│   └── tests/                # 203 backend tests
+│   └── tests/                # 212 backend tests
 ├── web/
 │   ├── src/app/              # dashboard, jobs, candidates, copilot, fairness, observability
 │   ├── src/components/       # UI primitives, charts, ATS widgets, copilot cards
@@ -405,6 +415,10 @@ The backend suite covers RRF arithmetic, score calibration, filter construction,
 **Why charts are hand-rolled.** A charting library would have been faster, but the constraints here (validated CVD-safe palette against a specific dark surface, table view on every chart, status never carried by colour alone, a Gantt-style span waterfall) are easier to satisfy directly than to configure around.
 
 **Why singletons.** `get_embedding_provider()` used to construct a fresh `SentenceTransformer` on every request — seconds of model loading per call. Both it and the Qdrant client are now process-wide.
+
+**Why the score is a sigmoid and not a min-max over the result set.** Normalising within the returned page would make the top result 100 every time, including when everyone is a bad fit. The calibrated sigmoid is absolute: a job with no good candidates shows a page of scores in the twenties, which is the correct answer.
+
+**Why the copilot returns cards instead of prose.** A model asked to describe a ranked list in text will either transcribe a table badly or summarise away the detail. Returning structured payloads lets the model do the part it is good at — two sentences of judgement — and lets the interface do the part it is good at.
 
 ---
 

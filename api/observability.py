@@ -13,7 +13,9 @@ What we capture, per span:
   dashboard can break latency down by layer
 * model name, token usage and USD cost for LLM calls
 * truncated input/output previews for debugging prompts
-* exceptions, with type and message, marking the span (and its trace) failed
+* exceptions, with type and message, marking the span (and its trace) failed —
+  except deliberate 4xx responses, which are recorded but not counted as
+  failures, so the error rate keeps meaning "something broke"
 
 Traces are flushed to Postgres on completion using a dedicated session, so a
 request that blows up still leaves a full record behind.
@@ -46,6 +48,19 @@ KIND_PARSE = "parse"
 
 STATUS_OK = "ok"
 STATUS_ERROR = "error"
+
+
+def _is_client_error(exc: BaseException) -> bool:
+    """True for a 4xx raised deliberately by a handler.
+
+    A request for a job that does not exist is a correct 404, not a system
+    failure. Counting it as an error inflates the error-rate metric and buries
+    the failures that actually need attention. We duck-type on `status_code`
+    rather than importing Starlette, so this module stays dependency-free.
+    """
+    status = getattr(exc, "status_code", None)
+    return isinstance(status, int) and 400 <= status < 500
+
 
 _MAX_PREVIEW = 4000
 
@@ -222,8 +237,13 @@ def trace(name: str, **metadata: Any) -> Iterator[Trace]:
     try:
         yield t
     except Exception as exc:  # noqa: BLE001 — we re-raise after recording
-        t.status = STATUS_ERROR
-        t.error_message = f"{type(exc).__name__}: {exc}"
+        if _is_client_error(exc):
+            # Recorded so it is still visible in the trace, but not counted as
+            # a system failure.
+            t.set(client_error=getattr(exc, "status_code", None), outcome=str(exc)[:200])
+        else:
+            t.status = STATUS_ERROR
+            t.error_message = f"{type(exc).__name__}: {exc}"
         raise
     finally:
         t.ended_at = time.perf_counter()
@@ -259,10 +279,13 @@ def span(name: str, kind: str = KIND_LOGIC, **attributes: Any) -> Iterator[Span]
     try:
         yield s
     except Exception as exc:  # noqa: BLE001
-        s.status = STATUS_ERROR
-        s.error_type = type(exc).__name__
-        s.error_message = str(exc)[:2000]
-        s.set(stacktrace=traceback.format_exc()[-2000:])
+        if _is_client_error(exc):
+            s.set(client_error=getattr(exc, "status_code", None), outcome=str(exc)[:200])
+        else:
+            s.status = STATUS_ERROR
+            s.error_type = type(exc).__name__
+            s.error_message = str(exc)[:2000]
+            s.set(stacktrace=traceback.format_exc()[-2000:])
         raise
     finally:
         s.ended_at = time.perf_counter()

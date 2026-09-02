@@ -264,3 +264,41 @@ def test_self_time_never_goes_negative(db_session):
         SpanModel(id="c", trace_id="t", parent_id="p", name="c", kind="llm", status="ok", duration_ms=99.0, attributes={}),
     ]
     assert telemetry._self_times(spans)["p"] == 0.0
+
+
+class _NotFound(Exception):
+    """Stands in for Starlette's HTTPException, which carries a status_code."""
+
+    status_code = 404
+
+    def __str__(self) -> str:
+        return "404: Vaga 9999 não encontrada."
+
+
+class _ServerError(Exception):
+    status_code = 500
+
+
+def test_a_4xx_is_recorded_but_not_counted_as_a_failure(captured):
+    """A correct 404 must not inflate the error rate that hides real outages."""
+    with pytest.raises(_NotFound):
+        with obs.trace("ats.rank"):
+            with obs.span("lookup", kind=obs.KIND_DB):
+                raise _NotFound()
+
+    trace = captured[0]
+    assert trace.status == obs.STATUS_OK
+    assert trace.metadata["client_error"] == 404
+    assert "9999" in trace.metadata["outcome"]
+
+    span = trace.spans[0]
+    assert span.status == obs.STATUS_OK
+    assert span.attributes["client_error"] == 404
+    assert span.error_type is None
+
+
+def test_a_5xx_is_still_a_failure(captured):
+    with pytest.raises(_ServerError):
+        with obs.trace("ats.rank"):
+            raise _ServerError()
+    assert captured[0].status == obs.STATUS_ERROR
