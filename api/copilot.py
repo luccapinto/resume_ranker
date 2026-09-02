@@ -23,8 +23,8 @@ from api.database import get_qdrant
 from api.embeddings import get_embedding_provider
 from api.explain import generate_match_explanation
 from api.llm import LLMClient, LLMNotConfigured, get_llm
-from api.models import STAGE_LABELS, STAGES, ApplicationModel, CandidateModel, JobModel, ProfileModel
-from api.search import build_profile_texts, hybrid_search_and_rerank
+from api.models import STAGE_LABELS, STAGES, CandidateModel, JobModel
+from api.search import hybrid_search_and_rerank
 
 MAX_TOOL_ROUNDS = 5
 

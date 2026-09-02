@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/primitives";
 import { PiiViewer } from "@/components/ats/PiiViewer";
 import { FairnessReport } from "@/components/ats/FairnessReport";
+import { JobRecommendations } from "@/components/ats/JobRecommendations";
 import { ScoreRing } from "@/components/charts";
 
 type TabKey = "perfil" | "candidaturas" | "pii" | "equidade";
@@ -340,51 +341,54 @@ export default function CandidateDetailPage() {
           ) : null}
 
           {tab === "candidaturas" ? (
-            data.applications?.length ? (
-              <div className="space-y-3">
-                {data.applications.map((application) => (
-                  <Panel key={application.id} hover className="p-4">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <Link
-                          href={`/jobs/${application.job_id}`}
-                          className="text-sm font-medium text-[var(--text-primary)] hover:text-[var(--accent-soft)]"
-                        >
-                          {application.job?.title ?? `Vaga ${application.job_id}`}
-                        </Link>
-                        <p className="mt-0.5 text-[11px] text-[var(--text-muted)]">
-                          Etapa: {application.stage_label} · atualizado em{" "}
-                          {formatDateTime(application.updated_at)}
+            <div className="space-y-4">
+              <JobRecommendations candidate={data} />
+              {data.applications?.length ? (
+                <div className="space-y-3">
+                  {data.applications.map((application) => (
+                    <Panel key={application.id} hover className="p-4">
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <Link
+                            href={`/jobs/${application.job_id}`}
+                            className="text-sm font-medium text-[var(--text-primary)] hover:text-[var(--accent-soft)]"
+                          >
+                            {application.job?.title ?? `Vaga ${application.job_id}`}
+                          </Link>
+                          <p className="mt-0.5 text-[11px] text-[var(--text-muted)]">
+                            Etapa: {application.stage_label} · atualizado em{" "}
+                            {formatDateTime(application.updated_at)}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <FitBadge fit={application.ai_fit} />
+                          {application.ai_score !== null ? (
+                            <ScoreRing value={application.ai_score} size={48} />
+                          ) : null}
+                        </div>
+                      </div>
+                      {application.ai_summary ? (
+                        <p className="mt-3 text-xs leading-relaxed text-[var(--text-secondary)]">
+                          {application.ai_summary}
                         </p>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <FitBadge fit={application.ai_fit} />
-                        {application.ai_score !== null ? (
-                          <ScoreRing value={application.ai_score} size={48} />
-                        ) : null}
-                      </div>
-                    </div>
-                    {application.ai_summary ? (
-                      <p className="mt-3 text-xs leading-relaxed text-[var(--text-secondary)]">
-                        {application.ai_summary}
-                      </p>
-                    ) : null}
-                    {application.ai_matched_skills.length ? (
-                      <div className="mt-3">
-                        <SkillChips skills={application.ai_matched_skills} tone="good" max={8} />
-                      </div>
-                    ) : null}
-                  </Panel>
-                ))}
-              </div>
-            ) : (
-              <Panel>
-                <EmptyState
-                  title="Sem candidaturas"
-                  description="Ranqueie uma vaga para que este candidato entre automaticamente no funil."
-                />
-              </Panel>
-            )
+                      ) : null}
+                      {application.ai_matched_skills.length ? (
+                        <div className="mt-3">
+                          <SkillChips skills={application.ai_matched_skills} tone="good" max={8} />
+                        </div>
+                      ) : null}
+                    </Panel>
+                  ))}
+                </div>
+              ) : (
+                <Panel>
+                  <EmptyState
+                    title="Sem candidaturas ativas"
+                    description="Ranqueie uma vaga para que este candidato entre automaticamente no funil."
+                  />
+                </Panel>
+              )}
+            </div>
           ) : null}
 
           {tab === "pii" ? (

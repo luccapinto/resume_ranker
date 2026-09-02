@@ -7,6 +7,7 @@ import type {
   FairnessAudit,
   Job,
   KanbanBoard,
+  MatchedJob,
   MatchExplanation,
   Metrics,
   Overview,
@@ -125,6 +126,13 @@ export const api = {
     request<MatchExplanation>(`/ats/applications/${id}/explain`, { method: "POST" }),
 
   /* ── matching engine ────────────────────────────────────────────── */
+  /** Reverse direction: which openings fit this candidate? */
+  matchJobsForCandidate: (candidateProfileId: number, topN = 5) =>
+    request<MatchedJob[]>(
+      `/matching/jobs?candidate_id=${candidateProfileId}&top_n=${topN}&top_k=20`,
+      { method: "POST" },
+    ),
+
   explainPair: (candidateProfileId: number, jobProfileId: number) =>
     request<MatchExplanation>(
       `/matching/explain?candidate_id=${candidateProfileId}&job_id=${jobProfileId}`,

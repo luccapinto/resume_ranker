@@ -80,6 +80,7 @@ export interface Job {
   nice_to_have_skills: string[];
   responsibilities: string[];
   skills: string[];
+  narrative: string | null;
   experience_years?: number;
   created_at: string;
   funnel?: Record<Stage, number>;
@@ -157,6 +158,21 @@ export interface RankedCandidate {
   application_id?: number;
   stage?: Stage;
   explanation?: MatchExplanation;
+}
+
+/** One hit from the raw matching engine, before the ATS layer wraps it. */
+export interface MatchedJob {
+  id: number;
+  rank: number;
+  score: number;
+  score_normalized: number;
+  rrf_score: number;
+  rrf_rank: number | null;
+  reranked: boolean;
+  strategy_ranks: Partial<Record<"skills" | "narrative" | "lexical", number>>;
+  strategy_scores: Partial<Record<"skills" | "narrative" | "lexical", number>>;
+  trace_id: string | null;
+  profile: Profile;
 }
 
 export interface RankResult {

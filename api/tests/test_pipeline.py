@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import concurrent.futures
-import json
 from unittest.mock import MagicMock, patch
 
 import fitz

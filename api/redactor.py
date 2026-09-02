@@ -1,8 +1,8 @@
 import re
-from typing import List, Dict, Any, Tuple
+from typing import Dict, Tuple
 
 from api import observability as obs
-from presidio_analyzer import AnalyzerEngine, PatternRecognizer, Pattern, RecognizerResult
+from presidio_analyzer import AnalyzerEngine, PatternRecognizer, Pattern
 from presidio_analyzer.nlp_engine import NlpEngineProvider
 from presidio_analyzer.predefined_recognizers import EmailRecognizer, IpRecognizer
 

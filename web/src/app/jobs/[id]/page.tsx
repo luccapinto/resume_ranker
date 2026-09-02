@@ -246,6 +246,11 @@ export default function JobDetailPage() {
         <div className="mb-5 grid gap-4 lg:grid-cols-3">
           <Panel className="p-4 lg:col-span-2">
             <SectionTitle title="Requisitos extraídos pela IA" icon={FileText} />
+            {data.narrative ? (
+              <p className="mb-4 text-xs leading-relaxed text-[var(--text-secondary)]">
+                {data.narrative}
+              </p>
+            ) : null}
             <div className="space-y-3">
               <div>
                 <p className="mb-1 text-[10px] uppercase tracking-wide text-[var(--text-muted)]">

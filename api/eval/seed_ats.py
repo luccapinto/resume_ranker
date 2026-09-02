@@ -17,7 +17,7 @@ import os
 import random
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 
 from sqlalchemy import text as sql_text
 
@@ -207,7 +207,7 @@ def seed(reset_first: bool = False, workers: int = 4, explain_top: int = 0) -> N
 
         # ── Ranking + funnel ────────────────────────────────────────────
         print("\nRanqueando candidatos para cada vaga…")
-        for slug, job in jobs_by_slug.items():
+        for job in jobs_by_slug.values():
             with obs.trace("seed.rank", job_id=job.id, job=job.title):
                 outcome = ats_service.rank_job(
                     db, job_id=job.id, top_n=12, top_k=40, explain_top=explain_top

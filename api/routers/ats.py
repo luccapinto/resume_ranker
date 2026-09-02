@@ -3,14 +3,16 @@
 from __future__ import annotations
 
 import json
-from typing import List, Optional
+import os
+from typing import Optional
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
 from sqlalchemy.orm import Session
 
 from api import ats as ats_service
 from api import observability as obs
-from api.database import get_db
+from api.config import settings
+from api.database import get_db, get_qdrant
 from api.explain import generate_match_explanation
 from api.models import (
     STAGE_LABELS,
@@ -22,9 +24,22 @@ from api.models import (
     ProfileModel,
 )
 from api.schemas import NoteCreate, RankRequest, StageUpdate
+from api.search import delete_profile_vectors
 from api.services import get_ingestion
 
 router = APIRouter(prefix="/ats", tags=["ats"])
+
+
+def _purge_profile(db: Session, profile_id: int, profile_type: str) -> None:
+    """Drop the source document and its vector so nothing is left dangling."""
+    delete_profile_vectors(get_qdrant(), profile_id, profile_type)
+    db.query(ProfileModel).filter(ProfileModel.id == profile_id).delete()
+    path = os.path.join(settings.pdf_dir, f"{profile_type}_{profile_id}.pdf")
+    if os.path.exists(path):
+        try:
+            os.remove(path)
+        except OSError:
+            pass
 
 
 def _json_meta(raw: Optional[str]) -> dict:
@@ -147,10 +162,13 @@ def update_job_status(job_id: int, status: str = Query(...), db: Session = Depen
 
 @router.delete("/jobs/{job_id}")
 def delete_job(job_id: int, db: Session = Depends(get_db)):
+    """Delete the job, its source document and its vector — no orphans."""
     job = db.query(JobModel).filter(JobModel.id == job_id).first()
     if not job:
         raise HTTPException(status_code=404, detail="Vaga não encontrada.")
+    profile_id = job.profile_id
     db.delete(job)
+    _purge_profile(db, profile_id, "job")
     db.commit()
     return {"deleted": job_id}
 
@@ -231,17 +249,25 @@ def create_candidate(
 
         payload = ats_service.serialize_candidate(candidate)
         if metadata.get("job_id"):
-            application = ats_service.ensure_application(db, candidate.id, int(metadata["job_id"]))
+            target = db.query(JobModel).filter(JobModel.id == int(metadata["job_id"])).first()
+            if not target:
+                raise HTTPException(
+                    status_code=404, detail=f"Vaga {metadata['job_id']} não encontrada."
+                )
+            application = ats_service.ensure_application(db, candidate.id, target.id)
             payload["application"] = ats_service.serialize_application(application, include_candidate=False)
         return payload
 
 
 @router.delete("/candidates/{candidate_id}")
 def delete_candidate(candidate_id: int, db: Session = Depends(get_db)):
+    """Delete the candidate, their résumé record and their vector — no orphans."""
     candidate = db.query(CandidateModel).filter(CandidateModel.id == candidate_id).first()
     if not candidate:
         raise HTTPException(status_code=404, detail="Candidato não encontrado.")
+    profile_id = candidate.profile_id
     db.delete(candidate)
+    _purge_profile(db, profile_id, "candidate")
     db.commit()
     return {"deleted": candidate_id}
 

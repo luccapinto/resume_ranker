@@ -25,7 +25,7 @@ from api.config import settings
 _STOPWORDS = {
     "de", "da", "do", "das", "dos", "e", "a", "o", "as", "os", "um", "uma", "em",
     "no", "na", "nos", "nas", "para", "por", "com", "que", "se", "ao", "à", "the",
-    "of", "and", "to", "in", "for", "with", "on", "at", "is", "as",
+    "of", "and", "to", "in", "for", "with", "on", "at", "is",
 }
 
 

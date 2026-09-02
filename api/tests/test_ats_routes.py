@@ -9,7 +9,7 @@ import pytest
 
 from api import ats
 from api.models import STAGES, ApplicationModel, CandidateModel, JobModel, ProfileModel
-from api.schemas import CandidateProfile, JobRequirements, SeniorityEnum
+from api.schemas import JobRequirements, SeniorityEnum
 
 
 @pytest.fixture
@@ -281,3 +281,35 @@ def test_rank_route_persists_applications(client, populated, fake_provider):
 
 def test_rank_route_404s_for_an_unknown_job(client, populated):
     assert client.post("/ats/jobs/9999/rank", json={"job_id": 9999}).status_code == 404
+
+
+# ── Deletion ────────────────────────────────────────────────────────────────
+def test_deleting_a_candidate_removes_the_document_and_the_vector(client, populated):
+    """A dangling ProfileModel or Qdrant point would keep showing up in searches."""
+    candidate_id = populated["candidate"].id
+    profile_id = populated["candidate"].profile_id
+    qdrant = MagicMock()
+
+    with patch("api.routers.ats.get_qdrant", return_value=qdrant):
+        assert client.delete(f"/ats/candidates/{candidate_id}").status_code == 200
+
+    assert populated["db"].query(CandidateModel).count() == 0
+    assert populated["db"].query(ProfileModel).filter(ProfileModel.id == profile_id).count() == 0
+    qdrant.delete.assert_called_once()
+
+
+def test_deleting_a_job_removes_the_document_and_the_vector(client, populated):
+    job_id = populated["job"].id
+    profile_id = populated["job"].profile_id
+    qdrant = MagicMock()
+
+    with patch("api.routers.ats.get_qdrant", return_value=qdrant):
+        assert client.delete(f"/ats/jobs/{job_id}").status_code == 200
+
+    assert populated["db"].query(JobModel).count() == 0
+    assert populated["db"].query(ProfileModel).filter(ProfileModel.id == profile_id).count() == 0
+
+
+def test_deleting_an_unknown_record_404s(client, populated):
+    assert client.delete("/ats/jobs/9999").status_code == 404
+    assert client.delete("/ats/candidates/9999").status_code == 404

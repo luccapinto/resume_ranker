@@ -328,6 +328,7 @@ def serialize_candidate(candidate: CandidateModel, include_profile: bool = False
 
 def serialize_job(job: JobModel, db: Optional[Session] = None) -> Dict[str, Any]:
     extracted = (job.profile.extracted_profile if job.profile else {}) or {}
+    rmap = (job.profile.redaction_map if job.profile else {}) or {}
     payload = {
         "id": job.id,
         "profile_id": job.profile_id,
@@ -344,11 +345,16 @@ def serialize_job(job: JobModel, db: Optional[Session] = None) -> Dict[str, Any]
         "owner": job.owner,
         "must_have_skills": extracted.get("must_have_skills") or [],
         "nice_to_have_skills": extracted.get("nice_to_have_skills") or [],
-        "responsibilities": extracted.get("responsibilities") or [],
+        # The model wrote these from the anonymised description, so they can
+        # carry placeholders; restore them at the display boundary.
+        "responsibilities": [
+            rehydrate(r, rmap) for r in (extracted.get("responsibilities") or [])
+        ],
         "skills": [
             s.get("preferred_label") or s.get("original_term")
             for s in (extracted.get("skills_normalized") or [])
         ],
+        "narrative": rehydrate(extracted.get("narrative_experience"), rmap),
         "experience_years": extracted.get("experience_years"),
         "created_at": job.created_at,
     }
