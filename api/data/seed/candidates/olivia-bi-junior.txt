@@ -1,0 +1,47 @@
+Luiza Fernandes de Oliveira
+luiza.fernandes@email.com.br | (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+
+Resumo Profissional
+Analista de dados júnior com 1 ano e meio de experiência prática em inteligência de negócios e análise de dados. Estágio concluído em BI e formação em Estatística em andamento. Domínio de SQL, Power BI, Excel avançado e pandas para manipulação, modelagem e visualização de dados. Capacidade de transformar dados brutos em insights acionáveis, automatizar processos e gerar relatórios que apoiam decisões estratégicas. Experiência comprovada em redução de tempos de processamento, aumento de precisão de indicadores e economia de custos operacionais.
+
+Experiência Profissional
+
+Analista de Dados Júnior
+DataVision Consultoria, São Paulo, SP
+Junho/2023 - Presente
+
+- Desenvolvi dashboards interativos no Power BI para o setor comercial, reduzindo o tempo de análise de indicadores de vendas em 35% (de 4 horas para 2,5 horas por semana).
+- Criei scripts em Python com pandas para automatizar a limpeza e consolidação de bases de clientes, diminuindo o tempo de processamento em 40% e eliminando erros manuais de digitação.
+- Realizei consultas SQL complexas em PostgreSQL para extrair métricas de performance de campanhas de marketing, identificando oportunidades que aumentaram a taxa de conversão em 12%.
+- Modelei dados no Power Query e ajustei relações entre tabelas, melhorando a precisão dos relatórios financeiros e reduzindo discrepâncias em 18%.
+- Participei de reuniões semanais com stakeholders para traduzir requisitos de negócio em análises, contribuindo para a priorização de ações que geraram economia de R$ 50 mil em custos operacionais.
+
+Estagiário de Business Intelligence
+Nexus Analytics, São Paulo, SP
+Janeiro/2023 - Maio/2023
+
+- Auxiliei na construção de relatórios gerenciais no Excel avançado, utilizando tabelas dinâmicas e fórmulas, que reduziram o tempo de preparação de relatórios mensais em 25%.
+- Executei consultas SQL para extrair dados de vendas e estoque, suportando a equipe de logística na identificação de padrões de sazonalidade que melhoraram o planejamento de reposição em 15%.
+- Apoiei a migração de relatórios legados para o Power BI, convertendo mais de 20 indicadores e garantindo consistência, o que reduziu retrabalhos em 30%.
+- Colaborei na elaboração de documentação técnica de processos de ETL, facilitando o treinamento de novos estagiários e diminuindo o tempo de onboarding em 20%.
+
+Formação Acadêmica
+Bacharelado em Estatística (conclusão prevista em Dezembro/2025)
+Universidade Federal de São Paulo (UNIFESP), São Paulo, SP
+
+Certificações
+- Certificação Power BI (Microsoft, 2023)
+- SQL para Análise de Dados (DataCamp, 2023)
+- Python para Data Science (Coursera, 2024)
+
+Competências Técnicas
+- SQL: PostgreSQL, MySQL, consultas complexas, joins, subconsultas, window functions, otimização de queries
+- Power BI: DAX, Power Query, modelagem de dados, dashboards interativos, publicação em serviço
+- Excel Avançado: tabelas dinâmicas, procv, índices, fórmulas matriciais, macros básicas
+- Python: pandas, numpy, matplotlib, seaborn para análise exploratória e automação
+- Ferramentas de BI: Tableau (básico), Google Data Studio (básico)
+- Versionamento: Git (básico)
+
+Idiomas
+- Português (nativo)
+- Inglês (intermediário - leitura técnica e conversação básica)

@@ -1,0 +1,13 @@
+Ana Beatriz Silva Santos
+E-mail: anabeatriz.santos@email.com | Telefone: (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+
+RESUMO PROFISSIONAL
+Cientista de dados pleno com 5 anos de experiência em análise de dados, modelagem estatística e experimentação. Especialista em Python, pandas e scikit-learn, com sólida formação em estatística. Proficiente em conduzir testes A/B e gerar insights baseados em dados para tomada de decisão. Apesar de ainda não ter colocado modelos em produção, tenho fortes habilidades em prototipação, validação e comunicação de resultados.
+
+EXPERIÊNCIA PROFISSIONAL
+
+Cientista de Dados | TechData Analytics Ltda. | São Paulo, SP | Jan/2021 - Presente
+- Desenvolvi modelos preditivos para análise de churn de clientes usando scikit-learn, alcançando precisão de 87% e recall de 82% nos testes de validação.
+- Conduzi experimentos A/B para otimizar campanhas de marketing, resultando em um aumento de 15% na taxa de conversão e redução de 20% nos custos de aquisição.
+- Realizei análises estatísticas descritivas e inferenciais sobre dados de vendas, identificando padrões que levaram a um incremento de 10% na receita no trimestre seguinte.
+- Criei dash

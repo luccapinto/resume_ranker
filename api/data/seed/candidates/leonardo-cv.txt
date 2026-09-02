@@ -1,0 +1,57 @@
+LUCAS ALMEIDA FERREIRA
+lucas.almeida.ferreira@email.com | (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+
+RESUMO PROFISSIONAL
+Engenheiro de Machine Learning sênior com mais de 8 anos de experiência focada em visão computacional. Especialista em desenvolvimento e deploy de modelos de Deep Learning utilizando PyTorch e OpenCV para aplicações em ambientes edge, como sistemas embarcados e dispositivos de baixo consumo. Histórico comprovado na otimização de pipelines de inferência, atingindo ganhos significativos de performance em produção. Perfil prático com forte atuação em projetos de classificação, detecção e segmentação de imagens, sem exposição relevante a Large Language Models.
+
+EXPERIÊNCIA PROFISSIONAL
+
+TechVision Soluções Inteligentes | São Paulo, SP
+Engenheiro de Machine Learning Sênior
+Março de 2021 - Presente
+- Liderei a migração da arquitetura de inferência de um sistema de inspeção visual, reduzindo a latência de processamento por imagem em 40% (de 150ms para 90ms) com a quantização de modelos PyTorch e uso do TensorRT.
+- Projetei e implementei um pipeline de detecção de defeitos em peças metálicas, aumentando a acurácia do sistema de 85% para 96% e gerando uma economia anual de R$ 1,2 milhão em devoluções de produtos defeituosos.
+- Otimizei o deploy de um modelo de segmentação semântica em dispositivos NVIDIA Jetson, reduzindo o consumo de memória em 35% e viabilizando a execução em tempo real (30 FPS) em plataformas edge.
+- Desenvolvi um sistema de calibração automática de câmeras com OpenCV, que diminuiu o tempo de setup de linhas de produção em 70%, passando de 2 horas para 35 minutos.
+
+AutomaTech Sistemas | Campinas, SP
+Engenheiro de Machine Learning Pleno
+Janeiro de 2018 - Fevereiro de 2021
+- Criei um módulo de reconhecimento facial para controle de acesso, processando mais de 10.000 requisições diárias com uma taxa de erro inferior a 0,5% em condições adversas de iluminação, utilizando PyTorch e dlib.
+- Implementei um sistema de contagem de pessoas em tempo real para lojas de varejo, processando feeds de 50 câmeras simultaneamente com OpenCV e YOLOv4, aumentando a precisão das métricas de fluxo de clientes em 25%.
+- Desenvolvi uma ferramenta de aumento de dados sintéticos com OpenCV e GANs, expandindo o dataset de treinamento em 300% e reduzindo o custo de coleta manual de imagens em R$ 80.000 por projeto.
+- Reduzi o tempo de treinamento de modelos de classificação em 15% através da implementação de pipelines de dados paralelizados com PyTorch DataLoaders e otimização de hiperparâmetros.
+
+DataVision | São Paulo, SP
+Engenheiro de Machine Learning Júnior
+Junho de 2016 - Dezembro de 2017
+- Contribuí para o desenvolvimento de um sistema OCR para leitura de placas veiculares, melhorando a acurácia de reconhecimento em 12% através do pré-processamento de imagens com filtros OpenCV.
+- Auxiliei na implementação de um pipeline de inferência para um sistema de monitoramento de fábricas, processando 15 quadros por segundo com modelos otimizados para CPU.
+- Realizei a anotação e validação de mais de 50.000 imagens para um dataset de detecção de objetos, seguindo padrões rigorosos que resultaram em uma melhoria de 8% na precisão do modelo final.
+
+FORMAÇÃO ACADÊMICA
+Mestrado em Engenharia Elétrica com ênfase em Visão Computacional
+Universidade de São Paulo (USP) | Concluído em 2016
+Dissertação sobre técnicas de detecção de bordas em tempo real com OpenCV.
+
+Bacharelado em Ciência da Computação
+Universidade Estadual de Campinas (UNICAMP) | Concluído em 2014
+
+CERTIFICAÇÕES
+Deep Learning Specialization (deeplearning.ai) - Coursera
+NVIDIA DLI: Fundamentals of Deep Learning for Computer Vision
+AWS Certified Machine Learning - Specialty
+
+COMPETÊNCIAS TÉCNICAS
+Linguagens: Python, C++
+Frameworks: PyTorch, TensorFlow (experiência básica), ONNX, TensorRT
+Bibliotecas: OpenCV, scikit-image, NumPy, Pandas
+Visão Computacional: Classificação, Detecção (YOLO, RetinaNet), Segmentação Semântica, OCR
+Ferramentas: Docker, Git, MLflow
+Deploy Edge: NVIDIA Jetson (Nano, TX2, Xavier), Raspberry Pi, OpenVINO, CUDA
+Ambientes: Linux, Windows
+
+IDIOMAS
+Português: Nativo
+Inglês: Fluente (leitura, escrita e conversação avançada)
+Espanhol: Intermediário (leitura e conversação básica)

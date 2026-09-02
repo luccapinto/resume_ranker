@@ -1,0 +1,53 @@
+Lucas Almeida Santos
+lucas.almeida.santos@email.com.br | (11) 98765-4321 | São Paulo, SP | CPF: 382.648.197-50
+
+RESUMO PROFISSIONAL
+Desenvolvedor full stack sênior com 9 anos de experiência na construção de aplicações web escaláveis e de alto desempenho. Especialista no ecossistema TypeScript, React e Node.js, com sólida expertise em bancos de dados PostgreSQL, APIs GraphQL e infraestrutura em nuvem AWS. Atuei como referência técnica em times ágeis, liderando squads de até 8 pessoas, realizando code reviews, definindo arquiteturas e promovendo boas práticas de engenharia de software. Foco em entregar soluções robustas, com alta disponibilidade e reduzindo custos operacionais.
+
+EXPERIÊNCIA PROFISSIONAL
+
+TechNova Soluções Inteligentes (São Paulo, SP)
+Desenvolvedor Full Stack Sênior | Líder Técnico
+Março/2021 - Presente
+- Liderei tecnicamente um squad de 7 desenvolvedores na migração de uma aplicação monolítica legada para uma arquitetura de microsserviços em Node.js e TypeScript, reduzindo o tempo de deploy em 70% e melhorando a escalabilidade para suportar 500 mil requisições diárias.
+- Projetei e implementei uma camada de APIs GraphQL (Apollo Server) que unificou dados de 3 sistemas legados, diminuindo a latência média de consultas em 40% e eliminando 15 horas mensais de retrabalho com integrações.
+- Otimizei consultas complexas no PostgreSQL e implementei índices avançados e estratégias de cache com Redis, resultando em uma redução de 55% no tempo de resposta de relatórios financeiros críticos para o negócio.
+- Gerenciei a infraestrutura na AWS (ECS, RDS, CloudFront, Lambda), automatizando pipelines de CI/CD com AWS CodePipeline e reduzindo o custo mensal de cloud em 25% através do dimensionamento correto de instâncias e uso de Spot Instances.
+- Conduzi a migração completa do front-end de React Class Components para React Hooks e contexto, eliminando bugs de estado e reduzindo o bundle final da aplicação em 30%.
+
+DataLink Sistemas Financeiros (São Paulo, SP)
+Desenvolvedor Full Stack Pleno
+Janeiro/2018 - Fevereiro/2021
+- Desenvolvi e mantive dashboards interativos em React e TypeScript para o setor de compliance, processando mais de 2 milhões de transações mensais com visualizações em tempo real via WebSockets.
+- Implementei uma API REST em Node.js (Express) integrada ao AWS SQS para processamento assíncrono de remessas bancárias, eliminando gargalos e garantindo a entrega de 99,9% dos lotes dentro do SLA de 4 horas.
+- Projetei o esquema relacional e procedures no PostgreSQL para um módulo de conciliação financeira, reduzindo o tempo de processamento noturno de 8 horas para 2,5 horas.
+- Colaborei na migração de um sistema on-premise para a AWS (EC2, RDS, S3), obtendo uma melhoria de disponibilidade de 98% para 99,97%.
+
+Atlas TI & Consultoria (São Paulo, SP)
+Desenvolvedor Full Stack Júnior
+Junho/2015 - Dezembro/2017
+- Participei do desenvolvimento de um sistema de agendamento web utilizando React e Node.js, servindo inicialmente 5 mil usuários simultâneos na plataforma.
+- Criei e mantive testes unitários e de integração (Jest, React Testing Library), elevando a cobertura de testes do projeto de 30% para 85% em 12 meses.
+- Prestei suporte direto ao cliente e realizei correções rápidas de bugs em produção, mantendo um índice de resolução de incidentes críticos abaixo de 2 horas.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Ciência da Computação
+Universidade Paulista (UNIP), São Paulo, SP
+Concluído em Junho/2015
+
+CERTIFICAÇÕES
+AWS Certified Solutions Architect – Associate (Amazon Web Services, 2020 - renovada em 2023)
+GraphQL Developer (Apollo GraphQL, 2022)
+LFCS: Linux Foundation Certified System Administrator (2019)
+
+COMPETÊNCIAS TÉCNICAS
+Linguagens e Frameworks: TypeScript, JavaScript (ES6+), React.js, Node.js, Express, Apollo Server/Client
+Bancos de Dados: PostgreSQL (modelagem, otimização, PL/pgSQL), Redis, MongoD (conhecimento básico)
+APIs e Protocolos: GraphQL, REST, WebSockets
+Cloud e DevOps: AWS (EC2, S3, RDS, Lambda, ECS, CloudFront, CodePipeline), Docker, Terraform (básico)
+Ferramentas: Git, Jest, React Testing Library, GitLab CI/CD, Swagger, Insomnia
+Metodologias: Scrum, Kanban, TDD, Code Review
+
+IDIOMAS
+Português: Nativo
+Inglês: Avançado (leitura e escrita fluente, conversação técnica para reuniões internacionais)

@@ -1,0 +1,52 @@
+Ana Carolina Silva Oliveira
+ana.carolina.oliveira@email.com | (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+
+RESUMO PROFISSIONAL
+Coordenadora de Marketing Digital com 6 anos de experiência focada em growth, mídia paga e CRM. Especialista em Google Ads, Meta Ads e LinkedIn Ads, com histórico de liderar equipes multidisciplinares e implementar estratégias data-driven que geraram aumentos significativos em leads qualificados e receita. Experiência em automação de marketing com RD Station e Salesforce, otimização de funis de conversão e redução de custos por aquisição. Habilidade em análise de dados com Looker e SQL básico para embasar decisões de investimento e alocação de budget. Bacharel em Marketing e certificações Google Ads e HubSpot.
+
+EXPERIÊNCIA PROFISSIONAL
+
+Coordenadora de Marketing Digital
+Agência Nexus Digital, São Paulo, SP
+Março/2021 - Atual
+
+- Lidero equipe de 8 analistas e especialistas em mídia paga e CRM, definindo metas mensais de leads e revenue que resultaram em crescimento de 42% na geração de leads qualificados em 2023.
+- Estruturei e gerenciei campanhas de Google Ads (Search, Shopping e Display) com orçamento mensal de R$ 1,2 milhão, alcançando ROAS médio de 5,8x e redução de 22% no CPA em 12 meses.
+- Implementei automações de nutrição no RD Station integradas ao Salesforce, elevando a taxa de conversão de lead para oportunidade em 35% e diminuindo o tempo médio de follow-up de 48h para 6h.
+- Desenvolvi dashboard de performance no Looker que permitiu à diretoria reduzir em 30% o tempo de análise de campanhas e realocar 15% do budget para canais com maior retorno.
+- Liderei projeto de growth hacking com testes A/B em landing pages e criativos de Meta Ads, gerando aumento de 18% na taxa de cliques (CTR) e economia de R$ 200 mil em custos de mídia no semestre.
+
+Analista de Marketing Digital
+Conecta CRM Tecnologia, São Paulo, SP
+Janeiro/2019 - Fevereiro/2021
+
+- Gerenciei campanhas de Google Ads e LinkedIn Ads para clientes B2B, atingindo média de 120 leads qualificados por mês e ROAS de 4,2x nos principais accounts.
+- Realizei análise de funil de vendas no Salesforce, identificando gargalos que permitiram aumentar a taxa de conversão de MQL para SQL em 25% e reduzir o ciclo de vendas em 12 dias.
+- Criei e otimizei fluxos de automação no RD Station com segmentação comportamental, resultando em crescimento de 40% no engajamento de e-mails e 15% de aumento em recompra.
+- Participei da implementação de modelo de atribuição multi-touch, que revelou que 34% das conversões finais passavam por anúncios de remarketing, redirecionando 20% do budget para essa estratégia.
+
+Assistente de Marketing Digital
+Loja Virtual Brasil, São Paulo, SP
+Junho/2017 - Dezembro/2018
+
+- Auxiliei na operação de campanhas de Google Shopping e Facebook Ads para e-commerce, contribuindo para crescimento de 28% na receita online no primeiro ano.
+- Realizei ajustes de lances e palavras-chave no Google Ads que reduziram o custo por clique (CPC) em 18% sem perda de volume de tráfego.
+- Apoiei a equipe de CRM na segmentação de base de clientes no RD Station, gerando campanhas de pós-venda que aumentaram a taxa de recompra em 12% em três meses.
+- Elaborei relatórios semanais de performance com métricas de CPA, ROAS e taxa de conversão, permitindo tomada de decisão ágil e otimização contínua dos investimentos.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Marketing, Universidade Paulista (UNIP)
+Concluído em Dezembro/2017
+
+CERTIFICAÇÕES
+- Google Ads Certification (Search, Display, Shopping) - Google Skillshop, 2020 e renovada em 2023
+- Inbound Marketing Certification - HubSpot Academy, 2021
+- RD Station Fundamentals - Resultados Digitais, 2022
+- Salesforce Administrator Certification (Sales Cloud) - Salesforce, 2023
+
+COMPETÊNCIAS TÉCNICAS
+Google Ads (Search, Shopping, Display, YouTube), Meta Ads Manager, LinkedIn Campaign Manager, RD Station Marketing, Salesforce Sales Cloud, Looker (Google Data Studio), SQL básico (consultas e agregações), Google Analytics 4, Excel Avançado (tabelas dinâmicas, VLOOKUP, macros básicas), ferramentas de teste A/B (Google Optimize, VWO), Google Tag Manager, metodologias de Growth Hacking e Lean Analytics.
+
+IDIOMAS
+Português: Nativo
+Inglês: Avançado (leitura fluente, conversação e escrita técnicas, certificação EF SET C1)

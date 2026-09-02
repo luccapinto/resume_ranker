@@ -1,0 +1,51 @@
+Ana Beatriz Oliveira Santos
+ana.beatriz.santos@email.com.br | (11) 98765-4321 | São Paulo - SP | CPF 123.456.789-00
+
+RESUMO PROFISSIONAL
+Product Manager pleno com 5 anos de experiência em fintech de pagamentos, atuando na interseção entre estratégia de produto, dados e tecnologia. Domínio de metodologias de discovery (RICE, jobs-to-be-done), definição de OKRs e execução de testes A/B para validação de hipóteses. Sólida capacidade analítica com SQL e Amplitude para extração de insights e monitoramento de métricas. Experiência em ciclos completos de desenvolvimento de produtos digitais, desde a ideação até o lançamento e iteração, sempre focando em resultados de negócio mensuráveis, como aumento de conversão, redução de churn e otimização de custos operacionais.
+
+EXPERIÊNCIA PROFISSIONAL
+
+PayFlow Tecnologia S.A. - Fintech de pagamentos
+Product Manager Pleno | Jun/2022 - Presente
+- Definiu e priorizou o roadmap de produtos da plataforma de checkout, utilizando RICE para selecionar iniciativas que geraram aumento de 22% na taxa de aprovação de transações em 6 meses.
+- Conduziu testes A/B com mais de 500 mil usuários, resultando em redução de 15% na taxa de abandono do fluxo de pagamento e incremento de R$ 1,2 milhão em receita mensal.
+- Implementou OKRs trimestrais alinhados à diretoria, melhorando a previsibilidade de entregas e elevando o NPS do produto de 68 para 82 em um ano.
+- Utilizou Amplitude e SQL para criar dashboards de funil e segmentação de comportamento, identificando gargalos que permitiram redução de 30% no tempo médio de checkout (de 3,2s para 2,2s).
+- Gerenciou squad multidisciplinar de 6 pessoas, promovendo rituais ágeis e integração contínua com engenharia e design, alcançando 95% de entregas no prazo.
+
+NexPay Soluções Financeiras Ltda.
+Product Manager Júnior | Mar/2020 - Mai/2022
+- Liderou discovery de funcionalidade de split de pagamentos, validando hipóteses via entrevistas e prototipação, com adoção de 40% da base ativa nos primeiros 3 meses.
+- Elaborou e monitorou OKR de redução de chargeback, alcançando economia de R$ 800 mil/ano após implementação de regras antifraude baseadas em dados.
+- Realizou testes A/B em fluxo de onboarding, elevando a taxa de conversão de cadastro de 58% para 73% em 4 meses.
+- Criou consultas SQL para extrair métricas de uso por segmento (PJ e PF), subsidiando decisões de precificação que geraram aumento de 12% na margem líquida.
+- Participou da migração de plataforma legada para nova arquitetura, coordenando testes de aceitação com 100% de cobertura dos cenários críticos.
+
+StartPay Tecnologia Ltda.
+Analista de Produto | Fev/2018 - Fev/2020
+- Apoiou a gestão do produto de pagamento recorrente, utilizando RICE para priorização de backlogs, resultando em redução de 20% do tempo de ciclo das entregas.
+- Desenvolveu dashboards no Amplitude para monitoramento de retenção e churn, identificando cohort que apresentava queda de 35% na ativação; ações corretivas recuperaram 18% dos usuários.
+- Executou testes A/B em campanhas push, elevando a taxa de reativação de clientes inativos em 25% com baixo custo incremental.
+- Automatizou rotinas de extração de dados em SQL, reduzindo em 10 horas semanais o trabalho manual da equipe de produto.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Administração de Empresas - Universidade Nova Aurora (UNIA) | Conclusão em 2017
+MBA em Gestão de Produtos Digitais - Instituto de Educação Executiva (IEE) | Conclusão em 2022
+
+CERTIFICAÇÕES
+- Product Management Certificate (PM3) - 2021
+- Scrum Product Owner Certified (SPOC) - 2020
+- Advanced SQL for Data Analysis (DataCamp) - 2023
+
+COMPETÊNCIAS TÉCNICAS
+- Discovery e priorização: RICE, jobs-to-be-done, value proposition canvas
+- Métricas e OKRs: definição, cascateamento, acompanhamento com Amplitude e dashboards SQL
+- Experimentação: testes A/B, hipóteses, significância estatística (ferramentas: Google Optimize, Optimizely)
+- Ferramentas: Amplitude, Metabase, Tableau, Figma, Jira, Confluence, Mixpanel
+- SQL avançado: consultas complexas, joins, window functions, agregações para análise de funis e cohortes
+- Metodologias ágeis: Scrum, Kanban, SAFe (conceitos)
+
+IDIOMAS
+- Português: nativo
+- Inglês: avançado (leitura, escrita e conversação técnica; certificação TOEFL ITP 580)

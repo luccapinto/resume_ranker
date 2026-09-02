@@ -1,0 +1,44 @@
+Product Manager Pleno
+
+SOBRE A VAGA
+
+Estamos em busca de uma pessoa Product Manager Pleno para se juntar ao time de produtos de pagamentos. Nossa missão é construir soluções financeiras robustas e escaláveis que simplifiquem a vida dos nossos clientes. Você será responsável por conduzir o ciclo de vida do produto, desde a descoberta de oportunidades até a entrega de valor, trabalhando de forma colaborativa com times de engenharia, design e negócios. O modelo de trabalho é híbrido, com presença em nosso escritório em São Paulo (SP) algumas vezes por semana.
+
+RESPONSABILIDADES
+
+- Conduzir processos de discovery para identificar problemas e oportunidades de negócio, validando hipóteses com clientes e dados.
+- Definir e priorizar o backlog do produto utilizando frameworks como RICE, alinhado às metas estratégicas da empresa.
+- Acompanhar e analisar métricas de produto em ferramentas como Amplitude ou Mixpanel, gerando insights para tomada de decisão.
+- Planejar, executar e analisar testes A/B para otimizar funcionalidades e taxas de conversão.
+- Trabalhar em parceria com engenharia e design, garantindo entregas de alta qualidade dentro dos prazos.
+- Definir e monitorar OKRs, reportando resultados e ajustando estratégias conforme necessário.
+- Atuar como a voz do cliente e do negócio, equilibrando necessidades técnicas e de mercado.
+
+REQUISITOS OBRIGATÓRIOS
+
+- Experiência mínima de 3 a 5 anos como Product Manager, com foco em produtos digitais.
+- Domínio comprovado de metodologias de discovery e frameworks de priorização (ex.: RICE).
+- Experiência prática com OKRs e definição de métricas de sucesso para produtos.
+- Proficiência em ferramentas de análise de produto como Amplitude ou Mixpanel.
+- Experiência em planejamento e análise de testes A/B.
+- Capacidade de trabalhar de forma colaborativa com times de engenharia e design.
+- Inglês intermediário para leitura de documentação técnica e reuniões eventuais.
+
+DIFERENCIAIS
+
+- Conhecimento de SQL para realizar análises próprias de dados.
+- Experiência prévia em fintechs ou produtos de pagamentos.
+- Vivência com metodologias ágeis (Scrum ou Kanban) em squads multidisciplinares.
+- Formação em áreas como Engenharia, Computação, Administração ou Economia.
+- Habilidade para comunicação clara e apresentação de resultados para stakeholders.
+
+BENEFÍCIOS
+
+- Vale-refeição e vale-alimentação (R$ 1.500,00/mês).
+- Plano de saúde e odontológico (sulamerica ou bradesco) sem coparticipação.
+- Vale-transporte ou auxílio mobilidade.
+- Seguro de vida.
+- Programa de participação nos lucros (PLR).
+- Gympass ou TotalPass.
+- Auxílio home office (R$ 200,00/mês).
+- Horário flexível com possibilidade de ajuste.

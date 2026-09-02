@@ -1,0 +1,68 @@
+FELIPE AUGUSTO DE OLIVEIRA
+
+E-mail: felipe.oliveira@email.com | Telefone: (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+
+RESUMO PROFISSIONAL
+
+Analytics Engineer sênior com 7 anos de experiência na construção e manutenção de pipelines de dados analíticos, especializado em modelagem dimensional e otimização de consultas SQL. Expertise comprovada em dbt (Data Build Tool) e Snowflake, liderando a migração de ambientes legados para arquiteturas modernas baseadas em nuvem. Foco em entregar datasets confiáveis e de alto desempenho para times de negócios, reduzindo latências e custos operacionais. Experiência complementar com Apache Spark para processamento de grandes volumes.
+
+EXPERIÊNCIA PROFISSIONAL
+
+NovaTech Soluções em Dados, São Paulo, SP
+Analytics Engineer Sênior
+Jan/2020 - Presente
+
+- Liderei a migração completa do data warehouse on-premise para Snowflake, resultando em redução de 40% no tempo de processamento de cargas diárias e economia anual de R$ 200 mil em infraestrutura.
+- Projetei e implementei 15 novos modelos de dados no dbt, utilizando técnicas de modelagem dimensional (star schema), que aumentaram a velocidade de consultas em dashboards em 60%, impactando diretamente a tomada de decisão de 5 áreas de negócio.
+- Otimizei consultas SQL complexas que reduziam a latência de relatórios financeiros de 4 horas para 20 minutos, permitindo análises em tempo real durante o fechamento mensal.
+- Desenvolvi testes de qualidade de dados automatizados no dbt, garantindo 99,5% de acurácia nas tabelas de fatos e dimensões, eliminando retrabalhos manuais recorrentes.
+- Coordenei a reestruturação do pipeline de dados de marketing, integrando fontes do Google Ads e Salesforce, o que reduziu em 30% o churn de clientes ao melhorar a segmentação analítica.
+
+Grupo DataVault, Rio de Janeiro, RJ
+Analytics Engineer Pleno
+Mar/2017 - Dez/2019
+
+- Construí e mantive 8 pipelines analíticos no dbt, conectados ao Snowflake, processando mais de 500 GB de dados diários de vendas e logística, com SLA de disponibilidade de 99,9%.
+- Implementei modelos de dados para o setor de supply chain, resultando em uma redução de 15% nos custos de estoque ao identificar padrões de sazonalidade com 95% de precisão.
+- Realizei a documentação técnica de todos os modelos no dbt Docs, colaborando com 3 analistas de dados para garantir a consistência das métricas utilizadas por toda a empresa.
+- Automatizei a transformação de dados brutos (raw data) em tabelas agregadas, reduzindo o tempo de entrega de relatórios operacionais de 2 dias para 4 horas.
+
+Mercado Digital Ltda, São Paulo, SP
+Analista de BI Júnior
+Jun/2016 - Fev/2017
+
+- Criei dashboards interativos no Tableau conectados ao Redshift, consumindo dados modelados em SQL, que aumentaram a visibilidade do funil de vendas em 25% para a diretoria.
+- Desenvolvi scripts SQL para extração e limpeza de dados de 3 fontes diferentes (ERP, CRM e planilhas), melhorando a confiabilidade das informações de receita em 20%.
+- Auxiliei na manutenção de views materializadas no PostgreSQL, otimizando o tempo de resposta de consultas analíticas para menos de 10 segundos.
+
+FORMAÇÃO ACADÊMICA
+
+Bacharelado em Ciência da Computação
+Universidade Federal de São Paulo (UNIFESP), São Paulo, SP
+Concluído em Dez/2016
+
+MBA em Data Science & Analytics
+Fundação Getulio Vargas (FGV), São Paulo, SP
+Concluído em Jun/2021
+
+CERTIFICAÇÕES
+
+- dbt Analytics Engineer Certification (2022)
+- SnowPro Core Certification (Snowflake, 2023)
+- AWS Certified Solutions Architect – Associate (2021)
+
+COMPETÊNCIAS TÉCNICAS
+
+- Linguagens: SQL (Avançado), Python (Intermediário)
+- Ferramentas de Transformação: dbt (Modelagem, Testes, Documentação)
+- Data Warehouses: Snowflake (Performance Tuning, Cost Optimization), Amazon Redshift, PostgreSQL
+- Modelagem: Modelagem Dimensional (Kimball), Star Schema, Data Vault
+- Processamento: Apache Spark (Básico, PySpark para ETL simples)
+- Cloud: AWS (S3, EC2, Redshift), GCP (BigQuery)
+- Orquestração: Apache Airflow, Dagster
+- Versionamento: Git, GitHub, GitLab
+
+IDIOMAS
+
+- Português: Nativo
+- Inglês: Avançado (leitura e escrita técnica fluente, conversação profissional)

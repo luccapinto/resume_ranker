@@ -1,0 +1,55 @@
+Carlos Eduardo de Oliveira Silva
+
+carlos.silva@email.com.br | (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+
+RESUMO PROFISSIONAL
+
+Profissional com 6 anos de experiência na área de controladoria e análise financeira, atuando em empresas de médio e grande porte. Sólida vivência em rotinas de fechamento contábil e fiscal, elaboração de relatórios gerenciais e acompanhamento orçamentário. Domínio avançado do SAP (módulos FI/CO) para conciliação de contas e análise de custos, Excel para automação de planilhas e modelagem financeira, e Power BI para criação de dashboards e indicadores de desempenho. Histórico de redução de prazos de fechamento, economia de custos operacionais e melhoria na acuracidade das informações financeiras.
+
+EXPERIÊNCIA PROFISSIONAL
+
+Grupo Nova Era S.A. – São Paulo, SP
+Analista Financeiro Pleno | Jan/2021 – atual
+- Responsável pelo fechamento mensal de 12 empresas do grupo, reduzindo o prazo médio de 5 para 3 dias úteis após a implementação de rotinas padronizadas no SAP e Excel.
+- Desenvolvi dashboard no Power BI que consolidou indicadores de rentabilidade e liquidez, permitindo à diretoria identificar desvios orçamentários com até 15% mais agilidade.
+- Conciliei contas contábeis de fornecedores e clientes, corrigindo inconsistências que geravam um passivo oculto de aproximadamente R$ 1,2 milhão, resultando em economia de 8% nos custos financeiros.
+- Elaborei projeções de fluxo de caixa e análise de variações, contribuindo para redução de 12% no custo de capital de giro da unidade de negócios.
+- Participei da implementação de novo plano de contas no SAP FI, garantindo aderência às normas IFRS e eliminando 90% dos ajustes manuais mensais.
+
+Construtora Horizonte Ltda. – São Paulo, SP
+Analista Financeiro Júnior | Mar/2018 – Dez/2020
+- Realizava conciliação bancária e de cartão de crédito para 8 contas correntes, identificando divergências que resultaram na recuperação de R$ 95 mil em taxas indevidas no período.
+- Criei planilhas de controle de contas a pagar e a receber no Excel, automatizando cálculos de juros e multas, o que reduziu o tempo de processamento de faturas em 40%.
+- Apoiei a elaboração do orçamento anual, analisando desvios entre realizado e previsto e gerando relatórios gerenciais que auxiliaram a redução de 12% nas despesas administrativas.
+- Utilizei SAP FI para lançamentos contábeis e extração de saldos, garantindo a precisão dos dados para o fechamento contábil trimestral.
+
+Logística Rápida Transportes Ltda. – Guarulhos, SP
+Assistente Financeiro | Fev/2017 – Fev/2018
+- Auxiliava na conciliação de contas a receber de clientes e no faturamento mensal, reduzindo em 25% o volume de divergências após implementar conferências cruzadas no Excel.
+- Organizava arquivos de comprovantes e notas fiscais, otimizando o processo de auditoria interna e diminuindo o tempo de resposta a solicitações de 3 dias para 1 dia.
+- Gerava relatórios de despesas por centro de custo no SAP, fornecendo subsídios para cortes de gastos que geraram economia de 6% no orçamento do setor.
+
+FORMAÇÃO ACADÊMICA
+
+Bacharelado em Ciências Contábeis – Universidade Cidade de São Paulo (UNICID) | Concluído em 2017
+
+CERTIFICAÇÕES
+
+- Certificação em Controladoria e Planejamento Financeiro – Instituto de Finanças Corporativas (IFC) | 2022
+- Power BI Avançado para Finanças – DataBrasil Educação | 2023
+- SAP FI/CO – Módulo Financeiro e Controladoria – Treinamento Corporativo SAP (carga horária: 80h) | 2021
+
+COMPETÊNCIAS TÉCNICAS
+
+- Excel: tabelas dinâmicas, procvs, macros e VBA para automação de relatórios e consolidação de dados financeiros
+- Power BI: criação de dashboards interativos com DAX, modelagem de dados e publicação de relatórios para tomada de decisão
+- SAP: módulos FI (contabilidade financeira) e CO (controle de custos), conciliação de contas, extração de saldos e análise de centros de custo
+- Orçamento e planejamento financeiro: elaboração de orçamento base zero, acompanhamento de execução e análise de variações
+- Conciliação bancária e de contas patrimoniais, fechamento contábil mensal e trimestral
+- Ferramentas de BI complementares: Salesforce (relatórios básicos) e Tableau (visualização simples)
+
+IDIOMAS
+
+- Português: nativo
+- Inglês: intermediário (leitura e compreensão de relatórios financeiros, conversação básica)
+- Espanhol: básico (compreensão de textos financeiros simples)

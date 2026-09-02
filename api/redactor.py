@@ -1,5 +1,7 @@
 import re
 from typing import List, Dict, Any, Tuple
+
+from api import observability as obs
 from presidio_analyzer import AnalyzerEngine, PatternRecognizer, Pattern, RecognizerResult
 from presidio_analyzer.nlp_engine import NlpEngineProvider
 from presidio_analyzer.predefined_recognizers import EmailRecognizer, IpRecognizer
@@ -181,6 +183,15 @@ class PIIRedactor:
         if not text:
             return "", {}
 
+        with obs.span("pii.redact", kind=obs.KIND_PII, chars=len(text)) as sp:
+            redacted_text, redaction_map = self._redact(text)
+            sp.set(
+                entities_redacted=len(redaction_map),
+                entity_types=sorted({k.rsplit("_", 1)[0].strip("[") for k in redaction_map}),
+            )
+            return redacted_text, redaction_map
+
+    def _redact(self, text: str) -> Tuple[str, Dict[str, str]]:
         # Analyze the text for PII
         # We look for standard entities plus our custom CPF and RG
         entities_to_detect = [

@@ -1,16 +1,63 @@
-.PHONY: up down test test-cov dev-backend dev-frontend
+.PHONY: help up down logs install seed corpus dev-api dev-web test test-cov lint eval calibrate build clean
+
+help:
+	@echo "Resume Ranker — comandos disponíveis"
+	@echo ""
+	@echo "  make up          Sobe Postgres e Qdrant (Docker)"
+	@echo "  make down        Derruba a infraestrutura"
+	@echo "  make install     Instala dependências de backend e frontend"
+	@echo "  make seed        Popula o ATS com o corpus de demonstração"
+	@echo "  make dev-api     Sobe a API em http://localhost:8000"
+	@echo "  make dev-web     Sobe o frontend em http://localhost:3100"
+	@echo "  make test        Roda a suíte de testes do backend"
+	@echo "  make lint        Lint + typecheck do frontend"
+	@echo "  make eval        Avaliação de recuperação (NDCG@5/@10, MRR)"
+	@echo "  make calibrate   Recalibra a escala de score do reranker"
 
 up:
-	docker-compose up -d
+	docker compose up -d
 
 down:
-	docker-compose down
+	docker compose down
+
+logs:
+	docker compose logs -f
+
+install:
+	cd api && python -m venv .venv || true
+	cd api && .venv/bin/pip install -r requirements.txt
+	cd api && .venv/bin/python -m spacy download pt_core_news_lg
+	cd web && npm install
+
+corpus:
+	cd $(CURDIR) && api/.venv/bin/python -m api.eval.generate_seed_corpus
+
+seed:
+	cd $(CURDIR) && api/.venv/bin/python -m api.eval.seed_ats --reset
+
+dev-api:
+	cd $(CURDIR) && api/.venv/bin/uvicorn api.main:app --reload --port 8000
+
+dev-web:
+	cd web && npm run dev -- --port 3100
 
 test:
-	cd api && .venv\Scripts\pytest -v
+	cd $(CURDIR) && api/.venv/bin/python -m pytest api/tests -q
 
-dev-backend:
-	cd api && .venv\Scripts\uvicorn api.main:app --reload
+test-cov:
+	cd $(CURDIR) && api/.venv/bin/python -m pytest api/tests --cov=api --cov-report=term-missing
 
-dev-frontend:
-	cd web && npm run dev
+lint:
+	cd web && npm run lint && npx tsc --noEmit
+
+build:
+	cd web && npm run build
+
+eval:
+	cd $(CURDIR) && api/.venv/bin/python -m api.eval.run_harness
+
+calibrate:
+	cd $(CURDIR) && api/.venv/bin/python -m api.eval.calibrate_scores
+
+clean:
+	rm -rf api/.venv web/node_modules web/.next api/data/pdfs

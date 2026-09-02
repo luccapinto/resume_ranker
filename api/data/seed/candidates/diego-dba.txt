@@ -1,0 +1,54 @@
+Carlos Eduardo Almeida Santos
+
+E-mail: carlos.santos@email.com.br | Telefone: (11) 98765-4321 | CPF: 345.678.901-23 | São Paulo - SP
+
+RESUMO PROFISSIONAL
+DBA Oracle e SQL Server Sênior com mais de 12 anos de experiência em administração, tuning e alta disponibilidade de bancos de dados relacionais. Histórico consolidado em ambientes corporativos de grande porte, com foco em desempenho, segurança e continuidade de operações críticas. Especialista em migração de dados e otimização de consultas, reduzindo latências e custos operacionais. Atualmente em processo de migração de carreira para a área de dados, ampliando conhecimentos em engenharia de dados, modelagem analítica e ferramentas de big data, como Databricks e Apache Spark, para atuar na interseção entre infraestrutura de bancos e soluções de dados modernas.
+
+EXPERIÊNCIA PROFISSIONAL
+
+Plata Digital Solutions S.A. - DBA Sênior Oracle
+Junho/2019 - Presente
+- Administrei mais de 120 instâncias Oracle (11g, 12c, 19c) em servidores Linux e Solaris, garantindo disponibilidade de 99,95% em ambiente de missão crítica.
+- Implementei tuning de queries com uso de hints, índices funcionais e particionamento de tabelas, resultando em redução de 62% no tempo médio de resposta de relatórios mensais de 8 milhões de registros.
+- Liderei a migração de 40 TB de dados de um banco Oracle on-premise para a nuvem AWS RDS, com estratégia de replicação contínua via Oracle GoldenGate, sem downtime e com economia de 30% em licenciamento.
+- Configurei e gerenciei clusters RAC e Data Guard, realizando failovers programados e recuperação de desastres em menos de 15 minutos. 
+- Automatizei processos de backup e monitoramento com shell scripts e Oracle Enterprise Manager, reduzindo erros manuais em 45%.
+
+NovaTech Sistemas Ltda. - DBA Pleno SQL Server
+Março/2014 - Maio/2019
+- Administrei mais de 80 servidores SQL Server (2008 a 2017) em ambiente Windows, com bancos de até 5 TB para aplicações financeiras e logísticas.
+- Otimizei índices e reescrevi stored procedures, reduzindo o tempo de execução de rotinas ETL noturnas de 4 horas para 1 hora e 20 minutos, um ganho de 66%.
+- Implementei Always On Availability Groups para alta disponibilidade, eliminando pontos únicos de falha e garantindo RTO de 2 minutos em 99,5% dos incidentes.
+- Liderei projeto de migração de dados de SQL Server para Oracle, utilizando Microsoft SSIS e scripts customizados, com volume de 12 TB e taxa de sucesso de 99,7%.
+- Criei dashboards de performance usando DMVs e Performance Monitor, identificando e corrigindo gargalos que reduziram o consumo de CPU em 20%.
+
+DataServ Gestão de TI - DBA Júnior (Oracle e SQL Server)
+Janeiro/2012 - Fevereiro/2014
+- Realizei manutenção preventiva e corretiva de 30 instâncias Oracle e 20 SQL Server, incluindo aplicação de patches e upgrades de versão.
+- Executei scripts de backup e restore, atingindo 100% de sucesso em testes de restauração programados mensalmente.
+- Elaborei documentação técnica de procedimentos operacionais, diminuindo o tempo de onboarding de novos DBAs em 30%.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Ciência da Computação - Universidade Federal de São Paulo (UNIFESP)
+Concluído em Dezembro/2011
+Pós-Graduação em Engenharia de Dados e Big Data - Instituto Infnet São Paulo
+Concluído em Dezembro/2023
+
+CERTIFICAÇÕES
+Oracle Database Administrator Certified Professional (OCP) - 12c
+Microsoft Certified: Azure Data Engineer Associate
+Microsoft Certified: SQL Server 2016 Database Administration (MCSA)
+AWS Certified Solutions Architect - Associate
+
+COMPETÊNCIAS TÉCNICAS
+Bancos de Dados: Oracle 11g/12c/19c (RAC, Data Guard, ASM, GoldenGate), SQL Server 2008-2019 (Always On, SSIS, SSRS, SSAS), MySQL 8.0
+Linguagens: SQL avançado, PL/SQL, T-SQL, Python (pandas, pySpark, SQLAlchemy), shell script, PowerShell
+Ferramentas de Dados: Databricks, Apache Spark (iniciante), Airflow (básico), Apache Kafka (conceitos), PostgreSQL (conceitos)
+Infraestrutura: AWS (RDS, EC2, S3, VPC), Linux (RedHat, Ubuntu), Windows Server, Docker, Terraform (básico)
+Monitoramento e Tuning: Oracle Enterprise Manager, SQL Server Profiler, Execution Plans, AWR/ADDM, Performance Monitor, Grafana, Prometheus
+Modelagem: Modelagem dimensional (Star Schema, Snowflake), normalização, particionamento
+
+IDIOMAS
+Português: Nativo
+Inglês: Avançado (leitura e escrita técnicas, conversação intermediária)

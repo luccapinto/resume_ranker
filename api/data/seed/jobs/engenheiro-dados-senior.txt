@@ -1,0 +1,39 @@
+Engenheiro(a) de Dados Sênior
+
+SOBRE A VAGA
+Buscamos uma pessoa engenheira de dados sênior para integrar o time de plataforma de dados de um dos maiores marketplaces do país. Você será responsável por arquitetar, construir e manter pipelines de dados robustos e escaláveis, atuando tanto em batch quanto em streaming. O modelo de trabalho é híbrido em São Paulo (SP), com idas ao escritório 2 a 3 vezes por semana. A stack principal inclui Python, Apache Kafka, Airflow, Spark, dbt, Snowflake e AWS. Se você tem autonomia para liderar iniciativas de dados, resolve problemas complexos de qualidade e performance, e gosta de mentorear pessoas mais juniores, essa vaga é para você.
+
+RESPONSABILIDADES
+- Projetar e implementar pipelines de dados em tempo real (streaming) e batch, garantindo baixa latência e alta disponibilidade.
+- Modelar dados dimensionalmente (star schema, data vault) para dar suporte a análises de negócio e produtos de dados.
+- Garantir a qualidade dos dados através de testes, validações e monitoramento contínuo dos fluxos.
+- Otimizar performance de queries e processos no Snowflake e no Spark, reduzindo custos e tempo de processamento.
+- Colaborar com times de produto, analytics e engenharia para definir requisitos e entregar soluções de dados.
+- Realizar code reviews e mentorar engenheiros de dados plenos e juniores, promovendo boas práticas de engenharia.
+
+REQUISITOS OBRIGATÓRIOS
+- Experiência mínima de 5 anos como engenheiro(a) de dados ou posição similar.
+- Domínio de Python para ETL/ELT e automação de pipelines.
+- Experiência comprovada com Apache Kafka ou Kinesis em produção, lidando com fluxos de streaming.
+- Conhecimento avançado de Apache Airflow para orquestração de workflows.
+- Sólida experiência com Apache Spark para processamento distribuído de grandes volumes de dados.
+- Domínio de modelagem dimensional (star schema, kimball) e SQL avançado.
+- Experiência com Snowflake e/ou AWS (S3, EMR, Lambda, Redshift).
+
+DIFERENCIAIS
+- Conhecimento em Terraform para infraestrutura como código (IaC).
+- Experiência com ferramentas de observabilidade e monitoramento de pipelines (Datadog, Grafana, Prometheus).
+- Vivência com dbt para transformação de dados na nuvem.
+- Habilidade comprovada em mentoria técnica de pessoas desenvolvedoras.
+- Experiência em marketplaces ou plataformas com alta volumetria de dados.
+
+BENEFÍCIOS
+- Vale-refeição e/ou vale-alimentação (R$ 1.500/mês)
+- Plano de saúde e odontológico (bradesco ou sulamérica) sem coparticipação
+- Vale-transporte ou auxílio combustível
+- Seguro de vida
+- Programa de participação nos resultados (PPR)
+- Auxílio home office (R$ 200/mês)
+- Gympass ou TotalPass
+- Acesso a plataformas de cursos e certificações (Alura, Udemy, Coursera)
+- Day off no mês do aniversário

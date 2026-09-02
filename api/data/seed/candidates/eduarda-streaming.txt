@@ -1,0 +1,60 @@
+Mariana Costa Albuquerque
+E-mail: mariana.albuquerque@email.com | Telefone: (11) 98765-4321 | São Paulo – SP | CPF: 123.456.789-00
+
+RESUMO PROFISSIONAL
+Engenheira de dados sênior com 9 anos de experiência no desenvolvimento e operação de pipelines de streaming em larga escala. Especialista em processamento contínuo com Kafka Streams, Flink e Spark Structured Streaming, aplicados a cenários de alta complexidade e volume. Perfil hands-on na construção de plataformas de dados resilientes, com forte automação de infraestrutura via Kubernetes e Terraform. Histórico consistente de redução de latências, otimização de custos de processamento e garantia de integridade transacional em ambientes de missão crítica. Atuação próxima aos times de negócio para traduzir requisitos complexos em soluções de dados que geram valor mensurável.
+
+EXPERIÊNCIA PROFISSIONAL
+
+TechNova Soluções em Dados – São Paulo/SP
+Engenheira de Dados Sênior
+Março/2021 – Presente
+- Liderou a migração de pipelines de micro-batch (Spark) para streaming contínuo com Flink e Kafka Streams, reduzindo a latência de processamento de dados de telemetria de 15 minutos para 45 segundos, um ganho de 95%.
+- Desenhou e implementou uma plataforma de processamento de eventos de compras em Kafka (tema com 120 milhões de eventos/dia), garantindo exatamente-uma vez e melhorando a acuracidade das métricas de receita em 99,97%.
+- Orquestrou clusters efêmeros de processamento de dados no Kubernetes, com provisionamento de infraestrutura 100% automatizado via Terraform, o que reduziu o custo de infraestrutura em 38% ao ano.
+- Reestruturou jobs de streaming legados para Spark Structured Streaming, otimizando o uso de memória e disk, resultando em economia de R$ 500 mil anuais em recursos na nuvem.
+- Implementou estratégia de evolução de schemas no Schema Registry, permitindo que 10 times de produto consumissem os dados de forma autônoma e segura, sem quebras contratuais.
+
+Financeira NovaGiro S.A. – São Paulo/SP
+Engenheira de Dados Plena
+Fevereiro/2018 – Fevereiro/2021
+- Construiu e manteve os tópicos críticos de pagamentos e antifraude no Kafka, processando cerca de 80 mil eventos por segundo com instabilidade zero e P99 inferior a 300ms.
+- Automatizou com Terraform o deployment de ambientes de desenvolvimento (dev/staging/prod) na AWS, reduzindo o tempo de setup de novas ambientes de 3 dias para 2 horas.
+- Desenvolveu aplicações com Kafka Streams para detecção de anomalias em transações, o que permitiu o bloqueio automático de tentativas de fraude, evitando perdas estimadas em R$ 2 milhões mensais.
+- Introduziu a prática de testes de integração para pipelines de streaming com Testcontainers e TopologyTestDriver, elevando a cobertura de código dos serviços críticos de 40% para 85%.
+
+DadosBR Tecnologia – Rio de Janeiro/RJ
+Analista de Dados / Engenheira de Dados Júnior
+Janeiro/2016 – Janeiro/2018
+- Desenvolveu rotinas de ingestão e transformação de dados com Spark Structured Streaming e Python, integrando APIs de redes sociais para análises de sentimento em tempo real.
+- Participou do projeto de migração de on-premise para a nuvem, utilizando Terraform para provisionamento inicial e Kubernetes para orquestração dos serviços de dados.
+- Auxiliou na criação de dashboards analíticos com dados agregados via streaming, contribuindo para o crescimento de 15% na retenção de clientes da empresa de varejo atendida.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Ciência da Computação
+Universidade Federal de São Paulo (UNIFESP) – São Paulo/SP
+Concluído em Dezembro/2015
+
+MBA em Business Intelligence e Big Data
+Fundação Getulio Vargas (FGV) – São Paulo/SP
+Concluído em Dezembro/2019
+
+CERTIFICAÇÕES
+- Confluent Certified Developer for Apache Kafka (CCDAK)
+- CKA: Certified Kubernetes Administrator (CNCF)
+- HashiCorp Certified: Terraform Associate (003)
+- AWS Certified Solutions Architect – Associate
+
+COMPETÊNCIAS TÉCNICAS
+- Processamento de Streams: Apache Kafka, Kafka Streams, Apache Flink, Spark Structured Streaming, Schema Registry.
+- Orquestração e Infraestrutura: Kubernetes (K8s), Docker, Terraform, Helm, ArgoCD.
+- Nuvem e Dados: AWS (Kinesis, MSK, S3, EMR), serviços de streaming gerenciados.
+- Linguagens de Programação: Java, Scala, Python.
+- Bancos de Dados: PostgreSQL, Cassandra, MongoDB, ClickHouse.
+- Monitoramento e Observabilidade: Prometheus, Grafana, ELK Stack (Elasticsearch, Logstash, Kibana).
+- Metodologias Ágeis: Scrum e Kanban, com forte foco em integração e entrega contínuas (CI/CD).
+
+IDIOMAS
+- Português: Nativo
+- Inglês: Fluente (leitura, escrita e conversação técnica avançada)
+- Espanhol: Intermediário (leitura e compreensão)

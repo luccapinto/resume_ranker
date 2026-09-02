@@ -1,0 +1,52 @@
+Ana Beatriz Carvalho Sampaio
+
+ana.sampaio@email.com | (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+
+RESUMO PROFISSIONAL
+
+Engenheira de MLOps com 5 anos de experiência no planejamento, construção e manutenção de pipelines de machine learning em produção. Sólida vivência com MLflow para rastreamento de experimentos e versionamento de modelos, além de orquestração de workflows com Apache Airflow e gerenciamento de clusters Kubernetes. Atuação em monitoramento contínuo de drift de dados e performance de modelos em ambiente AWS SageMaker, garantindo confiabilidade e baixa latência em sistemas críticos. Foco em automação de deploys, redução de custos de infraestrutura e governança de artefatos de ML.
+
+EXPERIÊNCIA PROFISSIONAL
+
+DataNexus Tecnologia Ltda. | Engenheira de MLOps Pleno
+Março/2022 - Presente
+
+- Estruturei um pipeline de CI/CD para modelos de recomendação usando MLflow e AWS SageMaker, reduzindo o tempo de deploy de 4 horas para 18 minutos e aumentando a frequência de entregas em 300%.
+- Implementei monitoramento de drift de dados com SageMaker Model Monitor, detectando 97% das deteriorações de acurácia antes de impactar usuários, com economia de R$ 2,1 milhões em retrabalho.
+- Projetei e gerenciei um cluster Kubernetes (EKS) para servir modelos em produção, escalando automaticamente para suportar picos de 25 mil requisições por segundo com latência média de 85 ms.
+- Criei DAGs no Apache Airflow que orquestram a reexecução de 150 experimentos de ML por semana, integrando com MLflow Tracking para comparação automática de métricas.
+- Otimizei o armazenamento de artefatos no S3 e reduzi custos de inferência em 40% ao migrar instâncias SageMaker para spot instances e habilitar auto-scaling baseado em demanda.
+
+InovaML Sistemas S.A. | Analista de MLOps Júnior
+Janeiro/2021 - Fevereiro/2022
+
+- Configurei o MLflow Tracking Server em ambiente Kubernetes para centralizar logs de 40 cientistas de dados, unificando o histórico de experimentos e eliminando retrabalho com scripts manuais.
+- Desenvolvi dashboards de monitoramento de modelos no SageMaker, com alertas de drift e degradação de performance, reduzindo em 60% o tempo de resposta a incidentes em produção.
+- Automatizei a orquestração de pipelines de treinamento com Airflow, integrando ingestão de dados, treinamento e registro no MLflow Registry, o que diminuiu o tempo médio de ciclo de desenvolvimento em 35%.
+- Colaborei na migração de workloads de treinamento de servidores on-premises para AWS SageMaker, resultando em redução de 50% nos custos de infraestrutura e aumento de 70% na escalabilidade.
+
+NuvemTech Soluções Ltda. | Estagiária de Engenharia de Dados
+Junho/2019 - Dezembro/2020
+
+- Auxiliei na implementação de pipelines de ingestão de dados utilizando Apache Airflow, processando 500 GB de dados diários com 99,7% de disponibilidade.
+- Realizei o deploy de contêineres Docker para microsserviços de transformação de dados em cluster Kubernetes, suportando picos de 10 mil transações por minuto.
+- Documentei e versionei artefatos de ML utilizando MLflow, garantindo rastreabilidade de 200 experimentos ao longo de 6 meses de projeto.
+
+FORMAÇÃO ACADÊMICA
+
+Bacharelado em Engenharia de Computação | Universidade Tecnológica do Brasil (UTB), São Paulo, SP
+Concluído em Dezembro/2020
+
+CERTIFICAÇÕES
+
+- AWS Certified Machine Learning – Specialty (2023)
+- Kubernetes Administrator (CKA) - The Linux Foundation (2022)
+- Data Engineering on AWS – Curso de Especialização (2021)
+
+COMPETÊNCIAS TÉCNICAS
+
+MLflow (Tracking, Registry, Model Serving); Apache Airflow (orquestração, DAGs, sensores); Kubernetes (EKS, deployments, HPA, namespaces); AWS SageMaker (Model Monitor, Pipelines, endpoints, auto-scaling); Monitoramento de modelos (drift de dados, atribuição de desempenho, alertas); Python (Pandas, Scikit-learn, FastAPI); Docker (imagens, multi-stage builds); AWS (S3, IAM, CloudWatch, VPC); Git e CI/CD (GitLab CI, GitHub Actions).
+
+IDIOMAS
+
+Português: nativo | Inglês: avançado (leitura e conversação técnicas, certificação EF SET C1) | Espanhol: intermediário (compreensão e comunicação básica)

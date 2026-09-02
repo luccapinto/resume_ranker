@@ -1,0 +1,252 @@
+{
+  "jobs": [
+    {
+      "slug": "engenheiro-dados-senior",
+      "title": "Engenheiro(a) de Dados Sênior",
+      "department": "Dados & Analytics",
+      "location": "São Paulo, SP",
+      "work_model": "Híbrido",
+      "employment_type": "CLT",
+      "seniority": "Sênior",
+      "salary_min": 14000,
+      "salary_max": 19000,
+      "headcount": 2,
+      "owner": "Camila Ferreira"
+    },
+    {
+      "slug": "fullstack-pleno",
+      "title": "Desenvolvedor(a) Full Stack Pleno",
+      "department": "Engenharia de Produto",
+      "location": "Remoto (Brasil)",
+      "work_model": "Remoto",
+      "employment_type": "CLT",
+      "seniority": "Pleno",
+      "salary_min": 9000,
+      "salary_max": 13000,
+      "headcount": 3,
+      "owner": "Rodrigo Alencar"
+    },
+    {
+      "slug": "ml-engineer-senior",
+      "title": "Engenheiro(a) de Machine Learning Sênior",
+      "department": "Inteligência Artificial",
+      "location": "São Paulo, SP",
+      "work_model": "Híbrido",
+      "employment_type": "CLT",
+      "seniority": "Sênior",
+      "salary_min": 16000,
+      "salary_max": 24000,
+      "headcount": 1,
+      "owner": "Camila Ferreira"
+    },
+    {
+      "slug": "analista-dados-junior",
+      "title": "Analista de Dados Júnior",
+      "department": "Business Intelligence",
+      "location": "Belo Horizonte, MG",
+      "work_model": "Presencial",
+      "employment_type": "CLT",
+      "seniority": "Júnior",
+      "salary_min": 4500,
+      "salary_max": 6500,
+      "headcount": 2,
+      "owner": "Marina Duarte"
+    },
+    {
+      "slug": "sre-platform-pleno",
+      "title": "Site Reliability Engineer Pleno",
+      "department": "Plataforma",
+      "location": "Remoto (Brasil)",
+      "work_model": "Remoto",
+      "employment_type": "PJ",
+      "seniority": "Pleno",
+      "salary_min": 12000,
+      "salary_max": 16000,
+      "headcount": 1,
+      "owner": "Rodrigo Alencar"
+    },
+    {
+      "slug": "product-manager-pleno",
+      "title": "Product Manager Pleno",
+      "department": "Produto",
+      "location": "São Paulo, SP",
+      "work_model": "Híbrido",
+      "employment_type": "CLT",
+      "seniority": "Pleno",
+      "salary_min": 11000,
+      "salary_max": 15000,
+      "headcount": 1,
+      "owner": "Marina Duarte"
+    }
+  ],
+  "candidates": [
+    {
+      "slug": "ana-kafka",
+      "archetype": "Engenheira de dados sênior, 8 anos, especialista em Kafka, Spark, Airflow, dbt, Snowflake e AWS; liderou migração de batch para streaming",
+      "job": "engenheiro-dados-senior",
+      "fit": "forte"
+    },
+    {
+      "slug": "bruno-airflow",
+      "archetype": "Engenheiro de dados pleno, 5 anos, Airflow, Python, SQL, dbt e BigQuery; sem experiência com streaming",
+      "job": "engenheiro-dados-senior",
+      "fit": "moderado"
+    },
+    {
+      "slug": "carla-analytics-eng",
+      "archetype": "Analytics engineer sênior, 7 anos, dbt, Snowflake, SQL avançado, modelagem dimensional; pouca experiência com Spark",
+      "job": "engenheiro-dados-senior",
+      "fit": "moderado"
+    },
+    {
+      "slug": "diego-dba",
+      "archetype": "DBA Oracle e SQL Server sênior, 12 anos, tuning e alta disponibilidade; migrando de carreira para dados",
+      "job": "engenheiro-dados-senior",
+      "fit": "baixo"
+    },
+    {
+      "slug": "eduarda-streaming",
+      "archetype": "Engenheira de dados sênior, 9 anos, Kafka Streams, Flink, Spark Structured Streaming, Kubernetes, Terraform",
+      "job": "engenheiro-dados-senior",
+      "fit": "forte"
+    },
+    {
+      "slug": "felipe-fullstack",
+      "archetype": "Desenvolvedor full stack pleno, 5 anos, TypeScript, React, Next.js, Node.js, NestJS, PostgreSQL, Docker e AWS",
+      "job": "fullstack-pleno",
+      "fit": "forte"
+    },
+    {
+      "slug": "gabriela-frontend",
+      "archetype": "Desenvolvedora frontend pleno, 4 anos, React, Next.js, Tailwind, design system e acessibilidade; backend limitado",
+      "job": "fullstack-pleno",
+      "fit": "moderado"
+    },
+    {
+      "slug": "henrique-backend-java",
+      "archetype": "Desenvolvedor backend pleno, 6 anos, Java, Spring Boot, PostgreSQL, Kafka; sem experiência com React",
+      "job": "fullstack-pleno",
+      "fit": "moderado"
+    },
+    {
+      "slug": "isabela-fullstack-junior",
+      "archetype": "Desenvolvedora full stack júnior, 2 anos, JavaScript, React, Node.js, MongoDB; bootcamp e projetos pessoais",
+      "job": "fullstack-pleno",
+      "fit": "baixo"
+    },
+    {
+      "slug": "joao-fullstack-senior",
+      "archetype": "Desenvolvedor full stack sênior, 9 anos, TypeScript, React, Node.js, GraphQL, PostgreSQL, AWS, liderança técnica",
+      "job": "fullstack-pleno",
+      "fit": "forte"
+    },
+    {
+      "slug": "karina-llm",
+      "archetype": "Engenheira de ML sênior, 7 anos, PyTorch, Hugging Face, LLMs, RAG, Qdrant, MLflow e Kubernetes; publicou avaliações de RAG",
+      "job": "ml-engineer-senior",
+      "fit": "forte"
+    },
+    {
+      "slug": "leonardo-cv",
+      "archetype": "Engenheiro de ML sênior, 8 anos, visão computacional, PyTorch, OpenCV, deploy em edge; pouca exposição a LLMs",
+      "job": "ml-engineer-senior",
+      "fit": "moderado"
+    },
+    {
+      "slug": "mariana-mlops",
+      "archetype": "Engenheira de MLOps pleno, 5 anos, MLflow, Kubernetes, Airflow, monitoramento de modelos, AWS SageMaker",
+      "job": "ml-engineer-senior",
+      "fit": "moderado"
+    },
+    {
+      "slug": "nicolas-cientista",
+      "archetype": "Cientista de dados pleno, 5 anos, scikit-learn, estatística, pandas, experimentação A/B; nunca colocou modelo em produção",
+      "job": "ml-engineer-senior",
+      "fit": "baixo"
+    },
+    {
+      "slug": "olivia-bi-junior",
+      "archetype": "Analista de dados júnior, 1,5 ano, SQL, Power BI, Excel avançado e pandas; estágio em BI concluído",
+      "job": "analista-dados-junior",
+      "fit": "forte"
+    },
+    {
+      "slug": "paulo-estagio-bi",
+      "archetype": "Recém-formado em Estatística, estágio de 1 ano com SQL, Power BI e Python",
+      "job": "analista-dados-junior",
+      "fit": "forte"
+    },
+    {
+      "slug": "renata-comercial",
+      "archetype": "Analista comercial pleno, 4 anos, Excel avançado, CRM Salesforce e relatórios; SQL básico",
+      "job": "analista-dados-junior",
+      "fit": "moderado"
+    },
+    {
+      "slug": "sergio-financeiro",
+      "archetype": "Analista financeiro pleno, 6 anos, controladoria, Excel, Power BI e SAP; sem programação",
+      "job": "analista-dados-junior",
+      "fit": "baixo"
+    },
+    {
+      "slug": "tatiana-sre",
+      "archetype": "SRE pleno, 6 anos, Kubernetes, Terraform, AWS, ArgoCD, Prometheus, Grafana, OpenTelemetry, SLO e on-call",
+      "job": "sre-platform-pleno",
+      "fit": "forte"
+    },
+    {
+      "slug": "ulisses-devops",
+      "archetype": "Engenheiro DevOps pleno, 5 anos, Docker, Jenkins, Ansible, AWS EC2; começando com Kubernetes",
+      "job": "sre-platform-pleno",
+      "fit": "moderado"
+    },
+    {
+      "slug": "vanessa-platform",
+      "archetype": "Platform engineer sênior, 8 anos, Kubernetes, Go, Terraform, service mesh Istio, GitOps e FinOps",
+      "job": "sre-platform-pleno",
+      "fit": "forte"
+    },
+    {
+      "slug": "wagner-infra",
+      "archetype": "Analista de infraestrutura sênior, 11 anos, VMware, Windows Server, redes e Active Directory; pouca nuvem",
+      "job": "sre-platform-pleno",
+      "fit": "baixo"
+    },
+    {
+      "slug": "xavier-pm-fintech",
+      "archetype": "Product manager pleno, 5 anos em fintech de pagamentos, discovery, RICE, OKR, Amplitude, testes A/B e SQL",
+      "job": "product-manager-pleno",
+      "fit": "forte"
+    },
+    {
+      "slug": "yara-po",
+      "archetype": "Product owner pleno, 4 anos, Scrum, refinamento de backlog, Jira; pouca prática de discovery e métricas",
+      "job": "product-manager-pleno",
+      "fit": "moderado"
+    },
+    {
+      "slug": "zeca-ux",
+      "archetype": "Product designer sênior, 7 anos, Figma, design system, pesquisa com usuários; transição para produto",
+      "job": "product-manager-pleno",
+      "fit": "moderado"
+    },
+    {
+      "slug": "amanda-marketing",
+      "archetype": "Coordenadora de marketing digital, 6 anos, growth, mídia paga, Google Ads e CRM",
+      "job": "product-manager-pleno",
+      "fit": "baixo"
+    },
+    {
+      "slug": "beatriz-juridico",
+      "archetype": "Advogada trabalhista sênior, 10 anos, contencioso, contratos e compliance",
+      "job": null,
+      "fit": "baixo"
+    },
+    {
+      "slug": "caio-logistica",
+      "archetype": "Coordenador de logística pleno, 7 anos, supply chain, lean, roteirização e gestão de frota",
+      "job": null,
+      "fit": "baixo"
+    }
+  ]
+}

@@ -30,3 +30,9 @@ Thumbs.db
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Generated artefacts
+api/data/pdfs/
+api/eval/*.db
+api/eval/qdrant_storage/
+docs/screenshots/*.tmp.png

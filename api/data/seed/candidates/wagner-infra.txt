@@ -1,0 +1,59 @@
+Carlos Eduardo Menezes
+E-mail: carlos.menezes@email.com | Telefone: (11) 98765-4321 | São Paulo - SP | CPF: 412.785.960-17
+
+RESUMO PROFISSIONAL
+Analista de Infraestrutura com 11 anos de experiência em ambientes corporativos de médio e grande porte, com forte atuação em virtualização VMware, administração de Windows Server, redes e Active Directory. Perfil voltado para a estabilidade, performance e segurança de datacenter, com histórico comprovado de redução de custos, aumento de disponibilidade e otimização de parques tecnológicos. Conhecimento intermediário em nuvem (AWS), complementando a base sólida em infraestrutura on-premise.
+
+EXPERIÊNCIA PROFISSIONAL
+
+**Centro de Processamento Sul S.A.** (São Paulo - SP)
+Analista de Infraestrutura Sênior | Mar/2019 - Atual
+- Responsável pelo ambiente de virtualização com 320 VMs em cluster vSphere 7.0 composto por 12 hosts, reduzindo o tempo de provisionamento de servidores em 60% com a padronização de templates e automação via PowerCLI.
+- Conduziu a migração de 80 servidores físicos legados para a plataforma VMware, resultando em uma economia de 35% em custos de energia e refrigeração do datacenter e a melhora de 20% na performance das aplicações.
+- Gerenciou a política de backup e restore (Veeam) para mais de 150 TB de dados, reduzindo o RTO (Recovery Time Objective) de 8 horas para 2 horas e garantindo a integridade de SLA críticos.
+- Implantou a solução de monitoramento Zabbix para controle proativo da infraestrutura, diminuindo o tempo médio de detecção de falhas em 50% e o número de incidentes de indisponibilidade em 30%.
+- Atuou na revisão completa das GPOs do Active Directory, corrigindo 200 políticas legadas e elevando a segurança do ambiente, além de reduzir o tempo de logon dos usuários em 40%.
+
+**Rede Integrada de Telecomunicações LTDA** (São Paulo - SP)
+Analista de Infraestrutura Pleno | Fev/2015 - Fev/2019
+- Administrou a rede de dados composta por 45 switches Cisco e 20 roteadores, promovendo a segmentação de VLANs e implementando QoS, o que reduziu a latência do link de dados em 25%.
+- Gerenciou o Active Directory, incluindo a criação de políticas, controle de acesso e Web Filter, atendendo a uma base de 900 usuários com uma taxa de satisfação interna de 95%.
+- Coordenou o projeto de expansão do parque de servidores Windows Server 2012 R2 para a versão 2016, garantindo uma migração sem perda de dados significativa (99,98% de sucesso) e sem downtime relevante em horário comercial.
+- Prestou suporte Nível 3 para incidentes complexos de Windows Server, virtualização e rede, solucionando 90% dos chamados dentro do SLA estabelecido e reduzindo a escalação para o fornecedor em 70%.
+- Executou a otimização de serviços como DHCP, DNS e WINS, minimizando erros de configuração e diminuindo os tickets relacionados a problemas de conectividade em 45%.
+
+**DigiStore Soluções Corporativas** (São Paulo - SP)
+Analista de Suporte/Infraestrutura Júnior | Jan/2013 - Jan/2015
+- Realizou o suporte e a manutenção de servidores Windows Server 2008 R2 e o gerenciamento da fila de chamados da central de TI (HelpDesk), mantendo uma média de 85% dos tickets resolvidos em até 4 horas.
+- Auxiliou no troubleshooting de problemas de rede cabeada, wireless e conectividade com a nuvem, contribuindo para a melhoria da disponibilidade da rede interna de 97% para 99,8%.
+- Participou ativamente na migração do correio eletrônico para o Exchange 2010, auxiliando na movimentação de 500 caixas postais sem incidentes críticos.
+- Atuou na manutenção preventiva e corretiva de desktops e notebooks, reduzindo a taxa de falha de hardware em 30% após a implementação de um novo ciclo de substituição de peças.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Redes de Computadores | Universidade Paulista (UNIP) - Concluído em 2014
+Pós-graduação em Administração de Sistemas e Infraestrutura em TI | Instituto Infnet - 2018
+
+CERTIFICAÇÕES
+- VMware Certified Professional (VCP) - 2021
+- Microsoft Certified Solutions Associate (MCSA) Windows Server 2016
+- ITIL v4 Foundation
+- CCNA (Cisco Certified Network Associate) - Certificado expirado, com conhecimento técnico atualizado
+
+COMPETÊNCIAS TÉCNICAS
+- ESXi e vCenter (troubleshooting, automação e performance)
+- vSphere HA, DRS e gerenciamento de clusters
+- Windows Server (2012/2016/2019): DNS, DHCP, AD, GPO e Patch Management
+- Active Directory e administração de políticas de segurança
+- Implementação e gestão de switches Cisco Camada 2/3, VLANs e Roteamento
+- Firewall: Fortinet e pfSense
+- Sistemas de Storage e SAN (Dell PowerVault, HP MSA)
+- Backup e Restore: Veeam Backup & Replication, Windows Server Backup
+- Monitoramento: Zabbix, PRTG
+- Virtualização e consolidação de servidores
+- Conhecimento intermediário em AWS (EC2, S3, VPC)
+- PowerShell e PowerCLI para automação de tarefas
+
+IDIOMAS
+- Português: Nativo
+- Inglês: Avançado para leitura e escrita, boa compreensão técnica (intercâmbio de curta duração)
+- Espanhol: Básico (leitura e comunicação limitada)

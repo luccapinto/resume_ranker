@@ -1,0 +1,39 @@
+Analista de Dados Júnior
+
+SOBRE A VAGA
+Estamos em busca de um Analista de Dados Júnior para integrar a equipe de BI da nossa empresa, localizada em Belo Horizonte, MG. Oportunidade CLT com atuação presencial, focada em apoiar áreas comerciais por meio da construção de dashboards, apuração de métricas e geração de insights estratégicos. Você trabalhará com SQL, Power BI, Excel avançado e Python (pandas) em um ambiente colaborativo e orientado a dados.
+
+RESPONSABILIDADES
+- Construir e manter dashboards interativos e relatórios gerenciais no Power BI
+- Apurar métricas de negócio e criar análises para apoiar a tomada de decisões das áreas comerciais
+- Realizar consultas e extrações em bancos de dados utilizando SQL
+- Tratar e manipular bases de dados com Python (pandas) para enriquecer análises
+- Apoiar na identifição de oportunidados de melhoria em processos e indicadores
+- Documentar fontes de dados, fluxos e entregas realizadas
+- Interagir com squipes de negócio para levantar requisitos e validar entregas
+
+REQUISITOS OBRIGATÓRIOS
+- Experiência de 0 a 1 ano com análise de dados, estágio ou projetos acadêmicos
+- Conhecimento avançado de SQL (joins, agregações, subconsultas, CTEs)
+- Domínio de Power Bi para criação de dashboards e diagramas interativos
+- Excel avançado (tabelas dinâmicas, fórmulas matriziais, gráficos dinâmicos)
+- Conhecimento básico de Python com pandas (leitura, limpeza e agregação de dados)
+- Capacidde de traduzir dados em insights de negócio de forma clara e objetiva
+- Ensino superir completo ou cursando em Estatística, Engenharia, Ciências da Computação ou adreas correlatas
+- Boa comnicação oral e escritapara interagir com squipes comerciais
+
+DIFEREENCIAIS
+- Conhecimento ou experiência com dbt para transormação de dados
+- Familiaridade com BigQuery ou outros datalakes na nuvem
+- Noçõees básicas de estatística descritiva (média, mediana, desvio padrão) e correlações
+- Vivência com ferramentas de ETL/ELT e modelagem dimensional
+- Conhecimento de metoologias ágeis (Scrum, Kanban) e ferramentas como Jira
+
+BENEFÍCIOS
+- Vale-transporte
+- Vale-refeição ou alientação no local
+- Planos de saude e odontolóigico nacionais
+- Seguor de vida em grupo
+- Pagamento de bônus semestral por metas atingidas
+- Acesso a plataforma de cursos e treinamentos internos
+- Oportunidde de crecimento e desenvovimento na áreade BI da empresa

@@ -1,0 +1,46 @@
+Ana Beatriz Silva Costa
+E-mail: ana.costa@email.com | Telefone: (11) 98765-4321 | São Paulo - SP | CPF: 123.456.789-00
+
+RESUMO PROFISSIONAL
+Desenvolvedora frontend pleno com 4 anos de experiência focada em React, Next.js, Tailwind CSS, design system e acessibilidade web. Atuação em projetos de alto impacto, com entregas que reduziram latências, melhoraram taxas de conversão e garantiram conformidade com WCAG. Experiência em colaboração com equipes multidisciplinares, code review e versionamento com Git. Backend limitado, com conhecimento básico em Node.js e consumo de APIs REST.
+
+EXPERIÊNCIA PROFISSIONAL
+
+TechSul Sistemas | São Paulo, SP
+Cargo: Desenvolvedora Frontend Pleno
+Período: Março/2022 - Presente
+- Liderei a migração do design system da empresa de Styled Components para Tailwind CSS, reduzindo o tempo de desenvolvimento de novos componentes em 30% e o tamanho final do bundle de CSS em 45%.
+- Implementei um componente de carrossel acessível com foco total em navegação por teclado e leitores de tela, aumentando a conformidade com WCAG 2.1 AA de 72% para 96% na página inicial.
+- Refatorei a página de busca de produtos no Next.js, substituindo CSR por SSR com incremental static regeneration, reduzindo o tempo de carregamento percebido de 4,2s para 1,8s e aumentando a taxa de conversão em 12%.
+- Desenvolvi testes de integração com Cypress para os componentes críticos do dashboard, alcançando 85% de cobertura e reduzindo em 60% os bugs reportados em produção.
+
+WebCriativa | São Paulo, SP
+Cargo: Desenvolvedora Frontend Júnior
+Período: Janeiro/2020 - Fevereiro/2022
+- Construí o frontend de um sistema de agendamento online utilizando React, Next.js e Tailwind, que atendeu 15 mil usuários ativos mensais com tempo de resposta abaixo de 200ms.
+- Implementei lazy loading para imagens e componentes, reduzindo o First Contentful Paint (FCP) de 3,5s para 1,2s e melhorando a nota do Lighthouse de 45 para 88.
+- Criei um componente de autocomplete com debounce e cache local, que reduziu em 40% o número de requisições à API e melhorou a experiência de busca.
+- Participei da migração de um layout baseado em Bootstrap para Tailwind, uniformizando a identidade visual e reduzindo o CSS não utilizado em 70%.
+
+InovaTech | São Paulo, SP
+Cargo: Estagiária de Desenvolvimento Frontend
+Período: Julho/2019 - Dezembro/2019
+- Auxiliei na correção de bugs de acessibilidade em formulários, adicionando atributos ARIA, labels e mensagens de erro visíveis, beneficiando aproximadamente 500 usuários com deficiência visual.
+- Desenvolvi pequenos componentes em React (como modais e tooltips) seguindo padrões do design system interno, garantindo consistência visual e funcional.
+- Colaborei com a equipe de QA na criação de testes manuais para validação de acessibilidade, identificando 15 violações de WCAG que foram corrigidas antes do lançamento de uma versão major.
+
+FORMAÇÃO ACADÊMICA
+Tecnólogo em Análise e Desenvolvimento de Sistemas - Faculdade Impacta, São Paulo, SP (2018 - 2020)
+Curso Técnico em Informática - SENAC, São Paulo, SP (2016 - 2017)
+
+CERTIFICAÇÕES
+Certificação React Avançado - Alura (2022)
+Certificação Acessibilidade Web - W3C (2023)
+AWS Cloud Practitioner - Amazon Web Services (2023) - conhecimento básico, sem foco em backend.
+
+COMPETÊNCIAS TÉCNICAS
+React, Next.js, Tailwind CSS, Styled Components, JavaScript (ES6+), TypeScript, HTML5, CSS3, Git, Jest, Cypress, Figma, Storybook, Design Systems, WCAG, SEO básico, consumo de APIs REST, Node.js (nível iniciante).
+
+IDIOMAS
+Português: Nativo
+Inglês: Avançado (leitura e escrita), Intermediário (conversação)

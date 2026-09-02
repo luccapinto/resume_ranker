@@ -1,0 +1,47 @@
+Carlos Eduardo Martins de Oliveira
+carlos.oliveira@email.com | (11) 98765-4321 | São Paulo - SP | CPF: 123.456.789-00
+
+RESUMO PROFISSIONAL
+Coordenador de Logística Pleno com 7 anos de experiência em supply chain, gestão de frota, roteirização e implementação de práticas Lean. Histórico de redução de custos operacionais, otimização de rotas e melhoria contínua de processos logísticos. Experiência na liderança de equipes multidisciplinares e no uso de ferramentas analíticas para tomada de decisão baseada em dados. Busca contribuir com a eficiência e competitividade da cadeia de suprimentos.
+
+EXPERIÊNCIA PROFISSIONAL
+
+Logística Integrada Brasil S.A. | Coordenador de Logística Pleno | São Paulo, SP
+Jan/2021 - Atual
+- Reduzi em 18% os custos com transporte ao reestruturar o planejamento de rotas e consolidar cargas, gerando economia anual de R$ 1,2 milhão.
+- Implementei sistema de roteirização dinâmica com TMS SAP TM, diminuindo o tempo médio de entrega em 12% e aumentando a taxa de ocupação dos veículos em 15%.
+- Liderei equipe de 12 motoristas e 5 auxiliares administrativos, alcançando 97% de entregas no prazo durante os últimos 12 meses.
+- Conduzi projetos Lean que eliminaram 22% dos desperdícios no armazém, como movimentações desnecessárias e retrabalho, reduzindo o lead time de separação em 9%.
+- Implantei indicadores de desempenho (KPIs) de frota e roteirização, resultando em redução de 14% no consumo de combustível por quilômetro rodado.
+
+Transportes Rápido Ltda. | Supervisor de Logística | São Paulo, SP
+Abr/2018 - Dez/2020
+- Gerenciei frota de 35 veículos leves e pesados, realizando manutenção preventiva programada que reduziu as paradas não planejadas em 30%.
+- Otimizei rotas de entregas urbanas com auxílio do software MapInfo, encurtando distâncias percorridas em 11% e aumentando a produtividade dos motoristas em 8%.
+- Desenvolvi plano de capacitação em direção econômica e segurança, resultando em queda de 20% nos acidentes de trânsito e 10% no consumo de diesel.
+- Monitorei custos operacionais mensais, identificando desvios e propondo ações corretivas que geraram economia de R$ 280 mil ao longo de 2 anos.
+- Coordenei equipe de 8 motoristas e 3 ajudantes, mantendo taxa de absenteísmo abaixo de 3% por meio de escalas otimizadas.
+
+Distribuidora Nacional de Alimentos Ltda. | Analista de Supply Chain | São Paulo, SP
+Fev/2016 - Mar/2018
+- Modelei e atualizei planilhas de controle de estoque no Excel, reduzindo divergências de inventário em 25% e melhorando a acuracidade para 98%.
+- Apoiei a implementação de WMS (TOTVS) no centro de distribuição, participando de testes e treinamentos que diminuíram o tempo de localização de produtos em 35%.
+- Analisei dados de fretes e propostas de transportadoras, selecionando parceiros que proporcionaram redução de 12% nos custos logísticos sem comprometer prazos.
+- Elaborei relatórios semanais de desempenho logístico (on-time delivery, custo por km, giro de estoque) para a gerência, subsidiando decisões estratégicas.
+- Participei de projetos de melhoria contínua com metodologia Lean, contribuindo para a otimização do layout do armazém e redução de 15% nas distâncias percorridas internamente.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Engenharia de Produção - Universidade Federal de São Paulo (UNIFESP), concluído em 2016.
+MBA em Logística e Supply Chain - Fundação Getulio Vargas (FGV), concluído em 2020.
+
+CERTIFICAÇÕES
+Green Belt Lean Six Sigma - Instituto de Educação Continuada (IEC), 2021.
+Certificação em Gestão de Frotas - Associação Brasileira de Logística (ABRALOG), 2022.
+Curso de Roteirização e Otimização de Rotas - SENAI, 2019.
+
+COMPETÊNCIAS TÉCNICAS
+Sistemas TMS (SAP TM, TOTVS Logística); WMS (TOTVS); Excel avançado (tabelas dinâmicas, macros, Power Query); Power BI para dashboards; Softwares de roteirização (MapInfo, Route4Me); Gestão de frotas e manutenção; Lean Manufacturing e Kaizen; Indicadores de desempenho logístico (KPIs); Análise de custos e redução de despesas; Planejamento de capacidade e demanda; Conhecimento de legislação de transporte (ANTT, ABNT).
+
+IDIOMAS
+Português: nativo.
+Inglês: avançado (leitura, escrita e conversação - certificado TOEIC 850).

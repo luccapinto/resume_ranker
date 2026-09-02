@@ -1,0 +1,50 @@
+Lucas Almeida Santos
+lucas.almeida.santos@email.com | (11) 98765-4321 | São Paulo, SP | CPF: 123.456.789-00
+
+RESUMO PROFISSIONAL
+Desenvolvedor full stack pleno com 5 anos de experiência na construção de aplicações web escaláveis e de alta performance. Especializado em TypeScript, React, Next.js e Node.js, com forte atuação em back-end com NestJS e bancos de dados PostgreSQL. Experiência sólida em conteinerização com Docker e deploy em nuvem AWS (EC2, S3, Lambda, RDS). Busco contribuir com equipes ágeis, otimizando processos, reduzindo custos e entregando valor de negócio através de código limpo e boas práticas de engenharia de software.
+
+EXPERIÊNCIA PROFISSIONAL
+
+InovaTech Soluções Digitais | São Paulo, SP
+Desenvolvedor Full Stack Pleno | 04/2022 - Presente
+- Liderei a migração de uma plataforma de e-commerce de React puro para Next.js, resultando em 40% de redução no tempo de carregamento das páginas e aumento de 25% na taxa de conversão.
+- Projetei e implementei uma API RESTful com NestJS e TypeORM, integrada a um banco PostgreSQL, reduzindo o tempo médio de resposta das consultas em 35% (de 250ms para 160ms).
+- Containerizei toda a aplicação com Docker e orquestrei ambientes de desenvolvimento e produção com docker-compose, diminuindo o tempo de setup de novos desenvolvedores de 3 horas para 15 minutos.
+- Configurei pipelines de CI/CD no AWS CodePipeline e CodeDeploy, automatizando deploys e reduzindo erros de release em 60% ao longo de 6 meses.
+- Otimizei consultas SQL e adicionei índices no PostgreSQL, diminuindo a latência de relatórios de vendas de 8 segundos para 1,2 segundos.
+
+DataBridge Sistemas | São Paulo, SP
+Desenvolvedor Full Stack | 08/2020 - 03/2022
+- Desenvolvi um sistema de gestão de pedidos utilizando React com hooks e Context API, Node.js com Express e PostgreSQL, processando mais de 50 mil pedidos por mês sem downtime.
+- Implementei autenticação JWT e controle de acesso baseado em papéis (RBAC) com NestJS, garantindo conformidade com LGPD e reduzindo incidentes de segurança em 80%.
+- Criei microsserviços de notificação e envio de e-mails usando AWS Lambda e SQS, processando 10 mil notificações diárias com latência inferior a 200ms.
+- Realizei a migração de banco de dados MySQL para PostgreSQL, otimizando consultas e reduzindo o consumo de armazenamento em 30% através de compressão de dados.
+- Colaborei na definição de testes unitários e de integração com Jest e Testing Library, elevando a cobertura de código de 45% para 85% em 8 meses.
+
+WebCraft Tecnologia | São Paulo, SP
+Desenvolvedor Full Stack Júnior | 01/2019 - 07/2020
+- Desenvolvi componentes reutilizáveis em React e TypeScript, reduzindo o tempo de implementação de novas páginas em 30%.
+- Mantive e evoluiu uma API REST com Node.js e Express, integrada a banco MongoDB, atendendo a 5 mil requisições por minuto.
+- Automatizei tarefas de deploy utilizando scripts shell e Docker, diminuindo o tempo de release manual de 2 horas para 20 minutos.
+- Participei de code reviews e refinamentos de backlog, contribuindo para a redução de bugs em produção em 20% no trimestre.
+
+FORMAÇÃO ACADÊMICA
+Bacharelado em Ciência da Computação | Universidade Federal de São Paulo (UNIFESP) | 2018 - 2022
+
+CERTIFICAÇÕES
+- AWS Certified Developer – Associate (2023)
+- Scrum Foundation Professional Certificate (SFPC) – CertiProf (2022)
+- NestJS: Fundamentos e Práticas Avançadas – Alura (2022)
+
+COMPETÊNCIAS TÉCNICAS
+- Linguagens: TypeScript, JavaScript, SQL
+- Front-end: React, Next.js, HTML5, CSS3, TailwindCSS, Styled Components
+- Back-end: Node.js, NestJS, Express, RESTful APIs, GraphQL (básico)
+- Banco de Dados: PostgreSQL, MongoDB, Redis (básico)
+- Infraestrutura: Docker, Docker Compose, AWS (EC2, S3, Lambda, RDS, CloudFront, CodePipeline)
+- Ferramentas: Git, GitHub Actions, Jest, Playwright, ESLint, Prettier, Figma (leitura)
+
+IDIOMAS
+- Português: Nativo
+- Inglês: Avançado (leitura técnica, escrita e conversação fluente)

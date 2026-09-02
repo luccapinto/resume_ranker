@@ -49,3 +49,128 @@ http://data.europa.eu/esco/skill/agile,Agile,metodologias ageis;metodologias ág
 http://data.europa.eu/esco/skill/unit-testing,Unit Testing,testes unitarios;testes unitários;testes de unidade;pytest;junit
 http://data.europa.eu/esco/skill/microservices,Microservices,microsservicos;microsserviços;microservices architecture;arquitetura de microsserviços
 http://data.europa.eu/esco/skill/ui-ux,UI/UX Design,design de interface;experiencia do usuario;experiência do usuário;figma;wireframing
+http://data.europa.eu/esco/skill/azure,Microsoft Azure,azure;azure cloud;nuvem azure;microsoft azure cloud
+http://data.europa.eu/esco/skill/gcp,Google Cloud Platform,gcp;google cloud;nuvem google;bigquery platform
+http://data.europa.eu/esco/skill/spring-boot,Spring Boot,spring;springboot;spring framework;java spring
+http://data.europa.eu/esco/skill/dotnet,.NET,dotnet;dot net;.net core;asp.net;net framework
+http://data.europa.eu/esco/skill/php,PHP,php language;programação php;php 8
+http://data.europa.eu/esco/skill/laravel,Laravel,laravel framework;php laravel
+http://data.europa.eu/esco/skill/ruby,Ruby,ruby language;programação ruby
+http://data.europa.eu/esco/skill/rails,Ruby on Rails,rails;ror;rails framework
+http://data.europa.eu/esco/skill/kotlin,Kotlin,kotlin language;programação kotlin
+http://data.europa.eu/esco/skill/swift,Swift,swift language;programação swift;swiftui
+http://data.europa.eu/esco/skill/objective-c,Objective-C,objc;objective c
+http://data.europa.eu/esco/skill/scala,Scala,scala language;programação scala
+http://data.europa.eu/esco/skill/elixir,Elixir,elixir language;phoenix framework
+http://data.europa.eu/esco/skill/r-language,R,r language;linguagem r;r statistics;rstudio
+http://data.europa.eu/esco/skill/matlab,MATLAB,matlab language;simulink
+http://data.europa.eu/esco/skill/bash,Shell Script,bash;shell scripting;shell script;scripts bash;zsh
+http://data.europa.eu/esco/skill/powershell,PowerShell,power shell;windows powershell
+http://data.europa.eu/esco/skill/nextjs,Next.js,next;nextjs;next framework;react next
+http://data.europa.eu/esco/skill/nestjs,NestJS,nest;nestjs framework;node nest
+http://data.europa.eu/esco/skill/svelte,Svelte,sveltekit;svelte framework
+http://data.europa.eu/esco/skill/tailwind,Tailwind CSS,tailwind;tailwindcss;utility css
+http://data.europa.eu/esco/skill/sass,Sass,scss;sass preprocessor;pré-processador css
+http://data.europa.eu/esco/skill/react-native,React Native,reactnative;rn mobile;mobile react
+http://data.europa.eu/esco/skill/flutter,Flutter,flutter dart;dart flutter;mobile flutter
+http://data.europa.eu/esco/skill/android,Android,android development;desenvolvimento android;android sdk
+http://data.europa.eu/esco/skill/ios,iOS,ios development;desenvolvimento ios;xcode
+http://data.europa.eu/esco/skill/mysql,MySQL,my sql;mariadb;banco de dados mysql
+http://data.europa.eu/esco/skill/sqlserver,SQL Server,microsoft sql server;mssql;t-sql;transact-sql
+http://data.europa.eu/esco/skill/oracle-db,Oracle Database,oracle;pl/sql;plsql;banco oracle
+http://data.europa.eu/esco/skill/elasticsearch,Elasticsearch,elastic;opensearch;elk stack;busca elasticsearch
+http://data.europa.eu/esco/skill/cassandra,Apache Cassandra,cassandra;banco cassandra
+http://data.europa.eu/esco/skill/dynamodb,DynamoDB,dynamo db;aws dynamodb
+http://data.europa.eu/esco/skill/kafka,Apache Kafka,kafka;streaming kafka;event streaming;mensageria kafka
+http://data.europa.eu/esco/skill/rabbitmq,RabbitMQ,rabbit mq;mensageria;filas de mensagens;message queue
+http://data.europa.eu/esco/skill/spark,Apache Spark,spark;pyspark;processamento distribuído
+http://data.europa.eu/esco/skill/airflow,Apache Airflow,airflow;orquestração de dados;dags airflow
+http://data.europa.eu/esco/skill/dbt,dbt,data build tool;dbt core;transformação de dados
+http://data.europa.eu/esco/skill/snowflake,Snowflake,snowflake dw;data warehouse snowflake
+http://data.europa.eu/esco/skill/bigquery,BigQuery,big query;google bigquery
+http://data.europa.eu/esco/skill/databricks,Databricks,data bricks;lakehouse
+http://data.europa.eu/esco/skill/etl,ETL,elt;pipelines de dados;data pipeline;extração transformação carga
+http://data.europa.eu/esco/skill/data-engineering,Data Engineering,engenharia de dados;engenheiro de dados;data eng
+http://data.europa.eu/esco/skill/data-science,Data Science,ciência de dados;ciencia de dados;cientista de dados
+http://data.europa.eu/esco/skill/data-analysis,Data Analysis,análise de dados;analise de dados;analista de dados;analytics
+http://data.europa.eu/esco/skill/statistics,Estatística,estatistica;statistics;inferência estatística;testes estatísticos
+http://data.europa.eu/esco/skill/pandas,Pandas,pandas python;dataframes;numpy
+http://data.europa.eu/esco/skill/scikit-learn,scikit-learn,sklearn;scikit;aprendizado supervisionado
+http://data.europa.eu/esco/skill/nlp,Processamento de Linguagem Natural,nlp;natural language processing;pln;text mining
+http://data.europa.eu/esco/skill/computer-vision,Visão Computacional,computer vision;cv;opencv;processamento de imagens
+http://data.europa.eu/esco/skill/llm,Large Language Models,llm;llms;modelos de linguagem;gpt;prompt engineering;engenharia de prompt
+http://data.europa.eu/esco/skill/rag,RAG,retrieval augmented generation;geração aumentada por recuperação;busca semântica
+http://data.europa.eu/esco/skill/vector-database,Banco de Dados Vetorial,vector database;qdrant;pinecone;weaviate;pgvector;embeddings
+http://data.europa.eu/esco/skill/mlops,MLOps,ml ops;mlflow;operacionalização de modelos;model deployment
+http://data.europa.eu/esco/skill/powerbi,Power BI,powerbi;microsoft power bi;dashboards power bi
+http://data.europa.eu/esco/skill/tableau,Tableau,tableau desktop;visualização tableau
+http://data.europa.eu/esco/skill/looker,Looker,looker studio;data studio
+http://data.europa.eu/esco/skill/excel,Microsoft Excel,excel;planilhas;vba;excel avançado
+http://data.europa.eu/esco/skill/aws-lambda,AWS Lambda,lambda;serverless;funções serverless;faas
+http://data.europa.eu/esco/skill/observability,Observabilidade,observability;monitoramento;monitoring;telemetria;opentelemetry
+http://data.europa.eu/esco/skill/prometheus,Prometheus,prometheus metrics;métricas prometheus
+http://data.europa.eu/esco/skill/grafana,Grafana,grafana dashboards;painéis grafana
+http://data.europa.eu/esco/skill/datadog,Datadog,data dog;apm datadog
+http://data.europa.eu/esco/skill/sre,Site Reliability Engineering,sre;confiabilidade;slo;sli;error budget
+http://data.europa.eu/esco/skill/devops,DevOps,dev ops;cultura devops;engenharia devops
+http://data.europa.eu/esco/skill/gitops,GitOps,git ops;argocd;flux cd
+http://data.europa.eu/esco/skill/github-actions,GitHub Actions,gh actions;actions ci;workflows github
+http://data.europa.eu/esco/skill/gitlab-ci,GitLab CI,gitlab pipelines;gitlab runner
+http://data.europa.eu/esco/skill/nginx,Nginx,nginx server;proxy reverso;reverse proxy
+http://data.europa.eu/esco/skill/cybersecurity,Segurança da Informação,cybersecurity;seguranca da informacao;security;appsec;segurança cibernética
+http://data.europa.eu/esco/skill/pentest,Pentest,penetration testing;teste de intrusão;ethical hacking;red team
+http://data.europa.eu/esco/skill/oauth,OAuth,oauth2;openid connect;oidc;autenticação;jwt
+http://data.europa.eu/esco/skill/lgpd,LGPD,gdpr;privacidade de dados;protecao de dados;proteção de dados;data privacy
+http://data.europa.eu/esco/skill/iso27001,ISO 27001,iso 27001;gestão de segurança da informação;sgsi
+http://data.europa.eu/esco/skill/soc2,SOC 2,soc2;compliance soc;auditoria soc
+http://data.europa.eu/esco/skill/tdd,TDD,test driven development;desenvolvimento orientado a testes;testes automatizados
+http://data.europa.eu/esco/skill/e2e-testing,Testes E2E,end to end testing;cypress;playwright;selenium;testes de ponta a ponta
+http://data.europa.eu/esco/skill/qa,Quality Assurance,qa;garantia de qualidade;analista de qualidade;testes de software
+http://data.europa.eu/esco/skill/code-review,Code Review,revisão de código;revisao de codigo;pull request review
+http://data.europa.eu/esco/skill/clean-architecture,Clean Architecture,arquitetura limpa;hexagonal architecture;ddd;domain driven design
+http://data.europa.eu/esco/skill/design-patterns,Design Patterns,padrões de projeto;padroes de projeto;solid;principios solid
+http://data.europa.eu/esco/skill/event-driven,Arquitetura Orientada a Eventos,event driven architecture;eda;event sourcing;cqrs
+http://data.europa.eu/esco/skill/grpc,gRPC,grpc protocol;protobuf;protocol buffers
+http://data.europa.eu/esco/skill/websockets,WebSockets,websocket;socket.io;comunicação em tempo real
+http://data.europa.eu/esco/skill/system-design,System Design,design de sistemas;arquitetura de sistemas;escalabilidade
+http://data.europa.eu/esco/skill/performance,Performance Tuning,otimização de performance;otimizacao;tuning;profiling
+http://data.europa.eu/esco/skill/accessibility,Acessibilidade,accessibility;a11y;wcag;acessibilidade web
+http://data.europa.eu/esco/skill/seo,SEO,search engine optimization;otimização para buscadores;seo técnico
+http://data.europa.eu/esco/skill/product-management,Product Management,gestão de produto;gestao de produto;product owner;po;product manager;pm
+http://data.europa.eu/esco/skill/product-discovery,Product Discovery,descoberta de produto;discovery;pesquisa de produto
+http://data.europa.eu/esco/skill/roadmap,Roadmap,planejamento de roadmap;priorização;priorizacao;rice;moscow
+http://data.europa.eu/esco/skill/okr,OKR,objectives and key results;metas e resultados;gestão por okr
+http://data.europa.eu/esco/skill/user-research,Pesquisa com Usuários,user research;ux research;pesquisa de usuário;entrevistas com usuários
+http://data.europa.eu/esco/skill/figma,Figma,figma design;prototipagem;prototipação;design system
+http://data.europa.eu/esco/skill/design-system,Design System,sistema de design;component library;biblioteca de componentes
+http://data.europa.eu/esco/skill/ab-testing,Testes A/B,a/b testing;ab test;experimentação;experimentacao;growth experiments
+http://data.europa.eu/esco/skill/analytics-produto,Product Analytics,amplitude;mixpanel;google analytics;métricas de produto
+http://data.europa.eu/esco/skill/growth,Growth,growth hacking;marketing de crescimento;aquisição de usuários
+http://data.europa.eu/esco/skill/marketing-digital,Marketing Digital,digital marketing;midia paga;mídia paga;google ads;meta ads
+http://data.europa.eu/esco/skill/crm,CRM,salesforce;hubspot;gestão de relacionamento com o cliente
+http://data.europa.eu/esco/skill/vendas,Vendas,sales;prospecção;prospeccao;inside sales;closer;account executive
+http://data.europa.eu/esco/skill/customer-success,Customer Success,cs;sucesso do cliente;retenção de clientes;churn
+http://data.europa.eu/esco/skill/atendimento,Atendimento ao Cliente,customer support;suporte ao cliente;help desk;service desk
+http://data.europa.eu/esco/skill/contabilidade,Contabilidade,accounting;contabil;contábil;fechamento contábil;balanço
+http://data.europa.eu/esco/skill/financas,Finanças Corporativas,corporate finance;financas;fp&a;planejamento financeiro;valuation
+http://data.europa.eu/esco/skill/controladoria,Controladoria,controlling;controller;controle orçamentário;budget
+http://data.europa.eu/esco/skill/recursos-humanos,Recursos Humanos,rh;human resources;people;gestão de pessoas;dp
+http://data.europa.eu/esco/skill/recrutamento,Recrutamento e Seleção,recruiting;r&s;talent acquisition;aquisição de talentos;headhunting;sourcing
+http://data.europa.eu/esco/skill/dei,Diversidade e Inclusão,dei;d&i;diversity and inclusion;diversidade equidade e inclusão
+http://data.europa.eu/esco/skill/juridico,Jurídico,legal;direito;contratos;compliance jurídico;advocacia
+http://data.europa.eu/esco/skill/supply-chain,Supply Chain,cadeia de suprimentos;logística;logistica;compras;procurement
+http://data.europa.eu/esco/skill/lean,Lean,lean manufacturing;melhoria contínua;kaizen;six sigma;seis sigma
+http://data.europa.eu/esco/skill/itil,ITIL,itil v4;gestão de serviços de ti;service management
+http://data.europa.eu/esco/skill/safe,SAFe,scaled agile framework;agile em escala;less
+http://data.europa.eu/esco/skill/stakeholder-management,Gestão de Stakeholders,stakeholder management;gestão de partes interessadas;relacionamento com stakeholders
+http://data.europa.eu/esco/skill/mentoring,Mentoria,mentoring;coaching;desenvolvimento de time;mentoria técnica
+http://data.europa.eu/esco/skill/technical-writing,Documentação Técnica,technical writing;redação técnica;documentacao tecnica;adr;rfc
+http://data.europa.eu/esco/skill/public-speaking,Oratória,public speaking;apresentações;apresentacoes;palestras
+http://data.europa.eu/esco/skill/adaptabilidade,Adaptabilidade,adaptability;flexibilidade;resiliência;resiliencia
+http://data.europa.eu/esco/skill/criatividade,Criatividade,creativity;pensamento criativo;inovação;inovacao
+http://data.europa.eu/esco/skill/organizacao,Organização,organization;gestão do tempo;time management;produtividade
+http://data.europa.eu/esco/skill/pensamento-critico,Pensamento Crítico,critical thinking;análise crítica;raciocínio lógico
+http://data.europa.eu/esco/skill/autonomia,Autonomia,autonomy;proatividade;self-starter;ownership;senso de dono
+http://data.europa.eu/esco/skill/ingles,Inglês,english;ingles fluente;inglês avançado;english proficiency
+http://data.europa.eu/esco/skill/espanhol,Espanhol,spanish;espanhol avançado;castellano
+http://data.europa.eu/esco/skill/frances,Francês,french;frances;français
