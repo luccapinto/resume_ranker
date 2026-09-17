@@ -14,7 +14,7 @@ class Settings(BaseSettings):
 
     # ── Storage ─────────────────────────────────────────────────────
     POSTGRES_USER: str = "postgres"
-    POSTGRES_PASSWORD: str = "postgrespassword"
+    POSTGRES_PASSWORD: str = ""  # sem default utilizavel: vem do api/.env
     POSTGRES_DB: str = "resume_ranker"
     POSTGRES_HOST: str = "localhost"
     POSTGRES_PORT: int = 5432
