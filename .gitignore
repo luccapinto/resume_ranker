@@ -36,6 +36,7 @@ api/data/pdfs/
 api/eval/*.db
 api/eval/qdrant_storage/
 docs/screenshots/*.tmp.png
+docs/demo/
 .run/
 web/test-results/
 web/playwright-report/

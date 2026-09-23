@@ -433,6 +433,7 @@ make build         # frontend production build
 
 cd web && npx playwright test          # end-to-end, needs a live seeded stack
 cd web && npx playwright test e2e/screenshots.spec.ts   # regenerate the images above
+make demo                              # re-record the demo video, same live stack (production build)
 ```
 
 The backend suite covers RRF arithmetic, score calibration, filter construction, indexing, the hybrid pipeline, ESCO matching, the citation guardrail, deterministic match signals, all four bias axes, identity recovery, funnel transitions, the ranking snapshot, the copilot's tool loop, span nesting and error capture, metric aggregation, and the LLM client's retry and schema-repair paths.
