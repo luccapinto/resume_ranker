@@ -22,6 +22,8 @@ The product is a working ATS: publish a job, drop in résumés, get a ranked sho
 
 <div align="center">
 
+https://github.com/user-attachments/assets/019356a9-9983-473a-843c-5d93ebc8bec5
+
 ![Dashboard](docs/screenshots/01-dashboard.png)
 
 </div>

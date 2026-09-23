@@ -217,7 +217,9 @@ class Screencast {
         "-y", "-loglevel", "error",
         "-f", "concat", "-safe", "0", "-i", list,
         "-vf", `fps=${FPS},scale=${OUT_SIZE.width}:${OUT_SIZE.height}:flags=lanczos,format=yuv420p`,
-        "-c:v", "libx264", "-preset", "slow", "-crf", "20",
+        // CRF 23 + animation tuning (flat UI surfaces) keeps a ~100 s demo near 8 MB,
+        // under GitHub's 10 MB video attachment limit on Free plans.
+        "-c:v", "libx264", "-preset", "slow", "-tune", "animation", "-crf", "23",
         "-movflags", "+faststart",
         outFile,
       ],
