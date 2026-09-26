@@ -5,8 +5,8 @@
  * Frames come from CDP `Page.startScreencast` rather than Playwright's
  * `recordVideo`, because the latter records at CSS-pixel size with a capped
  * VP8 bitrate — UI text comes out soft. Screencast frames are device pixels,
- * so a 1280×720 viewport at scale 1.5 yields crisp 1920×1080 frames with
- * UI large enough to read on a phone.
+ * so a 1280×720 viewport at scale 2 yields crisp 2560×1440 frames: the layout
+ * is that of a 720p screen, with twice the pixel density.
  */
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
@@ -14,9 +14,11 @@ import os from "node:os";
 import path from "node:path";
 
 export const VIEWPORT = { width: 1280, height: 720 };
-export const SCALE = 1.5;
+export const SCALE = 2;
 const OUT_SIZE = { width: VIEWPORT.width * SCALE, height: VIEWPORT.height * SCALE };
 const FPS = 30;
+// GitHub's video attachment limit on Free plans is 10 MB; aim a little under it.
+const README_TARGET_BYTES = 9_400_000;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
@@ -198,7 +200,15 @@ class Screencast {
     this.end = this.virtual;
   }
 
-  encode(outFile) {
+  /**
+   * Encodes the captured frames into one or both deliverables, each straight
+   * from the source frames (no generational loss):
+   * - `linkedin`: full 2560×1440 at near-transparent quality — LinkedIn takes
+   *   up to 4096×2304 and 30 Mbps, so the file size is not the constraint;
+   * - `readme`: the best picture that fits GitHub's 10 MB attachment limit —
+   *   a two-pass encode aimed at README_TARGET_BYTES.
+   */
+  encode({ linkedin, readme }) {
     if (!this.frames.length) throw new Error("Nenhum frame capturado.");
     const lines = ["ffconcat version 1.0"];
     this.frames.forEach((frame, i) => {
@@ -209,25 +219,38 @@ class Screencast {
     lines.push(`file '${this.frames.at(-1).file}'`);
     const list = path.join(this.dir, "frames.ffconcat");
     fs.writeFileSync(list, lines.join("\n"));
+    const input = ["-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", list];
+    const scale = (w, h) => ["-vf", `fps=${FPS},scale=${w}:${h}:flags=lanczos,format=yuv420p`];
 
-    fs.mkdirSync(path.dirname(outFile), { recursive: true });
-    const { status, error } = spawnSync(
-      "ffmpeg",
-      [
-        "-y", "-loglevel", "error",
-        "-f", "concat", "-safe", "0", "-i", list,
-        "-vf", `fps=${FPS},scale=${OUT_SIZE.width}:${OUT_SIZE.height}:flags=lanczos,format=yuv420p`,
-        // CRF 23 + animation tuning (flat UI surfaces) keeps a ~100 s demo near 8 MB,
-        // under GitHub's 10 MB video attachment limit on Free plans.
-        "-c:v", "libx264", "-preset", "slow", "-tune", "animation", "-crf", "23",
-        "-movflags", "+faststart",
-        outFile,
-      ],
-      { stdio: "inherit" },
-    );
-    if (error || status !== 0) throw error ?? new Error(`ffmpeg saiu com código ${status}`);
+    if (linkedin) {
+      fs.mkdirSync(path.dirname(linkedin), { recursive: true });
+      ffmpeg([
+        ...input, ...scale(OUT_SIZE.width, OUT_SIZE.height),
+        "-c:v", "libx264", "-preset", "slow", "-tune", "animation", "-crf", "16",
+        "-maxrate", "25M", "-bufsize", "50M",
+        "-movflags", "+faststart", linkedin,
+      ]);
+    }
+    if (readme) {
+      fs.mkdirSync(path.dirname(readme), { recursive: true });
+      // Bits per second that land the file on the target, minus ~1% of MP4 overhead.
+      const kbps = Math.floor((README_TARGET_BYTES * 8 * 0.99) / this.end / 1000);
+      const passlog = path.join(this.dir, "x264-2pass");
+      const video = [
+        ...input, ...scale(1920, 1080),
+        "-c:v", "libx264", "-preset", "veryslow", "-tune", "animation", "-b:v", `${kbps}k`,
+        "-passlogfile", passlog,
+      ];
+      ffmpeg([...video, "-pass", "1", "-an", "-f", "mp4", "/dev/null"]);
+      ffmpeg([...video, "-pass", "2", "-movflags", "+faststart", readme]);
+    }
     fs.rmSync(this.dir, { recursive: true, force: true });
   }
+}
+
+function ffmpeg(args) {
+  const { status, error } = spawnSync("ffmpeg", args, { stdio: "inherit" });
+  if (error || status !== 0) throw error ?? new Error(`ffmpeg saiu com código ${status}`);
 }
 
 /** Drives the page like a person would: eased cursor travel, visible clicks, captions. */
@@ -249,9 +272,10 @@ export class Director {
     await this.cast.start();
   }
 
-  async finish(outFile) {
+  /** `outputs`: `{ linkedin, readme }` file paths — see Screencast.encode. */
+  async finish(outputs) {
     await this.cast.stop();
-    this.cast.encode(outFile);
+    this.cast.encode(outputs);
   }
 
   hold(ms) {

@@ -22,7 +22,7 @@ The product is a working ATS: publish a job, drop in résumés, get a ranked sho
 
 <div align="center">
 
-https://github.com/user-attachments/assets/019356a9-9983-473a-843c-5d93ebc8bec5
+https://github.com/user-attachments/assets/7694fdd8-c40d-4d64-b72b-e81f211c699a
 
 ![Dashboard](docs/screenshots/01-dashboard.png)
 
@@ -436,7 +436,7 @@ make build         # frontend production build
 
 cd web && npx playwright test          # end-to-end, needs a live seeded stack
 cd web && npx playwright test e2e/screenshots.spec.ts   # regenerate the images above
-make demo                              # re-record the demo video, same live stack (production build)
+make demo                              # re-record the demo: README version (≤ 10 MB) + 1440p file for social posts
 ```
 
 The backend suite covers RRF arithmetic, score calibration, filter construction, indexing, the hybrid pipeline, ESCO matching, the citation guardrail, deterministic match signals, all four bias axes, identity recovery, funnel transitions, the ranking snapshot, the copilot's tool loop, span nesting and error capture, metric aggregation, and the LLM client's retry and schema-repair paths.

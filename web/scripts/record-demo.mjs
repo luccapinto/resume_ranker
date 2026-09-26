@@ -6,7 +6,9 @@
  * Needs the same live, seeded stack as the e2e suite — this is the real
  * product, not a mockup. The copilot and the bias audit make real LLM calls;
  * those waits are fast-forwarded on screen, with a badge saying so.
- * Output: docs/demo/demo.mp4
+ * Output (not committed): docs/demo/demo.mp4 — the README version, under
+ * GitHub's 10 MB attachment limit — and docs/demo/demo-linkedin.mp4, the
+ * full-quality 2560×1440 file for social posts.
  */
 import { chromium } from "@playwright/test";
 import path from "node:path";
@@ -14,7 +16,10 @@ import { Director, SCALE, VIEWPORT } from "./demo/director.mjs";
 
 const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3100";
 const API = process.env.E2E_API_BASE ?? "http://localhost:8000";
-const OUT = path.resolve(import.meta.dirname, "../../docs/demo/demo.mp4");
+const OUT = {
+  readme: path.resolve(import.meta.dirname, "../../docs/demo/demo.mp4"),
+  linkedin: path.resolve(import.meta.dirname, "../../docs/demo/demo-linkedin.mp4"),
+};
 
 const getJson = async (url) => (await fetch(`${API}${url}`)).json();
 const jobs = await getJson("/ats/jobs");
@@ -172,4 +177,4 @@ await d.card(
 
 await d.finish(OUT);
 await browser.close();
-console.log(`Demo gravada em ${path.relative(process.cwd(), OUT)}`);
+for (const file of Object.values(OUT)) console.log(`Demo gravada em ${path.relative(process.cwd(), file)}`);
