@@ -363,12 +363,13 @@ The whole turn is one trace: each model round-trip is an `llm` span, each tool e
 **Prerequisites:** Docker, Python 3.11+, Node 20+, and an [OpenRouter API key](https://openrouter.ai/keys).
 
 ```bash
-# 1 · Infrastructure (PostgreSQL + Qdrant)
-make up
-
-# 2 · Configuration
+# 1 · Configuration
 cp api/.env.example api/.env
-$EDITOR api/.env          # set OPENROUTER_API_KEY
+$EDITOR api/.env          # set OPENROUTER_API_KEY and POSTGRES_PASSWORD
+echo "POSTGRES_PASSWORD=<same password>" > .env   # read by docker compose
+
+# 2 · Infrastructure (PostgreSQL + Qdrant, bound to 127.0.0.1)
+make up
 
 # 3 · Dependencies (backend venv, spaCy model, frontend packages)
 make install
