@@ -1,4 +1,4 @@
-.PHONY: help up down logs install seed corpus dev-api dev-web test test-cov lint eval calibrate build clean
+.PHONY: help up down logs install seed corpus dev-api dev-web test test-cov lint eval calibrate build clean demo
 
 help:
 	@echo "Resume Ranker — comandos disponíveis"
@@ -13,6 +13,7 @@ help:
 	@echo "  make lint        Lint + typecheck do frontend"
 	@echo "  make eval        Avaliação de recuperação (NDCG@5/@10, MRR)"
 	@echo "  make calibrate   Recalibra a escala de score do reranker"
+	@echo "  make demo        Grava o vídeo de demonstração (stack no ar, build de produção)"
 
 up:
 	docker compose up -d
@@ -57,6 +58,10 @@ build:
 # Screenshots come from a production build so the dev overlay never shows up.
 screenshots:
 	cd web && npm run build && (npm run start &) && sleep 8 && npm run screenshots
+
+# Needs the live, seeded stack served by `npm run start`: the dev overlay must stay out of frame.
+demo:
+	cd web && node scripts/record-demo.mjs
 
 eval:
 	cd $(CURDIR) && api/.venv/bin/python -u -m api.eval.run_harness --readme
